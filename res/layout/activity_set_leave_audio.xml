@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/screen_window"
+    android:background="@color/DialogTransparency" >
+
+    <LinearLayout
+        android:id="@+id/info_window"
+        android:layout_width="@dimen/info_dialog_leave_width"
+        android:layout_height="@dimen/info_dialog_leave_height"
+        android:background="@color/White"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+        
+		<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/info_window_button_margin_left"
+            android:gravity="center"
+            android:text="@string/leave_message_setting"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/info_dialog_info_text_size" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/info_window_button_margin_left"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leave_message_way"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/info_window_button_text_size" />
+
+            <LinearLayout
+                android:id="@+id/layout_leave_message"
+                android:layout_width="@dimen/layout_leave_message_width"
+                android:layout_height="@dimen/layout_leave_message_height"
+                android:layout_marginLeft="@dimen/info_window_button_margin_left"
+                android:background="@drawable/bg_btn_normal_color"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_leave_message"
+                    android:layout_width="@dimen/text_leave_message_width"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/leave_message_default"
+                    android:textColor="@color/Blue"
+                    android:textSize="@dimen/button_text_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/bg_time_pull_down_clicked" />
+                
+            </LinearLayout>
+        </LinearLayout>
+        
+        <View 
+            android:layout_width="@dimen/view_line"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/info_window_button_margin_left"
+            android:background="@color/GreyBackground"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_window_button_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_minute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Teal"
+                    android:textSize="@dimen/key_button_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/Teal"
+                    android:textSize="@dimen/key_button_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Teal"
+                    android:textSize="@dimen/key_button_text_size" />
+                
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+        		android:progressDrawable="@drawable/progress_bar_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/progress_bar_leave_message_height"
+                android:layout_marginTop="@dimen/info_window_button_margin_top" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_window_button_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/btn_play"
+                    android:layout_width="@dimen/music_button_height"
+                    android:layout_height="@dimen/music_button_height"
+                    android:background="@null"
+                    android:src="@drawable/bg_leave_message_play" />
+                
+                <View 
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/view_line"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_start"
+                    android:layout_width="@dimen/music_button_height"
+                    android:layout_height="@dimen/music_button_height"
+                    android:background="@drawable/bg_leave_message_start_red" />
+
+                <View 
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/view_line"
+                    android:layout_weight="1" />
+                
+                <ImageButton
+                    android:id="@+id/btn_stop"
+                    android:layout_width="@dimen/music_button_height"
+                    android:layout_height="@dimen/music_button_height"
+                    android:background="@null"
+                    android:src="@drawable/bg_leave_message_stop" />
+                
+            </LinearLayout>
+        </LinearLayout>
+        
+        <View 
+            android:layout_width="@dimen/view_line"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="@dimen/info_dialog_button_width"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_marginBottom="@dimen/info_window_button_margin_left"
+            android:background="@drawable/bg_button_blue_all"
+            android:text="@string/save"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_dialog_info_text_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>

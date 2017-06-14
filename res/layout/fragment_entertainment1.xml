@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/btn_photo"
+        style="@style/style_rhombus_button"
+        android:background="@drawable/bg_home_blue_selector"
+        android:drawableTop="@drawable/ic_photo_browse"
+        android:text="@string/picture_show"/>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left" >
+        
+        <Button
+         android:id="@+id/btn_music"
+         style="@style/style_rhombus_button"
+         android:layout_marginBottom="@dimen/rhombus_button_margin_bottom"
+         android:background="@drawable/bg_home_orange_selector"
+         android:drawableTop="@drawable/ic_music_player"
+         android:text="@string/music_enjoy" />
+         
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/btn_movie"
+        style="@style/style_rhombus_button"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:background="@drawable/bg_home_green_selector"
+        android:drawableTop="@drawable/ic_video_browse"
+        android:text="@string/movie_enjoy" />
+        
+</LinearLayout>

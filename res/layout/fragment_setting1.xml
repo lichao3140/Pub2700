@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/btn_light"
+        style="@style/style_rhombus_button"
+        android:background="@drawable/bg_home_green_selector"
+        android:drawableTop="@drawable/btn_light"
+        android:text="@string/text_light" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btn_ringset"
+            style="@style/style_rhombus_button"
+            android:background="@drawable/bg_home_blue_selector"
+            android:drawableTop="@drawable/ic_ring_set"
+            android:text="@string/text_ring_set" />
+
+        <Button
+            android:id="@+id/btn_leave_audio"
+            style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:background="@drawable/bg_home_blue_selector"
+            android:drawableTop="@drawable/ic_leave_msg_set"
+            android:text="@string/text_leave_message_set" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btn_time_setting"
+            style="@style/style_rhombus_button"
+            android:background="@drawable/bg_home_yellow_selector"
+            android:drawableTop="@drawable/ic_time_set"
+            android:text="@string/text_time_setting" />
+
+        <Button
+            android:id="@+id/btn_system_info"
+            style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:background="@drawable/bg_home_orange_selector"
+            android:drawableTop="@drawable/ic_system_info"
+            android:text="@string/text_system_info" />
+
+        <Button
+            android:id="@+id/btn_language_set"
+            style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:background="@drawable/bg_home_yellow_selector"
+            android:drawableTop="@drawable/ic_language_set"
+            android:text="@string/text_language_set" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btn_screen_saver_set"
+            style="@style/style_rhombus_button"
+            android:background="@drawable/bg_home_blue_selector"
+            android:drawableTop="@drawable/ic_sreen_saver"
+            android:text="@string/screen_set" />
+
+        <Button
+            android:id="@+id/btn_wallpaper_set"
+            style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:background="@drawable/bg_home_blue_selector"
+            android:drawableTop="@drawable/ic_wallpaper_set"
+            android:text="@string/text_wallpaper" />
+        
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_system_setting"
+        style="@style/style_rhombus_button"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:background="@drawable/bg_home_green_selector"
+        android:drawableTop="@drawable/ic_system_set"
+        android:text="@string/text_system_setting" />
+
+</LinearLayout>

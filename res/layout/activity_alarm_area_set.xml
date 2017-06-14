@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/screen_window"
+    android:background="@color/DialogTransparency">
+
+	<LinearLayout 
+	    android:id="@+id/info_window"
+	    android:layout_width="@dimen/info_window_width"
+	    android:layout_height="@dimen/info_window_height"
+	    android:layout_centerInParent="true"
+	    android:background="@color/GreyBackground"
+	    android:orientation="vertical">
+	    
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1">
+	        
+	        <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_centerInParent="true"
+		        android:orientation="vertical" >
+		        
+		        <View
+			        android:layout_width="match_parent"
+			        android:layout_height="@dimen/view_line"
+			        android:layout_marginLeft="@dimen/info_window_wheel_margin"
+	            	android:layout_marginRight="@dimen/info_window_wheel_margin"
+			        android:background="@color/DarkIndigo" />
+		        
+		        <LinearLayout 
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+		            android:orientation="horizontal" >
+		            
+					<com.dpower.pub.dp2700.view.wheel.WheelView
+			            android:id="@+id/probe_id"
+			            android:layout_width="@dimen/wheel_view_alarm_width"
+			            android:layout_height="wrap_content" />
+			
+			        <com.dpower.pub.dp2700.view.wheel.WheelView
+			            android:id="@+id/alarm_area"
+			            android:layout_width="@dimen/wheel_view_area_width"
+			            android:layout_height="wrap_content" />
+			
+			        <com.dpower.pub.dp2700.view.wheel.WheelView
+			            android:id="@+id/alarm_type"
+			            android:layout_width="@dimen/wheel_view_alarm_width"
+			            android:layout_height="wrap_content" />
+			
+			        <com.dpower.pub.dp2700.view.wheel.WheelView
+			            android:id="@+id/connection"
+			            android:layout_width="@dimen/wheel_view_alarm_width"
+			            android:layout_height="wrap_content" />
+		        
+		        </LinearLayout>
+		        
+		        <View
+			        android:layout_width="match_parent"
+			        android:layout_height="@dimen/view_line"
+			        android:layout_marginLeft="@dimen/info_window_wheel_margin"
+	            	android:layout_marginRight="@dimen/info_window_wheel_margin"
+			        android:background="@color/DarkIndigo" />
+		        
+		    </LinearLayout>
+	    </RelativeLayout>
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/title_bar_height"
+	        android:layout_marginBottom="@dimen/info_window_button_margin_top"
+	        android:orientation="horizontal" >
+	
+	        <Button
+	            android:id="@+id/btn_cancel"
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:layout_marginLeft="@dimen/info_window_button_margin_left"
+                android:layout_marginRight="@dimen/info_window_button_margin_left"
+	            android:background="@drawable/bg_btn_selector"
+	            android:textColor="@color/Blue"
+	            android:textSize="@dimen/info_window_button_text_size"
+	            android:text="@string/cancel" />
+	
+	        <Button
+	            android:id="@+id/btn_confirm"
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:layout_marginLeft="@dimen/info_window_button_margin_left"
+                android:layout_marginRight="@dimen/info_window_button_margin_left"
+	            android:background="@drawable/bg_btn_selector"
+	            android:textColor="@color/Blue"
+	            android:textSize="@dimen/info_window_button_text_size"
+	            android:text="@string/submit" />
+	        
+	    </LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

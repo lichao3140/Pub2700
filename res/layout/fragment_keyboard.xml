@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_keyboard_number_1"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/number_1" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_2"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_2" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_3"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_3" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_4"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_4" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_5"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_5" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_6"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_6" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_7"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_7" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_8"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_8" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_9"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_9" />
+
+        <Button
+            android:id="@+id/bt_keyboard_number_0"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/number_0" />
+        
+         <Button
+            android:id="@+id/bt_keyboard_dot"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/dot" />
+         
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_q"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/letter_q" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_w"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_w" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_e"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_e" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_r"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_r" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_t"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_t" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_y"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_y" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_u"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_u" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_i"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_i" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_o"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_o" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_p"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_p" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_a"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/letter_a" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_s"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_s" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_d"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_d" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_f"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_f" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_g"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_g" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_h"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_h" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_j"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_j" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_k"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_k" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_l"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_l" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/bt_switch"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_weight="1"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_keyboard_shift" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_z"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_z" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_x"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_x" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_c"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_c" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_v"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_v" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_b"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_b" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_n"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_n" />
+
+        <Button
+            android:id="@+id/bt_keyboard_lowercase_m"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:text="@string/letter_m" />
+
+        <Button
+            android:id="@+id/bt_del"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="2"
+            android:text="@string/delete" />
+        
+    </LinearLayout>
+</LinearLayout>

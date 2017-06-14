@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/screen_window"
+    android:background="@color/DialogTransparency" >
+
+    <LinearLayout
+        android:id="@+id/info_window"
+        android:layout_width="@dimen/info_dialog_height1"
+        android:layout_height="@dimen/info_dialog_height1"
+        android:background="@color/White"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/info_window_button_margin_left"
+            android:gravity="center"
+            android:text="@string/text_language_set"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/info_dialog_info_text_size" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/info_window_button_margin_left"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_chinese"
+                android:layout_width="@dimen/info_dialog_language_button_width"
+                android:layout_height="@dimen/info_dialog_language_button_width"
+                android:background="@drawable/bg_button_blue_all"
+                android:text="@string/text_chinese"
+                android:textColor="@color/White"
+                android:textSize="@dimen/info_dialog_info_text_size" />
+
+            <Button
+                android:id="@+id/btn_english"
+                android:layout_width="@dimen/info_dialog_language_button_width"
+                android:layout_height="@dimen/info_dialog_language_button_width"
+                android:layout_marginLeft="@dimen/info_window_button_margin_left"
+                android:background="@drawable/bg_button_blue_frame_white_inside"
+                android:text="@string/text_english"
+                android:textColor="@color/DarkBlue"
+                android:textSize="@dimen/info_dialog_info_text_size" />
+            
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="@dimen/info_dialog_button_width"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_marginTop="@dimen/info_window_button_margin_left"
+            android:layout_marginBottom="@dimen/info_window_button_margin_left"
+            android:background="@drawable/bg_button_blue_all"
+            android:text="@string/save"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_dialog_info_text_size" />
+        
+    </LinearLayout>
+</RelativeLayout>

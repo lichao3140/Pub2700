@@ -1,0 +1,173 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="myTheme" parent="android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@style/noAnimation</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="noAnimatTheme" parent="android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@style/noAnimation</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">#000000</item>
+         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="noAnimation">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+        <item name="android:taskCloseEnterAnimation">@null</item>
+        <item name="android:taskCloseExitAnimation">@null</item>
+        <item name="android:taskToFrontEnterAnimation">@null</item>
+        <item name="android:taskToFrontExitAnimation">@null</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
+    </style>
+
+    <style name="style_keyboard">
+        <item name="android:width">0dp</item>
+        <item name="android:height">@dimen/title_bar_height</item>
+        <item name="android:textSize">@dimen/key_button_text_size</item>
+        <item name="android:background">@color/color_keyboard_transparency_amber</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_keyboard_number">
+        <item name="android:textSize">@dimen/key_button_number_size</item>
+        <item name="android:background">@color/color_keyboard_transparency_amber</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="style_keyboard_number_small">
+        <item name="android:textSize">@dimen/key_button_text_size</item>
+        <item name="android:background">@color/color_keyboard_transparency_amber</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+	<style name="style_ProgressBarStyleLarge" >
+		<item name="android:indeterminateDrawable">@drawable/progress_bar_large</item>
+		<item name="android:minWidth">76dip</item>
+		<item name="android:maxWidth">76dip</item>
+		<item name="android:minHeight">76dip</item>
+		<item name="android:maxHeight">76dip</item>
+	</style>
+	
+	<style name="style_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!-- 边框 -->
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsTranslucent">false</item><!-- 半透明 --> 
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:background">@color/Transparency</item><!-- 背景 -->
+        <item name="android:windowBackground">@color/Transparency</item><!-- 边框背景 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
+        <item name="android:backgroundDimAmount">0.2</item> <!-- 透明度 -->
+    </style>
+    
+	<style name="style_square_button">
+        <item name="android:layout_width">@dimen/square_button_width</item>
+        <item name="android:layout_height">@dimen/square_button_height</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@color/color_button_blue_purple</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+	<style name="style_rectangle_button">
+        <item name="android:layout_width">@dimen/rectangle_button_width</item>
+        <item name="android:layout_height">@dimen/rectangle_button_height</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@color/color_button_blue_purple</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+	<style name="style_horizontal_rectangle_button">
+        <item name="android:layout_width">@dimen/horizontal_rectangle_button_width</item>
+        <item name="android:layout_height">@dimen/horizontal_rectangle_button_height</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@color/color_button_blue_purple</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="style_vertical_rectangle_button">
+        <item name="android:layout_width">@dimen/vertical_rectangle_button_width</item>
+        <item name="android:layout_height">@dimen/vertical_rectangle_button_height</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background">@color/color_button_blue_purple</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+	<style name="style_rhombus_button">
+	    <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+	<style name="style_red_round">
+	    <item name="android:layout_width">@dimen/red_round_width</item>
+        <item name="android:layout_height">@dimen/red_round_width</item>
+        <item name="android:layout_marginRight">@dimen/red_round_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/red_round_margin_top</item>
+        <item name="android:background">@drawable/bg_little_circle_main</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/red_round_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+	<style name="style_EditText">
+        <item name="android:layout_marginTop">@dimen/info_window_button_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/info_window_button_margin_top</item>
+        <item name="android:background">@drawable/bg_edit_text_white_transparency</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/title_bar_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+	<style name="style_EditTextWhite">
+	    <item name="android:layout_width">@dimen/edit_text_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/edit_text_margin</item>
+        <item name="android:layout_marginBottom">@dimen/edit_text_margin</item>
+        <item name="android:layout_marginLeft">@dimen/info_window_button_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/info_window_button_margin_left</item>
+        <item name="android:background">@drawable/bg_edit_text_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">@dimen/title_bar_text_size</item>
+    </style>
+
+</resources>

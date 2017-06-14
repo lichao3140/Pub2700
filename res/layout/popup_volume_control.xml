@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/volume_layout_width"
+    android:layout_height="@dimen/volume_layout_height"
+    android:clickable="false"
+    android:background="@color/DarkBlueGrey"
+    android:gravity="center"
+    android:orientation="horizontal"  >
+ 
+    <TextView 
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:text="@string/text_volume"
+        android:gravity="center"
+        android:textColor="@color/White"
+        android:textSize="@dimen/info_window_button_text_size" />
+    
+    <ImageView
+        android:id="@+id/image_volume_1"
+        android:layout_height="@dimen/volume_image_width"
+        android:layout_width="@dimen/volume_image_height"
+        android:background="@color/DarkPink"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"
+        android:contentDescription="@null" />
+    
+    <ImageView 
+        android:id="@+id/image_volume_2"
+        android:layout_height="@dimen/volume_image_width"
+        android:layout_width="@dimen/volume_image_height"
+        android:background="@color/DarkPink"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"
+        android:contentDescription="@null" />
+    
+    <ImageView 
+        android:id="@+id/image_volume_3"
+        android:layout_height="@dimen/volume_image_width"
+        android:layout_width="@dimen/volume_image_height"
+        android:background="@color/DarkPink"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"
+        android:contentDescription="@null" />
+    
+    <ImageView 
+        android:id="@+id/image_volume_4"
+        android:layout_height="@dimen/volume_image_width"
+        android:layout_width="@dimen/volume_image_height"
+        android:background="@color/DarkPink"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"
+        android:contentDescription="@null" />
+    
+    <ImageView 
+        android:id="@+id/image_volume_5"
+        android:layout_height="@dimen/volume_image_width"
+        android:layout_width="@dimen/volume_image_height"
+        android:background="@color/DarkPink"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"
+        android:contentDescription="@null" />
+    
+    <TextView 
+        android:id="@+id/tv_volume"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textColor="@color/DarkOrange"
+        android:textSize="@dimen/info_window_button_text_size"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/info_window_button_margin_left"/>
+
+</LinearLayout>

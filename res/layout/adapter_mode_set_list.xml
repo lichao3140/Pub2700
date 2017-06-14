@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/GreyBackground"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="@color/LightPurple"
+        android:gravity="center"
+        android:text="@string/kitchen"
+        android:textColor="@color/White"
+        android:textSize="@dimen/info_window_button_text_size" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="2"
+        android:background="@color/LightPurple"
+        android:gravity="center"
+        android:text="@string/kitchen"
+        android:textColor="@color/White"
+        android:textSize="@dimen/info_window_button_text_size" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/mode_item_height"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="2"
+        android:background="@color/Purple" >
+
+        <ImageButton
+            android:id="@+id/btn_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:contentDescription="@null"
+            android:src="@drawable/jt_left1" />
+
+        <TextView
+            android:id="@+id/tv_delay_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/kitchen"
+            android:textColor="@color/White"
+        	android:textSize="@dimen/info_window_button_text_size" />
+
+        <ImageButton
+            android:id="@+id/btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:contentDescription="@null"
+            android:src="@drawable/jt_right1" />
+        
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_switch"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="2"
+        android:background="@color/Purple"
+        android:text="@string/text_open"
+        android:textColor="@color/White"
+        android:textSize="@dimen/info_window_button_text_size" />
+
+</LinearLayout>

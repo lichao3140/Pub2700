@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false" >
+
+            <Button
+	            android:id="@+id/btn_call_record"
+	            style="@style/style_rhombus_button"
+	            android:background="@drawable/bg_home_yellow_selector"
+	            android:drawableTop="@drawable/ic_call_log"
+	            android:text="@string/text_call_record" />
+
+            <Button
+                android:id="@+id/call_log_hint"
+                android:layout_marginLeft="@dimen/red_round_margin_top"
+                style="@style/style_red_round"
+                android:visibility="gone" />
+            
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_building_monitor"
+            style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:background="@drawable/bg_home_pink_selector"
+            android:drawableTop="@drawable/ic_building_monitor"
+            android:text="@string/text_building_monitor" />
+        
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_call_management_center"
+        style="@style/style_rhombus_button"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:background="@drawable/bg_home_green_selector"
+        android:drawableTop="@drawable/ic_call_management"
+        android:text="@string/call_center" />
+
+    <LinearLayout 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:orientation="vertical" >
+    
+    	<FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false" >
+
+            <Button
+		        android:id="@+id/btn_leave_message_or_video"
+		        style="@style/style_rhombus_button"
+		        android:background="@drawable/bg_home_orange_selector"
+		        android:drawableTop="@drawable/ic_leave_msg"
+		        android:text="@string/text_leave_message_or_video" />
+
+            <Button
+                android:id="@+id/message_hint"
+                android:layout_marginLeft="@dimen/red_round_margin_top"
+                style="@style/style_red_round"
+                android:visibility="gone" />
+            
+        </FrameLayout>
+
+	    <Button
+	        android:id="@+id/btn_user_call"
+	        style="@style/style_rhombus_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+	        android:background="@drawable/bg_home_blue_selector"
+	        android:drawableTop="@drawable/ic_user_intercom"
+	        android:text="@string/text_user_intercom" />
+    
+    </LinearLayout>
+</LinearLayout>

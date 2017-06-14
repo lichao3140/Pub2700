@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@null" >
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <Button
+            android:id="@+id/btn_in_bed"
+            style="@style/style_square_button"
+            android:drawableTop="@drawable/ic_bed_state"
+            android:text="@string/mode_in_bed" />
+        
+        <Button
+            android:id="@+id/btn_dinner"
+            style="@style/style_square_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_dinner_state"
+            android:text="@string/mode_dinner" />
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <Button
+            android:id="@+id/btn_at_home"
+            style="@style/style_square_button"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_home_state"
+            android:text="@string/mode_at_home" />
+        
+        <Button
+            android:id="@+id/btn_entertainment"
+            style="@style/style_square_button"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_entertainment_state"
+            android:text="@string/mode_entertainment" />
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <Button
+            android:id="@+id/btn_disable_all"
+            style="@style/style_square_button"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_closed_state"
+            android:text="@string/mode_disable_all" />
+        
+        <Button
+            android:id="@+id/btn_media"
+            style="@style/style_square_button"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_video_state"
+            android:text="@string/mode_media" />
+        
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_smart_home_server_on"
+        style="@style/style_square_button"
+        android:text="@string/smart_home_server_on"
+        android:visibility="gone" />
+    
+</LinearLayout>

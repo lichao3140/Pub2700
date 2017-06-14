@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="screen_width">1024</integer>
+    <integer name="screen_height">552</integer>
+    <integer name="monitor_width">768</integer>
+    <integer name="monitor_height">470</integer>
+    <integer name="title_bar_height">56</integer>
+    <integer name="door_call_in_width">1024</integer>
+    <integer name="door_call_in_height">470</integer>
+    <integer name="user_call_in_width">1024</integer>
+    <integer name="user_call_in_height">470</integer>
+    <integer name="call_management_width">1024</integer>
+    <integer name="call_management_height">470</integer>
+
+</resources>

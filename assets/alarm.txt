@@ -1,0 +1,13 @@
+{
+"probenum":8,
+"chinese":
+{
+	"area":[{"name":"厨房","value":"10"},{"name":"卧室","value":"11"},{"name":"大厅","value":"12"},{"name":"窗户","value":"13"},{"name":"大门","value":"14"},{"name":"阳台","value":"15"},{"name":"客房","value":"16"}],
+	"type":[{"name":"紧急","value":"0","priority":"1"},{"name":"烟感","value":"1","priority":"2"},{"name":"煤气","value":"2","priority":"2"},{"name":"红外","value":"4","priority":"3"},{"name":"门磁","value":"3","priority":"3"},{"name":"门铃","value":"3","priority":"0"}]
+},
+"english":
+{
+	"area":[{"name":"Kitchen","value":"10"},{"name":"Bedroom","value":"11"},{"name":"Hall","value":"12"},{"name":"Window","value":"13"},{"name":"Gate","value":"14"},{"name":"Balcony","value":"15"},{"name":"Guest Room","value":"16"}],
+	"type":[{"name":"Panic","value":"0","priority":"1"},{"name":"Smoke","value":"1","priority":"2"},{"name":"Gas","value":"2","priority":"2"},{"name":"Infrared","value":"4","priority":"3"},{"name":"Door","value":"3","priority":"3"},{"name":"Doorbell","value":"3","priority":"0"}]
+}
+}

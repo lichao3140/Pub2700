@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_btn_normal_color" >
+    
+    <Button
+	    android:id="@+id/btn_leave_message_no"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/layout_leave_message_height"
+	    android:gravity="center"
+	    android:textSize="@dimen/button_text_size"
+	    android:text="@string/leave_message_no"
+	    android:background="@color/Transparency"
+	    android:textColor="@color/Blue" />
+	
+	<View 
+	    android:layout_width="@dimen/text_leave_message_width"
+	    android:layout_height="@dimen/view_line"
+	    android:background="@color/Yellow" />
+	
+	<Button
+		android:id="@+id/btn_leave_message_default"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/layout_leave_message_height"
+	    android:gravity="center"
+	    android:textSize="@dimen/button_text_size"
+	    android:text="@string/leave_message_default"
+	    android:background="@color/Transparency"
+	    android:textColor="@color/Blue"  />
+	
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/view_line"
+	    android:background="@color/Yellow" />
+	
+	<Button
+		android:id="@+id/btn_leave_message_user"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/layout_leave_message_height"
+	    android:gravity="center"
+	    android:textSize="@dimen/button_text_size"
+	    android:text="@string/leave_message_user"
+	    android:background="@color/Transparency"
+	    android:textColor="@color/Blue"  />
+</LinearLayout>

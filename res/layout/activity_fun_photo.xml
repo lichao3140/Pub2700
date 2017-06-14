@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_height"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/title_bar_icon_margin_left"
+            android:src="@drawable/ic_wallpaper_set" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/title_bar_text_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/picture_show"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+        
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent" >
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/color_button_transparency_purple"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:background="@color/color_button_transparency_purple"
+            android:text="@string/back"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:background="@color/color_button_transparency_purple"
+            android:text="@string/submit"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+    </LinearLayout>
+</LinearLayout>

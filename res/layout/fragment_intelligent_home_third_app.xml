@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null" >
+
+    <Button
+		android:id="@+id/bt_start_app"
+		android:layout_width="@dimen/info_dialog_button_width"
+		android:layout_height="@dimen/info_dialog_button_width"
+		android:layout_centerInParent="true"
+		android:background="@color/TransparencyBlue"
+		android:gravity="center"
+		android:text="@string/mode_start_third_app"
+		android:textColor="@color/White"
+		android:textSize="@dimen/title_bar_text_size" />
+    
+</RelativeLayout>

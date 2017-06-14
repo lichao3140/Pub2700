@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@null"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+        <RelativeLayout
+            android:layout_width="@dimen/vertical_rectangle_button_width"
+            android:layout_height="@dimen/vertical_rectangle_button_height" >
+
+            <Button
+	            android:id="@+id/btn_call_record"
+	            style="@style/style_vertical_rectangle_button"
+	            android:drawableTop="@drawable/ic_call_log"
+	            android:text="@string/text_call_record" />
+
+            <Button
+                android:id="@+id/call_log_hint"
+                android:layout_alignParentRight="true"
+                style="@style/style_red_round"
+                android:visibility="gone" />
+            
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_building_monitor"
+            style="@style/style_vertical_rectangle_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_building_monitor"
+            android:text="@string/text_building_monitor" />
+        
+    </LinearLayout>
+
+    <com.dpower.pub.dp2700.view.DrawableCenterButton
+        android:id="@+id/btn_call_management_center"
+        style="@style/style_vertical_rectangle_button"
+        android:layout_height="@dimen/vertical_rectangle_layout_height"
+        android:layout_marginLeft="@dimen/button_margin_left"
+        android:drawableTop="@drawable/ic_call_management"
+        android:text="@string/call_center" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/button_margin_left"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/vertical_rectangle_button_width"
+            android:layout_height="@dimen/vertical_rectangle_button_height" >
+
+            <Button
+	            android:id="@+id/btn_leave_message_or_video"
+	            style="@style/style_vertical_rectangle_button"
+	            android:drawableTop="@drawable/ic_leave_msg"
+	            android:text="@string/text_leave_message_or_video" />
+
+            <Button
+                android:id="@+id/message_hint"
+                android:layout_alignParentRight="true"
+                style="@style/style_red_round"
+                android:visibility="gone" />
+            
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_user_call"
+            style="@style/style_vertical_rectangle_button"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:drawableTop="@drawable/ic_user_intercom"
+            android:text="@string/text_user_intercom" />
+        
+    </LinearLayout>
+</LinearLayout>

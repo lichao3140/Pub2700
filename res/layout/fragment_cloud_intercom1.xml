@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+    
+	<Button
+        android:id="@+id/btn_wifi_set"
+        style="@style/style_rhombus_button"
+        android:background="@drawable/bg_home_orange_selector"
+        android:drawableTop="@drawable/ic_wireless_set"
+        android:text="@string/wifi_setting" />
+
+	<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left" >
+        
+        <Button
+	        android:id="@+id/btn_bind_device"
+	        style="@style/style_rhombus_button"
+	        android:layout_marginBottom="@dimen/rhombus_button_margin_bottom"
+	        android:background="@drawable/bg_home_pink_selector"
+	        android:drawableTop="@drawable/cloud_intercom_bind"
+	        android:text="@string/bind_device" />
+         
+    </LinearLayout>
+	
+	<Button
+        android:id="@+id/btn_call_forwarding"
+        style="@style/style_rhombus_button"
+        android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+        android:background="@drawable/bg_home_blue_selector"
+        android:drawableTop="@drawable/cloud_intercom_call_forwarding"
+        android:text="@string/call_forwarding" />
+    
+    
+	
+</LinearLayout>

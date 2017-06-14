@@ -1,0 +1,148 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:layout_gravity="top"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@color/Transparency" />
+        
+        <ImageView
+            android:id="@+id/image_network_wireless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:layout_marginRight="@dimen/button_margin_left"
+            android:src="@drawable/ic_network_wireless"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_network_ethernet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:layout_marginRight="@dimen/button_margin_left"
+            android:src="@drawable/ic_network_ethernet"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_defence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/button_margin_left"
+            android:layout_marginRight="@dimen/button_margin_left"
+            android:src="@drawable/ic_defence_on" />
+
+        <ImageView
+            android:layout_width="@dimen/info_window_button_margin_top"
+            android:layout_height="match_parent"
+            android:src="@color/Transparency" />
+        
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="bottom"
+        android:background="@color/DialogTransparency" >
+
+        <Button
+            android:id="@+id/btn_cloud_intercom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_cloud_intercom"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_house_sercurity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_home_sercurity"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_visual_intercom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_visual_intercom"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_home"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_intelligent_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_intelligent_home"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_setting"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+
+        <Button
+            android:id="@+id/btn_entertainment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/TransparencyBlue"
+            android:text="@string/text_entertainment"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size"/>
+        
+    </LinearLayout>
+</LinearLayout>

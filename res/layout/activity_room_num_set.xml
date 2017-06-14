@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_height"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/title_bar_icon_margin_left"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_room_number_set" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/title_bar_text_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/text_room_num_set"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" >
+        
+        <GridLayout
+            android:layout_width="@dimen/keyboard_number_width"
+            android:layout_height="@dimen/keyboard_number_height"
+            android:columnCount="3"
+            android:rowCount="4" >
+
+            <Button
+                android:id="@+id/btn_num_1"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                style="@style/style_keyboard_number_small"
+                android:text="1"/>
+
+            <Button
+                android:id="@+id/btn_num_2"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/btn_num_3"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/btn_num_4"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/btn_num_5"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/btn_num_6"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/btn_num_7"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/btn_num_8"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/btn_num_9"
+                android:layout_width="@dimen/keyboard_number_button_width"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="1dp"
+                style="@style/style_keyboard_number_small"
+                android:text="9" />
+
+            <Button
+                android:id="@+id/btn_num_0"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/keyboard_number_button_height"
+                android:layout_marginTop="1dp"
+                android:layout_columnSpan="3"
+                style="@style/style_keyboard_number_small"
+                android:text="0" />
+            
+        </GridLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/keyboard_number_height"
+            android:layout_marginLeft="@dimen/info_window_button_margin_left"
+            android:background="@color/DialogTransparency"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_area"
+                    style="@style/style_EditTextWhite"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_area"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_building"
+                    style="@style/style_EditTextWhite"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_building"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_unit"
+                    style="@style/style_EditTextWhite"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_unit"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_room"
+                    style="@style/style_EditTextWhite"
+                    android:hint="0000"
+                    android:inputType="number"
+                    android:maxLength="4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_room"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_extension"
+                    style="@style/style_EditTextWhite"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_extension"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout 
+            android:layout_width="@dimen/time_button_width"
+            android:layout_height="@dimen/keyboard_number_height"
+            android:layout_marginLeft="@dimen/info_window_button_margin_left"
+            android:orientation="vertical">
+            
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/color_keyboard_transparency_amber"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textColor="@color/White"
+                android:textSize="@dimen/info_window_button_text_size" />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/info_window_button_margin_left"
+                android:background="@color/color_keyboard_transparency_amber"
+                android:gravity="center"
+                android:text="@string/submit"
+                android:textColor="@color/White"
+                android:textSize="@dimen/info_window_button_text_size" />
+            
+        </LinearLayout>
+    </LinearLayout>
+
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/color_button_transparency_purple"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:background="@color/color_button_transparency_purple"
+            android:text="@string/back"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        
+        <Button
+            android:id="@+id/btn_netcfg_updata"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/info_window_button_margin_top"
+            android:paddingRight="@dimen/info_window_button_margin_top"
+            android:background="@color/color_button_transparency_purple"
+            android:clickable="false"
+            android:text="@string/text_netcfg_update"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+        <Button
+            android:id="@+id/btn_sd_updata"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/info_window_button_margin_top"
+            android:paddingRight="@dimen/info_window_button_margin_top"
+            android:layout_marginLeft="2dp"
+            android:background="@color/color_button_transparency_purple"
+            android:clickable="false"
+            android:text="@string/text_APK_update"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+    </LinearLayout>
+</LinearLayout>

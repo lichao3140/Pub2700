@@ -1,0 +1,13 @@
+{
+"probenum":8,
+"chinese":
+{
+	"area":[{"name":"客厅","value":"7"},{"name":"餐厅","value":"9"},{"name":"厨房","value":"10"},{"name":"卧室","value":"11"},{"name":"大厅","value":"12"},{"name":"窗户","value":"13"},{"name":"大门","value":"14"},{"name":"阳台","value":"15"},{"name":"客房","value":"16"},{"name":"卫生间","value":"17"},{"name":"书房","value":"18"},{"name":"主卧室","value":"20"},{"name":"保姆间","value":"48"},{"name":"客卧","value":"49"},{"name":"工作间","value":"50"},{"name":"进户门","value":"51"},{"name":"次卧","value":"52"},{"name":"紧急","value":"53"}],
+	"type":[{"name":"紧急","value":"0","priority":"1"},{"name":"烟感","value":"1","priority":"2"},{"name":"煤气","value":"2","priority":"2"},{"name":"红外","value":"4","priority":"3"},{"name":"门磁","value":"3","priority":"3"},{"name":"门铃","value":"3","priority":"0"}]
+},
+"english":
+{
+	"area":[{"name":"Living Room","value":"7"},{"name":"Dining Room","value":"9"},{"name":"Kitchen","value":"10"},{"name":"Bedroom","value":"11"},{"name":"Hall","value":"12"},{"name":"Window","value":"13"},{"name":"Front Gate","value":"14"},{"name":"Balcony","value":"15"},{"name":"Guest Room","value":"16"},{"name":"Wash Room","value":"17"},{"name":"Study Room","value":"18"},{"name":"Master Bedroom","value":"20"},{"name":"Housekeeping","value":"48"},{"name":"Guest Bedroom","value":"49"},{"name":"Workshop","value":"50"},{"name":"Gate","value":"51"},{"name":"Subaltern Room","value":"52"},{"name":"Panic","value":"53"}],
+	"type":[{"name":"Panic","value":"0","priority":"1"},{"name":"Smoke","value":"1","priority":"2"},{"name":"Gas","value":"2","priority":"2"},{"name":"Infrared","value":"4","priority":"3"},{"name":"Door","value":"3","priority":"3"},{"name":"Doorbell","value":"3","priority":"0"}]
+}
+}

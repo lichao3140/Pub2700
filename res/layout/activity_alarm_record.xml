@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_height"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/title_bar_icon_margin_left"
+            android:src="@drawable/ic_alarm_record"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/title_bar_text_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/alarm_record"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@color/DeepPurple"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/number"
+                android:textColor="@color/White"
+                android:textSize="@dimen/title_bar_text_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/defence_area_id"
+                android:textColor="@color/White"
+                android:textSize="@dimen/title_bar_text_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/defence_area_name"
+                android:textColor="@color/White"
+                android:textSize="@dimen/title_bar_text_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/type"
+                android:textColor="@color/White"
+                android:textSize="@dimen/title_bar_text_size" />
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/execution_time"
+                android:textColor="@color/White"
+                android:textSize="@dimen/title_bar_text_size" />
+            
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_view_alarm_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/DarkDeepPurple"
+            android:dividerHeight="1dp" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:background="@color/color_button_transparency_purple"
+            android:text="@string/back"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        
+        <Button
+            android:id="@+id/btn_delete_all"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/info_window_button_margin_top"
+            android:paddingRight="@dimen/info_window_button_margin_top"
+            android:background="@color/color_button_transparency_purple"
+            android:clickable="false"
+            android:text="@string/text_delete_all"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/info_window_button_margin_top"
+            android:paddingRight="@dimen/info_window_button_margin_top"
+            android:layout_marginLeft="2dp"
+            android:background="@color/color_button_transparency_purple"
+            android:clickable="false"
+            android:text="@string/delete"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+    </LinearLayout>
+</LinearLayout>

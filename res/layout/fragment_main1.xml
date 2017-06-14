@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		android:gravity="center"
+		android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/White"
+            android:textSize="@dimen/time_text_size" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:textColor="@color/White"
+            android:textSize="@dimen/date_text_size" />
+
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_left"
+            android:textColor="@color/White"
+            android:textSize="@dimen/week_text_size" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" 
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btn_talk_in_user"
+                style="@style/style_rhombus_button"
+                android:background="@drawable/bg_home_blue_selector"
+                android:drawableTop="@drawable/ic_home_talk"
+                android:text="@string/text_user_intercom" />
+
+            <Button
+                android:id="@+id/btn_monitor"
+                style="@style/style_rhombus_button"
+            	android:layout_marginTop="@dimen/button_margin_left"
+                android:background="@drawable/bg_home_green_selector"
+                android:drawableTop="@drawable/ic_home_monitor"
+                android:text="@string/building_monitor" />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false" >
+
+                <Button
+                    android:id="@+id/btn_msg"
+                    style="@style/style_rhombus_button"
+                    android:background="@drawable/bg_home_orange_selector"
+                    android:drawableTop="@drawable/ic_home_msg"
+                    android:text="@string/social_message" />
+
+                <Button
+                    android:id="@+id/sms_hint"
+                    android:layout_marginLeft="@dimen/red_round_margin_top"
+                    style="@style/style_red_round"
+                    android:visibility="gone" />
+                
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btn_call_center"
+                style="@style/style_rhombus_button"
+            	android:layout_marginTop="@dimen/button_margin_left"
+                android:background="@drawable/bg_home_green_selector"
+                android:drawableTop="@drawable/ic_home_call_manager"
+                android:text="@string/call_center" />
+
+            <Button
+                android:id="@+id/btn_ring_enable"
+                style="@style/style_rhombus_button"
+            	android:layout_marginTop="@dimen/button_margin_left"
+                android:background="@drawable/bg_home_pink_selector"
+                android:drawableTop="@drawable/ic_home_ring"
+                android:text="@string/ring_enable" />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/rhombus_button_margin_left"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btn_call_elevator"
+                style="@style/style_rhombus_button"
+                android:background="@drawable/bg_home_blue_selector"
+                android:drawableTop="@drawable/ic_call_elevator"
+                android:text="@string/text_call_elevator"
+                android:visibility="gone" />
+            
+            <Button
+                android:id="@+id/btn_out_security"
+                style="@style/style_rhombus_button"
+                android:background="@drawable/bg_home_blue_selector"
+                android:drawableTop="@drawable/ic_home_out_security"
+                android:text="@string/quick_security" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false" >
+
+                <Button
+                    android:id="@+id/btn_call_log"
+                    style="@style/style_rhombus_button"
+                    android:layout_marginTop="@dimen/button_margin_left"
+                    android:background="@drawable/bg_home_blue_selector"
+                    android:drawableTop="@drawable/ic_call_log"
+                    android:text="@string/text_call_record" />
+
+                <Button
+                    android:id="@+id/call_log_hint"
+                    android:layout_marginLeft="@dimen/red_round_margin_top"
+                    style="@style/style_red_round"
+                    android:visibility="gone" />
+                
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

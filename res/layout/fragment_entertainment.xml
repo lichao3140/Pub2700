@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <com.dpower.pub.dp2700.view.DrawableCenterButton
+        android:id="@+id/btn_photo"
+        style="@style/style_rectangle_button"
+        android:layout_marginRight="@dimen/button_margin_left"
+        android:drawableTop="@drawable/ic_photo_browse"
+        android:text="@string/picture_show" />
+    
+    <com.dpower.pub.dp2700.view.DrawableCenterButton
+        android:id="@+id/btn_music"
+        style="@style/style_rectangle_button"
+        android:layout_marginRight="@dimen/button_margin_left"
+        android:drawableTop="@drawable/ic_music_player"
+        android:text="@string/music_enjoy" />
+
+    <com.dpower.pub.dp2700.view.DrawableCenterButton
+        android:id="@+id/btn_movie"
+        style="@style/style_rectangle_button"
+        android:drawableTop="@drawable/ic_video_browse"
+        android:text="@string/movie_enjoy"/>
+
+</LinearLayout>

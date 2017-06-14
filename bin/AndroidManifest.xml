@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dpower.pub.dp2700"
+    android:versionCode="1076"
+    android:versionName="DP2700" >
+    
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="21" />
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_VIDEO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" />
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.STATUS_BAR"/>
+    <uses-permission android:name="android.permission.RUN_INSTRUMENTATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:name="com.dpower.pub.dp2700.application.App"
+        android:allowBackup="false"
+        android:configChanges="locale|keyboard|keyboardHidden|navigation|orientation"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="landscape"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.UHOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.SystemSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.RoomNumSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.MonitorActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.WifiActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.BindDeviceActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallForwardingActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.UnBindDeviceActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.UserDialActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallOutActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallManagementActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallGuardActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallInFromDoorActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallInActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.CallLogActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.LeaveMessageActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.DefenceRecordActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.AlarmRecordActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.AlarmVideoActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.ModeSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.SystemInfoActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.DefenceAreaSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.AlarmActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.FunPhotoActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.FunMusicActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.ChangeProjectPasswordActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.UnlockSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.LittleDoorSetActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.ScreenSaverBlackActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.ScreenSaverCalendarActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity android:name="com.dpower.pub.dp2700.activity.ScreenSaverPictureActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.FunMovieActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.FunMoviePlayActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.UnlockPasswordActivity"
+            android:theme="@style/myTheme" />
+        <activity android:name="com.dpower.pub.dp2700.activity.ExceptionActivity" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.SMSActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.SMSCheckActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.RebootActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.SetTimeActivity"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SetLeaveAudioDialog"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SetScreenSaverDialog"
+            android:theme="@style/myTheme" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.AlarmAreaDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.DisalarmDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SecurityDelayDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SystemLightSetDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SystemResetDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SmartServerIPSetDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.SetLanguageDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.HomeSecurityCancelTipsDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.HomeSecurityCheckCancelPasswordDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.HomeSecurityModeClickedDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.HomeSecurityModeDelayDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.CheckPasswordDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.dpower.pub.dp2700.activity.dialog.WebCameraSetDialog"
+            android:theme="@style/myTheme"
+            android:launchMode="singleTop" />
+
+        <service android:name="com.example.dpservice.DPSafeService" />
+        <service android:name="com.example.dpservice.DPIntercomService" />
+        <service android:name="com.dpower.pub.dp2700.service.ScreenSaverService" />
+        <service android:name="com.dpower.pub.dp2700.service.PhysicsKeyService" />
+        <service android:name="com.dpower.pub.dp2700.service.SmartHomeService" />
+        
+        <!-- sip service -->
+        <service android:name="com.dpower.dpsiplib.service.DPSIPService" />
+
+        <receiver
+            android:name="com.dpower.pub.dp2700.broadcastreceiver.RebootAlarmReceiver"
+            android:process=":remote" />
+        
+    </application>
+</manifest>

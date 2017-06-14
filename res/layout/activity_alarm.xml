@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/DarkBlueGrey" >
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" >
+
+        <SurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        
+    </FrameLayout>
+    
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+	        android:gravity="center"
+	        android:orientation="horizontal" >
+	
+	        <LinearLayout
+	            android:layout_width="@dimen/info_window_width"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="@dimen/title_bar_height"
+	                android:background="@color/DeepPurple"
+	                android:orientation="horizontal" >
+	                
+	                <TextView
+	                    android:layout_width="0dp"
+	                    android:layout_height="match_parent"
+	                    android:layout_weight="1"
+	                    android:gravity="center"
+	                    android:text="@string/defence_area_id"
+	                    android:textColor="@color/White"
+	                    android:textSize="@dimen/title_bar_text_size" />
+	
+	                <TextView
+	                    android:layout_width="0dp"
+	                    android:layout_height="match_parent"
+	                    android:layout_weight="2"
+	                    android:gravity="center"
+	                    android:text="@string/defence_area_name"
+	                    android:textColor="@color/White"
+	                    android:textSize="@dimen/title_bar_text_size" />
+	
+	                <TextView
+	                    android:layout_width="0dp"
+	                    android:layout_height="match_parent"
+	                    android:layout_weight="1"
+	                    android:gravity="center"
+	                    android:text="@string/type"
+	                    android:textColor="@color/White"
+	                    android:textSize="@dimen/title_bar_text_size" />
+	                
+	                <TextView
+	                    android:layout_width="0dp"
+	                    android:layout_height="match_parent"
+	                    android:layout_weight="1"
+	                    android:gravity="center"
+	                    android:text="@string/alarm_delay"
+	                    android:textColor="@color/White"
+	                    android:textSize="@dimen/title_bar_text_size" />
+	                
+	                <TextView
+	                    android:layout_width="0dp"
+	                    android:layout_height="match_parent"
+	                    android:layout_weight="1"
+	                    android:gravity="center"
+	                    android:text="@string/text_state"
+	                    android:textColor="@color/White"
+	                    android:textSize="@dimen/title_bar_text_size" />
+	
+	            </LinearLayout>
+	
+	            <View
+	                android:layout_width="match_parent"
+	                android:layout_height="1dp"
+	                android:background="@color/DarkDeepPurple" />
+	
+	            <ListView
+	                android:id="@+id/disalarm_list"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:divider="@color/DarkDeepPurple"
+	                android:dividerHeight="1dp" />
+	            
+	        </LinearLayout>
+	    </LinearLayout>
+	
+	    <Button
+			android:id="@+id/btn_disalarm"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/button_height"
+			android:background="@drawable/bg_btn_selector2"
+			android:text="@string/defence_cancel"
+			android:textColor="@color/White"
+			android:textSize="@dimen/info_window_button_text_size" />
+	    
+	</LinearLayout>
+</RelativeLayout>

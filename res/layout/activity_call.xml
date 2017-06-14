@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/DarkBlueGrey"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/call_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/Indigo"
+        android:gravity="center"
+        android:text="@string/call_in_text"
+        android:textColor="@color/White"
+        android:textSize="@dimen/info_window_title_text_size" />
+
+    <ImageView
+        android:id="@+id/image_video"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@null" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/TransparencyBlue"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btn_volume_down"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_volume_turn_down"
+            android:contentDescription="@null" />
+
+        <ImageButton
+            android:id="@+id/btn_volume_up"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_volume_turn_up"
+            android:contentDescription="@null" />
+        
+        <Button
+            android:id="@+id/btn_unlock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/color_button_transparency_purple"
+            android:gravity="center"
+            android:text="@string/text_unlock"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_title_text_size"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_open_video"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/color_button_transparency_purple"
+            android:gravity="center"
+            android:text="@string/text_open_video"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_title_text_size" />
+        
+        <Button
+            android:id="@+id/btn_answer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:layout_marginLeft="1dp"
+            android:background="@color/color_button_transparency_purple"
+            android:gravity="center"
+            android:text="@string/text_answer_call"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_title_text_size"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_hang_up"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:layout_marginLeft="1dp"
+            android:background="@color/color_button_transparency_purple"
+            android:gravity="center"
+            android:text="@string/text_hang_up"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_title_text_size" />
+        
+    </LinearLayout>
+</LinearLayout>

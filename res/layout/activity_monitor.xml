@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/DarkBlueGrey"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/Indigo"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_height"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/title_bar_icon_margin_left"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_building_monitor" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/title_bar_text_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/text_building_monitor"
+            android:textColor="@color/White"
+            android:textSize="@dimen/title_bar_text_size" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/GreyBackground"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/DarkBlueGrey"
+            android:layout_weight="3" >
+
+            <ImageView
+                android:id="@+id/image_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/tv_monitor_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/White"
+                android:textSize="@dimen/info_window_button_text_size" />
+            
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/list_view_monitor"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:divider="@color/DeepOrange"
+            android:dividerHeight="1dp" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/TransparencyBlue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="match_parent"
+            android:background="@color/color_button_transparency_purple"
+            android:text="@string/back"
+            android:textColor="@color/White"
+            android:textSize="@dimen/info_window_button_text_size" />
+        
+    </LinearLayout>
+</LinearLayout>

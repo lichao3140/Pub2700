@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView  xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="@dimen/music_list_height"
+	android:layout_width="match_parent"
+	android:background="@drawable/area_item_selector"
+	android:gravity="center_vertical"
+	android:textColor="@color/DarkBlue"
+	android:textSize="@dimen/info_window_button_text_size"
+	android:paddingLeft="@dimen/info_window_button_margin_left" />
+    
