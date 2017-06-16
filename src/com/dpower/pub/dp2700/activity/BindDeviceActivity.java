@@ -1,5 +1,6 @@
 package com.dpower.pub.dp2700.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -39,11 +39,11 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private SharedPreferences sharedPreferences;
 	private Editor editor;
 	
+	@SuppressLint("HandlerLeak") 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				long startTime=System.currentTimeMillis();   //获取开始时间
 				String QRString = (String) msg.obj;
 				String encode = null;
 				try {
@@ -58,8 +58,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 				}
 				showQRCode(encode);
 				saveQRCodeInfo(encode);
-				long endTime=System.currentTimeMillis(); //获取结束时间
-				System.out.println("运行时间： "+(endTime-startTime)+"ms");
 				break;
 
 			default:
@@ -97,8 +95,8 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 					+ getString(R.string.account_is_online)
 					+ (DPFunction.isOnline() ? "YES" : "NO");
 		} else {// CloudMessage不用，MSG显示SIP状态
-			msg = getString(R.string.account) + account + "\n" + "云对讲登录 : "
-					+ (DPFunction.sipIsOnline() ? "成功" : "失败");
+			msg = getString(R.string.account) + account + "\n" + getString(R.string.cloud_login_status)
+					+ (DPFunction.sipIsOnline() ? getString(R.string.cloud_login_success) : getString(R.string.cloud_login_failed));
 		}
 		mTextQRCode.setText(msg);
 	}

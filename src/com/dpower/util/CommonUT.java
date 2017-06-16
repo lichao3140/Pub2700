@@ -145,21 +145,33 @@ public class CommonUT {
 		}
 	}
 	
+	/**
+	 * 创建二维码位图
+	 * @param str  二维码内容
+	 * @param widthAndHeight 二维码边长
+	 * @param codeColor 二维码点的颜色
+	 * @return
+	 * @throws WriterException
+	 */
 	public static Bitmap createQRCode(String str, int widthAndHeight, int codeColor) throws WriterException {
 		Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();  
-        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8"); 
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        //比特矩阵
 		BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
 		int width = matrix.getWidth();
 		int height = matrix.getHeight();
 		int[] pixels = new int[width * height];
-		
+		//比特矩阵转颜色数组
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				if (matrix.get(x, y)) {
-					pixels[y * width + x] = codeColor;
+					pixels[y * width + x] = codeColor;//二维码颜色为传进来的颜色
+				} else {
+					pixels[y * width + x] = 0xffffffff;//白点,透明点0x00ffffff
 				}
 			}
 		}
+		//解析颜色数组
 		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 		return bitmap;

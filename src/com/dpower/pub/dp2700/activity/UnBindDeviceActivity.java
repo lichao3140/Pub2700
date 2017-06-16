@@ -138,22 +138,22 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.btn_all_devices:
+			case R.id.btn_all_devices://所有设备
 				updateCurrentList(mButtonAllDevices);
 				break;
-			case R.id.btn_devices_and:
+			case R.id.btn_devices_and://所有安卓设备
 				updateCurrentList(mButtonDevicesAnd);
 				break;
-			case R.id.btn_devices_ios:
+			case R.id.btn_devices_ios://所有苹果设备
 				updateCurrentList(mButtonDevicesIos);
 				break;
-			case R.id.btn_back:
+			case R.id.btn_back://返回
 				finish();
 				break;
-			case R.id.btn_delete:
+			case R.id.btn_delete://解绑选中设备
 				if (mAdapter.checkID >= 0) {
 					TipsDialog dialog = new TipsDialog(mContext);
-					dialog.setContent(getString(R.string.delete_or_not) + "?");
+					dialog.setContent(getString(R.string.unbind_or_not) + "?");
 					dialog.setOnClickListener(new OnDialogClickListener() {
 						
 						@Override
@@ -163,7 +163,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 							DPSIPService.sendInstantMessage(sip_phone, DPSIPService.getMsgCommand(new PhoneMessageMod(UNBIND_MSG_PHONE, msg_body, "0")));
 							DPFunction.deleteAccount(mAdapter.getDevicesList()
 									.get(mAdapter.checkID).mDB_id);
-							MyToast.show(R.string.delete_success);
+							MyToast.show(R.string.unbind_phone_device_success);
 							updateCurrentList(mButtonCurrent);
 						}
 					});
@@ -174,7 +174,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 					MyToast.show(R.string.no_item_to_del);
 				}
 				break;
-			case R.id.btn_delete_all:
+			case R.id.btn_delete_all://解绑所有设备
 				if (mAdapter.getDevicesList().size() > 0) {
 					TipsDialog dialog = new TipsDialog(mContext);
 					if (mButtonCurrent == mButtonDevicesAnd) {
@@ -200,7 +200,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 								unBindPhone(0);
 							}
 							DPFunction.clearAccount(type);
-							MyToast.show(R.string.delete_success);
+							MyToast.show(R.string.unbind_phone_device_success);
 							updateCurrentList(mButtonCurrent);
 						}
 					});
