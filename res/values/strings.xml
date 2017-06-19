@@ -53,6 +53,7 @@
     <string name="unbind_all_devices">全部解绑</string>
     <string name="unbind_phone_device">解绑</string>
     <string name="unbind_phone_device_success">解绑成功</string>
+    <string name="unbind_phone_device_faile">解绑失败，账号没上线！</string>
     <string name="delete_all_devices">解绑全部绑定设备</string>
     <string name="delete_and_devices">解绑全部安卓绑定设备</string>
     <string name="delete_ios_devices">解绑全部苹果绑定设备</string>

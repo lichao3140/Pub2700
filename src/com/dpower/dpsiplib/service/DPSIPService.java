@@ -39,10 +39,12 @@ import com.dpower.domain.MessageInfo;
 import com.dpower.dpsiplib.callback.MyAppCallback;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
 import com.dpower.dpsiplib.sipintercom.SIPIntercom;
+import com.dpower.dpsiplib.utils.MSG_TYPE;
 import com.dpower.dpsiplib.utils.SIPIntercomLog;
 import com.dpower.dpsiplib.utils.NetworkUntil;
 import com.dpower.pub.dp2700.tools.JniBase64Code;
 import com.dpower.util.DPDBHelper;
+import com.dpower.util.ReceiverAction;
 import com.google.gson.GsonBuilder;
 
 /**
@@ -54,7 +56,10 @@ public class DPSIPService extends Service implements MyAppCallback {
 	private static final String TAG = "DPSIPService";
 	private static final String LICHAO = "lichao";
 	private static final String CHARSET = "UTF-8";
+	/**转发小区消息*/
 	private static final String TURN_MSG_PHONE = "05";
+	/**PJSIP返回消息类型*/
+	public static int currentMsgType = 0;
 	private final String ACCOUNT_CHECK = "";
 	private static DPSIPService mInstance = null;
 	private WakeLock mWakeLock = null;
@@ -125,8 +130,6 @@ public class DPSIPService extends Service implements MyAppCallback {
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
-
-	
 
 	@Override
 	public void onDestroy() {
@@ -706,7 +709,44 @@ public class DPSIPService extends Service implements MyAppCallback {
 	/** 接受手机发送过来的文本消息状态 */
 	@Override
 	public void notifyMessageFromPhoneStatus(OnInstantMessageStatusParam prm) {
-		
+		Intent intent = new Intent();
+		System.out.println("currentMsgType:"+currentMsgType);
+		switch (currentMsgType) {
+		case MSG_TYPE.MSG_BACK_UNBIND_PHONE_ONE:
+			if (prm.getCode().equals(pjsip_status_code.PJSIP_SC_OK)) {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_ONE_SUCCESS);
+			} else {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_ONE_FAILED);
+			}
+			sendBroadcast(intent);
+			break;
+		case MSG_TYPE.MSG_BACK_UNBIND_PHONE_AND:
+			if (prm.getCode().equals(pjsip_status_code.PJSIP_SC_OK)) {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_AND_SUCCESS);
+			} else {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_AND_FAILED);
+			}
+			sendBroadcast(intent);
+			break;
+		case MSG_TYPE.MSG_BACK_UNBIND_PHONE_IOS:
+			if (prm.getCode().equals(pjsip_status_code.PJSIP_SC_OK)) {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_IOS_SUCCESS);
+			} else {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_IOS_FAILED);
+			}
+			sendBroadcast(intent);
+			break;
+		case MSG_TYPE.MSG_BACK_UNBIND_PHONE_ALL:
+			if (prm.getCode().equals(pjsip_status_code.PJSIP_SC_OK)) {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_ALL_SUCCESS);
+			} else {
+				intent.setAction(ReceiverAction.ACTION_UNBIND_PHONE_ALL_FAILED);
+			}
+			sendBroadcast(intent);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	/** 收到小区消息广播  */

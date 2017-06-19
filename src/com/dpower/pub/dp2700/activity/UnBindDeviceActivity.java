@@ -5,14 +5,20 @@ import java.util.List;
 import com.dpower.domain.BindAccountInfo;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
 import com.dpower.dpsiplib.service.DPSIPService;
+import com.dpower.dpsiplib.utils.MSG_TYPE;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.adapter.DevicesListAdapter;
+import com.dpower.pub.dp2700.application.App;
 import com.dpower.pub.dp2700.dialog.TipsDialog;
 import com.dpower.pub.dp2700.dialog.TipsDialog.OnDialogClickListener;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.SPreferences;
+import com.dpower.util.ReceiverAction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -26,8 +32,20 @@ import android.widget.ListView;
  */
 public class UnBindDeviceActivity extends BaseActivity implements OnClickListener {
 	private static final String UNBIND_MSG_PHONE = "07";
+	private static final int PHONE_TYPE_AND = 1;
+	private static final int PHONE_TYPE_IOS = 2;
+	private static final int PHONE_TYPE_ALL = 0;
 	private ListView mListView;
 	private DevicesListAdapter mAdapter;
+	private UnBindPhoneReceiver unBindPhoneReceiver;
+	private IntentFilter filter_one_success;
+	private IntentFilter filter_one_faile;
+	private IntentFilter filter_all_success;
+	private IntentFilter filter_all_faile;
+	private IntentFilter filter_and_success;
+	private IntentFilter filter_and_faile;
+	private IntentFilter filter_ios_success;
+	private IntentFilter filter_ios_faile;
 	/** 全部设备 */
 	private Button mButtonAllDevices;
 	/** Android设备 */
@@ -46,6 +64,28 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_unbind_device);
 		init();
+		initReceiver();
+	}
+	
+	/**  广播接收初始化 */
+	private void initReceiver(){
+		filter_one_success = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_ONE_SUCCESS);
+		filter_one_faile = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_ONE_FAILED);
+		filter_all_success = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_ALL_SUCCESS);
+		filter_all_faile = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_ALL_FAILED);
+		filter_and_success = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_AND_SUCCESS);
+		filter_and_faile = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_AND_FAILED);
+		filter_ios_success = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_IOS_SUCCESS);
+		filter_ios_faile = new IntentFilter(ReceiverAction.ACTION_UNBIND_PHONE_IOS_FAILED);
+		unBindPhoneReceiver = new UnBindPhoneReceiver();
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_one_success);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_one_faile);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_all_success);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_all_faile);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_and_success);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_and_faile);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_ios_success);
+		App.getInstance().getContext().registerReceiver(unBindPhoneReceiver, filter_ios_faile);
 	}
 	
 	private void init() {
@@ -134,6 +174,14 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 				SPreferences.getInstance().getWallpaper());
 		updateCurrentList(mButtonCurrent);
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (unBindPhoneReceiver != null) {
+			App.getInstance().getContext().unregisterReceiver(unBindPhoneReceiver);
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -160,11 +208,8 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 						public void onClick() {
 							String sip_phone = mAdapter.getDevicesList().get(mAdapter.checkID).accountname;
 							String msg_body = DPFunction.getRoomCode();
+							DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_ONE;
 							DPSIPService.sendInstantMessage(sip_phone, DPSIPService.getMsgCommand(new PhoneMessageMod(UNBIND_MSG_PHONE, msg_body, "0")));
-							DPFunction.deleteAccount(mAdapter.getDevicesList()
-									.get(mAdapter.checkID).mDB_id);
-							MyToast.show(R.string.unbind_phone_device_success);
-							updateCurrentList(mButtonCurrent);
 						}
 					});
 					dialog.show();
@@ -188,20 +233,16 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 						
 						@Override
 						public void onClick() {
-							int type = 0;
 							if (mButtonCurrent == mButtonDevicesAnd) {
-								type = 1;
-								unBindPhone(1);
+								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_AND;
+								unBindPhone(PHONE_TYPE_AND);
 							} else if (mButtonCurrent == mButtonDevicesIos) {
-								type = 2;
-								unBindPhone(2);
+								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_IOS;
+								unBindPhone(PHONE_TYPE_IOS);
 							} else {
-								type = 0;
-								unBindPhone(0);
+								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_ALL;
+								unBindPhone(PHONE_TYPE_ALL);
 							}
-							DPFunction.clearAccount(type);
-							MyToast.show(R.string.unbind_phone_device_success);
-							updateCurrentList(mButtonCurrent);
 						}
 					});
 					dialog.show();
@@ -224,5 +265,47 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 			String msg_body = DPFunction.getRoomCode();
 			DPSIPService.sendInstantMessage(account, DPSIPService.getMsgCommand(new PhoneMessageMod(UNBIND_MSG_PHONE, msg_body, "0")));
 		}
+	}
+	
+	private class UnBindPhoneReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ONE_SUCCESS)) {
+				DPFunction.deleteAccount(mAdapter.getDevicesList().get(mAdapter.checkID).mDB_id);
+				MyToast.show(R.string.unbind_phone_device_success);
+				updateCurrentList(mButtonCurrent);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ONE_FAILED)) {
+				MyToast.show(R.string.unbind_phone_device_faile);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_AND_SUCCESS)){
+				DPFunction.clearAccount(PHONE_TYPE_AND);
+				MyToast.show(R.string.unbind_phone_device_success);
+				updateCurrentList(mButtonCurrent);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_AND_FAILED)){
+				MyToast.show(R.string.unbind_phone_device_faile);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_IOS_SUCCESS)){
+				DPFunction.clearAccount(PHONE_TYPE_IOS);
+				MyToast.show(R.string.unbind_phone_device_success);
+				updateCurrentList(mButtonCurrent);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_IOS_FAILED)){
+				MyToast.show(R.string.unbind_phone_device_faile);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ALL_SUCCESS)){
+				DPFunction.clearAccount(PHONE_TYPE_ALL);
+				MyToast.show(R.string.unbind_phone_device_success);
+				updateCurrentList(mButtonCurrent);
+				
+			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ALL_FAILED)){
+				MyToast.show(R.string.unbind_phone_device_faile);
+				
+			}
+		}
+		
 	}
 }

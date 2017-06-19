@@ -53,6 +53,7 @@
     <string name="unbind_all_devices">Unbind All</string>
     <string name="unbind_phone_device">Unbind</string>
     <string name="unbind_phone_device_success">Unbind Success</string>
+    <string name="unbind_phone_device_faile">Unbind Faile, SIP Not OnLine</string>
     <string name="delete_all_devices">Unbind All Devices</string>
     <string name="delete_and_devices">Unbind All Android Devices</string>
     <string name="delete_ios_devices">Unbind All IPhone Devices</string>

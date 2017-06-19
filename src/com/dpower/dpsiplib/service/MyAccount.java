@@ -76,7 +76,7 @@ public class MyAccount extends Account {
 	@Override
 	public void onInstantMessage(OnInstantMessageParam prm) {
 		MyApp.callback.notifyMessageFromPhone(prm);
-		SIPIntercomLog.print("======== Incoming pager ======== ");
+		SIPIntercomLog.print("======== onInstantMessage ======== ");
 		SIPIntercomLog.print("From     : " + prm.getFromUri());
 		SIPIntercomLog.print("To       : " + prm.getToUri());
 		SIPIntercomLog.print("Rdata    : " + prm.getRdata());
@@ -90,6 +90,13 @@ public class MyAccount extends Account {
 	@Override
 	public void onInstantMessageStatus(OnInstantMessageStatusParam prm) {
 		super.onInstantMessageStatus(prm);
-		SIPIntercomLog.print("Code    : " + prm.getCode());
+		MyApp.callback.notifyMessageFromPhoneStatus(prm);
+		SIPIntercomLog.print("======== onInstantMessageStatus ======== ");
+		SIPIntercomLog.print("To       : " + prm.getToUri());
+		SIPIntercomLog.print("Reason   : " + prm.getReason());
+		SIPIntercomLog.print("Code     : " + prm.getCode());
+		SIPIntercomLog.print("Body     : " + prm.getMsgBody());
+		SIPIntercomLog.print("Rdata    : " + prm.getRdata());
+		SIPIntercomLog.print("UserData : " + prm.getUserData());
 	}
 }
