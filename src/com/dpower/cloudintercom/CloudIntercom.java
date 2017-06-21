@@ -987,14 +987,23 @@ public class CloudIntercom {
 		
 		new Thread(){
 			public void run() {
-				String sipId = mCallback.queryFistSip().getSipId().toString();
+				String sipId = null;
+				if(mCallback.countIndoorSip() == 0) {
+					sipId = "DISABLED";
+				} else {
+					sipId = mCallback.queryFistSip().getSipId().toString();
+				}
 				String mac = getMacAddress();
 				String qr = mac + "_" + mCallback.getRoomCode();
 				String myqr = "QUHWA_" + qr + "_" + sipId;
 				SIPIntercomLog.print("getQRAccount: " + myqr);
-				if(myqr != null && myqr.length() > 0){
+				if (!myqr.equals("") && myqr.length() > 0 && !sipId.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(0);
 					msg.obj = myqr;
+					handler.sendMessage(msg);
+				} else if (sipId.equals("DISABLED")) {
+					Message msg = handler.obtainMessage(1);
+					msg.obj = "DISABLED";
 					handler.sendMessage(msg);
 				}
 			};

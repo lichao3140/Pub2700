@@ -35,6 +35,7 @@
     <string name="cloud_login_status">云对讲登录:</string>
     <string name="cloud_login_success">成功</string>
     <string name="cloud_login_failed">失败</string>
+    <string name="cloud_status_tip">云对讲登录失败，请先配置房间号！</string>
     <string name="bind_device">绑定设备</string>
     <string name="unbind_device">设备解绑</string>
     <string name="call_forwarding">呼叫转移</string>

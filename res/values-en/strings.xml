@@ -35,6 +35,7 @@
     <string name="cloud_login_status">Cloud Login Status:</string>
     <string name="cloud_login_success">Success</string>
     <string name="cloud_login_failed">Failed</string>
+    <string name="cloud_status_tip">Cloud Login Faile,Please Config RoomNo！</string>
     <string name="bind_device">Bind device</string>
     <string name="unbind_device">Unbind device</string>
     <string name="call_forwarding">callMove</string>

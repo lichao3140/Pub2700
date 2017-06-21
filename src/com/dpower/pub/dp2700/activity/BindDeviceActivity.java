@@ -20,6 +20,7 @@ import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.application.App;
 import com.dpower.pub.dp2700.tools.JniBase64Code;
+import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.CommonUT;
 import com.dpower.util.ProjectConfigure;
@@ -59,7 +60,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 				showQRCode(encode);
 				saveQRCodeInfo(encode);
 				break;
-
+			case 1:
+				String error = (String) msg.obj;
+				showQRCode(error);
+				MyToast.show(R.string.cloud_status_tip);
 			default:
 				break;
 			}
