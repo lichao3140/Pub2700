@@ -267,6 +267,29 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 		}
 	}
 	
+	/**  强制解绑手机    */
+	public void forceUnbindPhone(){
+		if (mAdapter.checkID >= 0) {
+			TipsDialog dialog = new TipsDialog(mContext);
+			dialog.setContent(getString(R.string.force_unbind_or_not) + "?");
+			dialog.setOnClickListener(new OnDialogClickListener() {
+				
+				@Override
+				public void onClick() {
+					DPFunction.deleteAccount(mAdapter.getDevicesList().get(mAdapter.checkID).mDB_id);
+					MyToast.show(R.string.force_unbind_phone_device_success);
+					updateCurrentList(mButtonCurrent);
+				}
+			});
+			dialog.show();
+		} else if (mAdapter.getDevicesList().size() > 0) {
+			MyToast.show(R.string.no_item_check);
+		} else {
+			MyToast.show(R.string.no_item_to_del);
+		}
+	}
+	
+	/**  解绑手机广播    */
 	private class UnBindPhoneReceiver extends BroadcastReceiver {
 
 		@Override
@@ -279,6 +302,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 				
 			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ONE_FAILED)) {
 				MyToast.show(R.string.unbind_phone_device_faile);
+				forceUnbindPhone();
 				
 			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_AND_SUCCESS)){
 				DPFunction.clearAccount(PHONE_TYPE_AND);

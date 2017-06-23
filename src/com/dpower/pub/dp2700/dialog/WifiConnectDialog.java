@@ -2,7 +2,6 @@ package com.dpower.pub.dp2700.dialog;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.fragment.KeyboardFragment;
 import com.dpower.pub.dp2700.fragment.KeyboardFragment.OnKeyboardListener;
@@ -10,7 +9,6 @@ import com.dpower.pub.dp2700.tools.EditTextTool;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.wifi.WifiScanResult;
 import com.dpower.wifi.WifiSettings;
-
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -92,6 +90,7 @@ public class WifiConnectDialog extends
         mKeyboard = new KeyboardFragment();
         getChildFragmentManager().beginTransaction().replace(
         		R.id.frame_keyboard, mKeyboard).commitAllowingStateLoss();
+       
 	}
 
 	private void initListener() {

@@ -1,11 +1,9 @@
 package com.dpower.pub.dp2700.broadcastreceiver;
 
 import java.util.Calendar;
-
 import com.dpower.pub.dp2700.activity.RebootActivity;
 import com.dpower.pub.dp2700.tools.RebootUT;
 import com.dpower.util.MyLog;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

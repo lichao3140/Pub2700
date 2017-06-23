@@ -195,7 +195,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 
 				@Override
 				public void run() {
-					if(ping()){
+					if(!ping()){
 						SIPIntercomLog.print("ÍøÂç²»Í¨");
 						mIsOnline = false;
 						mIsAllowLogin = true;

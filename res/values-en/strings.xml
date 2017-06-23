@@ -33,6 +33,7 @@
     <string name="server_login">Server Setting</string>
     <string name="cloud_talk_setting">Cloud Setting</string>
     <string name="cloud_login_status">Cloud Login Status:</string>
+    <string name="cloud_login_restar">Cloud Logining,Please wait a moment\u2026\u2026\u2026</string>
     <string name="cloud_login_success">Success</string>
     <string name="cloud_login_failed">Failed</string>
     <string name="cloud_status_tip">Cloud Login Faile,Please Config RoomNo！</string>
@@ -43,9 +44,9 @@
     <string name="call_not_forwarding">disable move</string>
     <string name="call_not_forwarding_tips">Not call to telPhone When callIn</string>
     <string name="bind_device_type">Phone type</string>
-    <string name="bind_device_isonline">Is Online</string>
-    <string name="bind_device_on">On-line</string>
-    <string name="bind_device_off">Off-line</string>
+    <string name="bind_device_isonline">Is Ignore</string>
+    <string name="bind_device_on">UnIgnore</string>
+    <string name="bind_device_off">Ignore</string>
     <string name="bind_device_all">All Devices</string>
     <string name="bind_device_and">Android Devices</string>
     <string name="bind_device_ios">IPhone Devices</string>
@@ -54,6 +55,7 @@
     <string name="unbind_all_devices">Unbind All</string>
     <string name="unbind_phone_device">Unbind</string>
     <string name="unbind_phone_device_success">Unbind Success</string>
+    <string name="force_unbind_phone_device_success">Force Unbind Success</string>
     <string name="unbind_phone_device_faile">Unbind Faile, SIP Not OnLine</string>
     <string name="delete_all_devices">Unbind All Devices</string>
     <string name="delete_and_devices">Unbind All Android Devices</string>
@@ -179,6 +181,8 @@
     <string name="delete_success">Delete Completed</string>
     <string name="delete_or_not">Confirm</string>
     <string name="unbind_or_not">Confirm UnBind</string>
+    <string name="force_unbind_or_not">UnBind Faile,Confirm Force UnBind</string>
+    <string name="restar_or_not">Reboot device</string>
     <string name="choice_roomcode_to_recall">Please Choose A Number</string>
     <string name="no_leave_audio_date_from_unitgate">No Message</string>
     <string name="all_pick">Choose All</string>
@@ -403,6 +407,7 @@
     <string name="text_APK_update">APK Update</string>
     <string name="text_netcfg_update">Network Configuration Update</string>
     <string name="tips_loading">Loading</string>
+    <string name="text_reboot">Restar</string>
     <string name="text_login">Login</string>
     <string name="text_unlogin">Logout</string>
     <string name="cloud_login_out_time">Login Overtime</string>

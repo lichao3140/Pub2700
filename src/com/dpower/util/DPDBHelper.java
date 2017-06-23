@@ -1028,7 +1028,7 @@ public class DPDBHelper {
 	public static List<String> getTokenByTypeList(String type) {
 		List<String> tokens = new ArrayList<String>();
 		DBOpen();
-		String sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=" + type;
+		String sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=" + type + " and isonline=1";
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
 			String acc = cursor.getString(4);

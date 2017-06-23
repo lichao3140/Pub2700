@@ -48,6 +48,7 @@
     <dimen name="rectangle_button_width">150dp</dimen>
     <dimen name="rectangle_button_height">305dp</dimen>
     <dimen name="button_margin_left">5dp</dimen>
+    <dimen name="button_margin_right">2dp</dimen>
     <dimen name="button_width">150dp</dimen>
     <dimen name="button_height">75dp</dimen>
     <dimen name="qr_code_height">300dp</dimen>

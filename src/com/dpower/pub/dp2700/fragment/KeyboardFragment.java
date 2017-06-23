@@ -70,9 +70,9 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 		setClickListener(R.id.bt_keyboard_lowercase_y, "y");
 		setClickListener(R.id.bt_keyboard_lowercase_z, "z");
 		
-
 		// É¾³ý¼ü
 		setClickListener(R.id.bt_del, "-1");
+		// ÇÐ»»¼ü
 		setClickListener(R.id.bt_switch, "");
 		return mView;
 	}
@@ -89,12 +89,12 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 
 	private void changeKey() {
 		if(mIsUpper) {
-			for(Button button : mButtons) {
+			for(Button button : mButtons) {//´óÐ´
 				button.setText(button.getTag().toString().toUpperCase(Locale.US));
 				button.setTag(button.getText().toString());
 			}
 		} else {
-			for(Button button : mButtons) {
+			for(Button button : mButtons) {//Ð¡Ð´
 				button.setText(button.getTag().toString().toLowerCase(Locale.US));
 				button.setTag(button.getText().toString());
 			}

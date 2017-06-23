@@ -16,11 +16,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.dpower.cloudintercom.CloudIntercom;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.application.App;
+import com.dpower.pub.dp2700.dialog.TipsDialog;
+import com.dpower.pub.dp2700.dialog.TipsDialog.OnDialogClickListener;
 import com.dpower.pub.dp2700.tools.JniBase64Code;
 import com.dpower.pub.dp2700.tools.MyToast;
+import com.dpower.pub.dp2700.tools.RebootUT;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.CommonUT;
 import com.dpower.util.ProjectConfigure;
@@ -58,7 +62,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 					QRString = "DISABLED";
 				}
 				showQRCode(encode);
-				saveQRCodeInfo(encode);
+				saveQRCodeInfo(QRString, encode);
 				break;
 			case 1:
 				String error = (String) msg.obj;
@@ -77,8 +81,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		mImageQRCode = (ImageView) findViewById(R.id.image_qr_code);
 		mTextQRCode = (TextView) findViewById(R.id.tv_qrcode);
 		findViewById(R.id.btn_back).setOnClickListener(this);
-		if(!readQRCodeInfo().equals("")) {
-			showQRCode(readQRCodeInfo());
+		findViewById(R.id.btn_login).setOnClickListener(this);
+		findViewById(R.id.btn_reboot).setOnClickListener(this);
+		if(!readQRCodeInfo("encode").equals("") && readCodeInfo()) {
+			showQRCode(readQRCodeInfo("encode"));
 		} else {
 			DPFunction.getQRString(handler);
 		}
@@ -128,6 +134,22 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		case R.id.btn_back:
 			finish();
 			break;
+		case R.id.btn_login:
+			CloudIntercom.startLogin();
+			MyToast.show(R.string.cloud_login_restar);
+			break;
+		case R.id.btn_reboot:
+			TipsDialog dialog = new TipsDialog(this);
+			dialog.setContent(getString(R.string.restar_or_not) + "?");
+			dialog.setOnClickListener(new OnDialogClickListener() {
+				
+				@Override
+				public void onClick() {
+					RebootUT.rebootSU();
+				}
+			});
+			dialog.show();
+			break;
 		default:
 			break;
 		}
@@ -144,17 +166,32 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	}
 	
 	/** 存储二维码加密信息 */
-	private void saveQRCodeInfo(String encode) {
+	private void saveQRCodeInfo(String code, String encode) {
 		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
 		editor = sharedPreferences.edit();
+		editor.putString("code", code);
 		editor.putString("encode", encode);
 		editor.apply();
 	}
 	
-	/** 读取二维码加密信息 */
-	private String readQRCodeInfo(){
+	/** 判断保存的二维码信息是否要更新  */
+	private boolean readCodeInfo(){
+		boolean flag = true;
+		if(!readQRCodeInfo("code").equals("")) {
+			String newcode = readQRCodeInfo("code").substring(6, 32).replaceAll("_", "");
+			String account = CloudIntercom.getAccount();
+			if(!newcode.equals(account)){
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	/** 读取二维码加密信息 
+	 * @return */
+	private String readQRCodeInfo(String keystr){
 		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
-		String encode = sharedPreferences.getString("encode", "");
+		String encode = sharedPreferences.getString(keystr, "");
 		return encode;
 	}
 
@@ -165,6 +202,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		public void onReceive(Context context, Intent intent) {
 			updateLoginStatus();
 		}
-	}
+	} 
 
 }

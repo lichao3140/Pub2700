@@ -56,8 +56,8 @@ public class CloudIntercom {
 	private static final int REG_SERVER_PORT = 15001; // 登陆服务器端口
 
 	/** SIP服务器IP */
-	private static final String SIP_SERVER_IP = "192.168.10.10";// QuHwa
-	//private static final String SIP_SERVER_IP = "120.25.126.228";
+	//private static final String SIP_SERVER_IP = "192.168.10.10";// QuHwa
+	private static final String SIP_SERVER_IP = "120.25.126.228";
 	/** SIP服务器端口 */
 	private static final int SIP_SERVER_PORT = 5060; // 登陆服务器端口
 
@@ -374,7 +374,7 @@ public class CloudIntercom {
 		sb.insert(2, ":");  
 		String macStrNew = sb.toString();  
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
-		maps.put("deviceName", roomNum);
+		maps.put("deviceName", "1001" + roomNum.substring(1, roomNum.length()));
 		maps.put("deviceType", "01");
 		maps.put("device_status", "1");
 		maps.put("mac", macStrNew);
@@ -443,7 +443,7 @@ public class CloudIntercom {
 	}
 
 	/** 登录到服务器 */
-	private static boolean startLogin() {
+	public static boolean startLogin() {
 		synchronized (mutex) {
 			if (getMacAddress() != null
 					&& NetworkUntil.getLanConnectState(networkCard)) {
@@ -453,7 +453,7 @@ public class CloudIntercom {
 							+ mCloudMessageOnline);
 					boolean ret = false;
 					count_sip = mCallback.countIndoorSip();
-					if (count_sip == 0) {
+					if (count_sip == 0) {//室内机数据库SIP为空就去注册
 						registerIndoor();
 						account = getSipAcount();
 						sipPwd = getSipPwd();

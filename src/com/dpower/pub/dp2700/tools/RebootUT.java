@@ -1,5 +1,9 @@
 package com.dpower.pub.dp2700.tools;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -67,6 +71,49 @@ public class RebootUT {
 		c.set(Calendar.SECOND, 0);
 		return c.getTimeInMillis();
 	}
+	
+	/**  关机重启   */
+	public static void rebootSU() {  
+        Runtime runtime = Runtime.getRuntime();  
+        Process proc = null;  
+        OutputStreamWriter osw = null;  
+        StringBuilder sbstdOut = new StringBuilder();  
+        StringBuilder sbstdErr = new StringBuilder();  
+  
+        String command="/system/bin/reboot";  
+  
+        try { // Run Script  
+            proc = runtime.exec("su");  
+            osw = new OutputStreamWriter(proc.getOutputStream());  
+            osw.write(command);  
+            osw.flush();  
+            osw.close();  
+  
+        } catch (IOException ex) {  
+            ex.printStackTrace();  
+        } finally {  
+            if (osw != null) {  
+                try {  
+                    osw.close();  
+                } catch (IOException e) {  
+                    e.printStackTrace();                      
+                }  
+            }  
+        }  
+        try {  
+            if (proc != null)  
+                proc.waitFor();  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }  
+  
+        sbstdOut.append(new BufferedReader(new InputStreamReader(proc  
+                .getInputStream())));  
+        sbstdErr.append(new BufferedReader(new InputStreamReader(proc  
+                .getErrorStream())));  
+        if (proc.exitValue() != 0) {  
+        }  
+    } 
 
 	// 测试程序
 	// private long getTimeTest(int hour){
