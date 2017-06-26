@@ -305,9 +305,20 @@
             style="@style/style_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/title_bar_height"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:contentDescription="@null"
             android:src="@drawable/ic_keyboard_shift" />
+        
+        <Button
+            android:id="@+id/bt_special_symbol"
+            style="@style/style_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:contentDescription="@null"
+            android:textSize="25sp"
+            android:text="@string/special_symbol" />
 
         <Button
             android:id="@+id/bt_keyboard_lowercase_z"

@@ -253,6 +253,7 @@
     <string name="wifi_ip_address">IP 地址</string>
     <string name="wifi_password">密码</string>
     <string name="wifi_show_password">显示密码</string>
+    <string name="wifi_show_special_symbol">显示特殊符号</string>
     <string name="wifi_ip_settings">IP 设置</string>
     <string name="wifi_unchanged">（未更改）</string>
     <string name="wifi_remembered">已保存</string>
@@ -510,6 +511,7 @@
     <string name="number_8">8</string>
     <string name="number_9">9</string>
     <string name="dot">.</string>
+    <string name="special_symbol">123?</string>
     <string name="letter_q">q</string>
     <string name="letter_w">w</string>
     <string name="letter_e">e</string>

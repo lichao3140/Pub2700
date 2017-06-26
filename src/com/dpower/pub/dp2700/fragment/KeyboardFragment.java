@@ -3,9 +3,7 @@ package com.dpower.pub.dp2700.fragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import com.dpower.pub.dp2700.R;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +13,13 @@ import android.widget.Button;
 
 /**
  * @author ZhengZhiying
- * @Funtion ¼üÅÌ
+ * @Funtion é”®ç›˜
  */
 public class KeyboardFragment extends BaseFragment implements OnClickListener {
 
 	private View mView;
-	private Boolean mIsUpper = false; // ÊÇ´óĞ´
+	private Boolean mIsUpper = false; // æ˜¯å¤§å†™
+	private Boolean mIsSymbol = false;// æ˜¯ç‰¹æ®Šç¬¦å·
 	private List<Button> mButtons = new ArrayList<Button>();
 	private OnKeyboardListener mKeyListener;
 
@@ -28,7 +27,7 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.fragment_keyboard, container, false);
-		// Êı×Ö¼ü
+		// æ•°å­—é”®
 		setClickListener(R.id.bt_keyboard_number_1, "1");
 		setClickListener(R.id.bt_keyboard_number_2, "2");
 		setClickListener(R.id.bt_keyboard_number_3, "3");
@@ -40,7 +39,7 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 		setClickListener(R.id.bt_keyboard_number_9, "9");
 		setClickListener(R.id.bt_keyboard_number_0, "0");
 		setClickListener(R.id.bt_keyboard_dot, ".");
-		// ×ÖÄ¸¼ü
+		// å­—æ¯é”®
 		setClickListener(R.id.bt_keyboard_lowercase_a, "a");
 		setClickListener(R.id.bt_keyboard_lowercase_b, "b");
 		setClickListener(R.id.bt_keyboard_lowercase_c, "c");
@@ -70,10 +69,11 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 		setClickListener(R.id.bt_keyboard_lowercase_y, "y");
 		setClickListener(R.id.bt_keyboard_lowercase_z, "z");
 		
-		// É¾³ı¼ü
+		// åˆ é™¤é”®
 		setClickListener(R.id.bt_del, "-1");
-		// ÇĞ»»¼ü
+		// åˆ‡æ¢é”®
 		setClickListener(R.id.bt_switch, "");
+		setClickListener(R.id.bt_special_symbol, "");
 		return mView;
 	}
 
@@ -82,23 +82,98 @@ public class KeyboardFragment extends BaseFragment implements OnClickListener {
 		if (v.getId() == R.id.bt_switch) {
 			mIsUpper = !mIsUpper;
 			changeKey();
+		} else if (v.getId() == R.id.bt_special_symbol) {
+			mIsSymbol = !mIsSymbol;
+			changeSymbol();
 		} else if (mKeyListener != null) {
 			mKeyListener.onKeyboardClick(v.getTag().toString());
+		} 
+		
+	}
+
+	private void changeSymbol() {
+		if(mIsSymbol) {//ç‰¹æ®Šç¬¦å·
+			changeSymbol(R.id.bt_keyboard_lowercase_q, "=");
+			changeSymbol(R.id.bt_keyboard_lowercase_w, "/");
+			changeSymbol(R.id.bt_keyboard_lowercase_e, "+");
+			changeSymbol(R.id.bt_keyboard_lowercase_r, "?");
+			changeSymbol(R.id.bt_keyboard_lowercase_t, ",");
+			changeSymbol(R.id.bt_keyboard_lowercase_y, "-");
+			changeSymbol(R.id.bt_keyboard_lowercase_u, "'");
+			changeSymbol(R.id.bt_keyboard_lowercase_i, "{");
+			changeSymbol(R.id.bt_keyboard_lowercase_o, "}");
+			changeSymbol(R.id.bt_keyboard_lowercase_p, "*");
+			
+			changeSymbol(R.id.bt_keyboard_lowercase_a, "@");
+			changeSymbol(R.id.bt_keyboard_lowercase_s, "Â¥");
+			changeSymbol(R.id.bt_keyboard_lowercase_d, "&");
+			changeSymbol(R.id.bt_keyboard_lowercase_f, "_");
+			changeSymbol(R.id.bt_keyboard_lowercase_g, "(");
+			changeSymbol(R.id.bt_keyboard_lowercase_h, ")");
+			changeSymbol(R.id.bt_keyboard_lowercase_j, ":");
+			changeSymbol(R.id.bt_keyboard_lowercase_k, ";");
+			changeSymbol(R.id.bt_keyboard_lowercase_l, "\"");
+			
+			changeSymbol(R.id.bt_keyboard_lowercase_z, "!");
+			changeSymbol(R.id.bt_keyboard_lowercase_x, "[");
+			changeSymbol(R.id.bt_keyboard_lowercase_c, "]");
+			changeSymbol(R.id.bt_keyboard_lowercase_v, "<");
+			changeSymbol(R.id.bt_keyboard_lowercase_b, ">");
+			changeSymbol(R.id.bt_keyboard_lowercase_n, "~");
+			changeSymbol(R.id.bt_keyboard_lowercase_m, "^");
+			
+		} else {
+			changeSymbol(R.id.bt_keyboard_lowercase_q, "q");
+			changeSymbol(R.id.bt_keyboard_lowercase_w, "w");
+			changeSymbol(R.id.bt_keyboard_lowercase_e, "e");
+			changeSymbol(R.id.bt_keyboard_lowercase_r, "r");
+			changeSymbol(R.id.bt_keyboard_lowercase_t, "t");
+			changeSymbol(R.id.bt_keyboard_lowercase_y, "y");
+			changeSymbol(R.id.bt_keyboard_lowercase_u, "u");
+			changeSymbol(R.id.bt_keyboard_lowercase_i, "i");
+			changeSymbol(R.id.bt_keyboard_lowercase_o, "o");
+			changeSymbol(R.id.bt_keyboard_lowercase_p, "p");
+			
+			changeSymbol(R.id.bt_keyboard_lowercase_a, "a");
+			changeSymbol(R.id.bt_keyboard_lowercase_s, "s");
+			changeSymbol(R.id.bt_keyboard_lowercase_d, "d");
+			changeSymbol(R.id.bt_keyboard_lowercase_f, "f");
+			changeSymbol(R.id.bt_keyboard_lowercase_g, "g");
+			changeSymbol(R.id.bt_keyboard_lowercase_h, "h");
+			changeSymbol(R.id.bt_keyboard_lowercase_j, "j");
+			changeSymbol(R.id.bt_keyboard_lowercase_k, "k");
+			changeSymbol(R.id.bt_keyboard_lowercase_l, "l");
+			
+			changeSymbol(R.id.bt_keyboard_lowercase_z, "z");
+			changeSymbol(R.id.bt_keyboard_lowercase_x, "x");
+			changeSymbol(R.id.bt_keyboard_lowercase_c, "c");
+			changeSymbol(R.id.bt_keyboard_lowercase_v, "v");
+			changeSymbol(R.id.bt_keyboard_lowercase_b, "b");
+			changeSymbol(R.id.bt_keyboard_lowercase_n, "n");
+			changeSymbol(R.id.bt_keyboard_lowercase_m, "m");
 		}
+		
 	}
 
 	private void changeKey() {
 		if(mIsUpper) {
-			for(Button button : mButtons) {//´óĞ´
+			for(Button button : mButtons) {//å¤§å†™
 				button.setText(button.getTag().toString().toUpperCase(Locale.US));
 				button.setTag(button.getText().toString());
 			}
 		} else {
-			for(Button button : mButtons) {//Ğ¡Ğ´
+			for(Button button : mButtons) {//å°å†™
 				button.setText(button.getTag().toString().toLowerCase(Locale.US));
 				button.setTag(button.getText().toString());
 			}
 		}
+	}
+	
+	private void changeSymbol(int resId, String tag) {
+		Button button;
+		button = (Button) mView.findViewById(resId);
+		button.setTag(tag);
+		button.setText(tag);
 	}
 
 	private void setClickListener(int resId, String tag) {

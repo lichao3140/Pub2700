@@ -50,8 +50,8 @@ public class WifiConnectDialog extends
 	private EditText mEditGateway;
 	private EditText mEditSubnetMask;
 	private EditText mEditDns;
-	private CheckBox mShowPassword;
-	private CheckBox mShowAdvanced;
+	private CheckBox mShowPassword;//显示密码
+	private CheckBox mShowAdvanced;//显示高级选项
 	private LinearLayout mIpSet;
 	private LinearLayout mStaticIp;
 	private Spinner mSpinner;
