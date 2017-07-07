@@ -80,22 +80,7 @@ public class CloudIntercom {
 	private static final String UPLOAD_OPEN_DOOR_RECORD = IP_PORT
 			+ "/smarthomeservice/rest/unlock/add";
 	
-	/** 手机开锁 */
-	private static final String PHONE_TYPE_UNLOCK = "01";
-	/** 绑定手机 */
-	private static final String PHONE_TYPE_BIND = "03";
-	/** 设置开锁密码 */
-	private static final String PHONE_TYPE_SETPWD = "04";
-	/** 设置访客开锁密码 */
-	private static final String PHONE_TYPE_VISITORPWD = "05";
-	/** 手机设置关闭云对讲 */
-	private static final String PHONE_CLOUD_CLOSE = "06";
-	/** 手机解绑室内机 */
-	private static final String PHONE_CLOUD_UNBIND = "07";
-	/** Android设备类型 */
-	private static final String PUSH_AND_TOKEN = "1";
-	/** IOS设备类型 */
-	private static final String PUSH_IOS_TOKEN = "2";
+	
 	private static final String LAN_NETWORK_CARD_ETH0 = "eth0";
 	private static final String LAN_NETWORK_CARD_ETH1 = "eth1";
 	private static final String WLAN_NETWORK_CARD = "wlan0";
@@ -184,10 +169,10 @@ public class CloudIntercom {
 				}
 				break;
 			case CALL_OUT:
-				if (!(mCallback.getTokensCount(PUSH_AND_TOKEN) == 0)) {
+				if (!(mCallback.getTokensCount(Constant.PUSH_AND_TOKEN) == 0)) {
 					poushToAnd(mContext.getString(R.string.push_visitor_call));
 				}
-				if (!(mCallback.getTokensCount(PUSH_IOS_TOKEN) == 0)) {
+				if (!(mCallback.getTokensCount(Constant.PUSH_IOS_TOKEN) == 0)) {
 					poushToIos(mContext.getString(R.string.push_visitor_call));
 				}
 				List<String> accounts = mCallback.getAccountList();
@@ -308,7 +293,7 @@ public class CloudIntercom {
 	/** 推送给IOS */
 	public static void poushToIos(String tokenmsg) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		String tokenStr = getTokens(PUSH_IOS_TOKEN);
+		String tokenStr = getTokens(Constant.PUSH_IOS_TOKEN);
 		String token = null;
 		if (!tokenStr.equals("")) {
 			token = tokenStr.substring(0, tokenStr.length() - 1);
@@ -340,7 +325,7 @@ public class CloudIntercom {
 	/** 推送给Android */
 	public static void poushToAnd(String tokenmsg) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		String tokenStr = getTokens(PUSH_AND_TOKEN);
+		String tokenStr = getTokens(Constant.PUSH_AND_TOKEN);
 		String token = null;
 		if (!tokenStr.equals("")) {
 			token = tokenStr.substring(0, tokenStr.length() - 1);
@@ -1101,26 +1086,26 @@ public class CloudIntercom {
 			Log.i(LICHAO, "isdecode_str:" + isdecode_str);
 			JsonParser gson = new JsonParser();
 			PhoneMessageMod phoneMsg = gson.getObject(isdecode_str, PhoneMessageMod.class);
-			if (phoneMsg.getType().equals(PHONE_TYPE_UNLOCK)) {// 手机开锁
+			if (phoneMsg.getType().equals(Constant.PHONE_TYPE_UNLOCK)) {// 手机开锁
 				Map<String, String> map = new HashMap<String, String>();
 				map = gson.getMapFromString(phoneMsg.getMsg().toString());
 				OpenLockMessage(map.get("doorCode"), sip[0], phoneMsg.getStatus());
 				
-			} else if (phoneMsg.getType().equals(PHONE_TYPE_BIND)) {// 绑定手机
+			} else if (phoneMsg.getType().equals(Constant.PHONE_TYPE_BIND)) {// 绑定手机
 				Map<String, String> map = new HashMap<String, String>();
 				map = gson.getMapFromString(phoneMsg.getMsg().toString());
 				BindPhoneMessage(map.get("sipId"), map.get("token"), map.get("mobileType"));
 				
-			} else if (phoneMsg.getType().equals(PHONE_TYPE_SETPWD)) {// 设置开锁密码
+			} else if (phoneMsg.getType().equals(Constant.PHONE_TYPE_SETPWD)) {// 设置开锁密码
 				SetDoorPassword(phoneMsg.getMsg().toString(), sip[0]);
 				
-			} else if (phoneMsg.getType().equals(PHONE_TYPE_VISITORPWD)) {// 设置访客密码
+			} else if (phoneMsg.getType().equals(Constant.PHONE_TYPE_VISITORPWD)) {// 设置访客密码
 				SetVisitorPassword(phoneMsg.getMsg().toString(), sip[0]);
 				
-			} else if (phoneMsg.getType().equals(PHONE_CLOUD_CLOSE)) {//手机屏蔽云对讲
+			} else if (phoneMsg.getType().equals(Constant.PHONE_CLOUD_CLOSE)) {//手机屏蔽云对讲
 				SetCloudClose(phoneMsg.getMsg().toString(), phoneMsg.getStatus().toString());
 				
-			} else if (phoneMsg.getType().equals(PHONE_CLOUD_UNBIND)) {//手机解绑室内机
+			} else if (phoneMsg.getType().equals(Constant.PHONE_CLOUD_UNBIND)) {//手机解绑室内机
 				Map<String, String> map = new HashMap<String, String>();
 				map = gson.getMapFromString(phoneMsg.getMsg().toString());
 				UnBindDevice(map.get("sipId"), map.get("token"));
@@ -1180,10 +1165,10 @@ public class CloudIntercom {
 		Log.e(LICHAO, "doorIpAddr=" + doorIpAddr);
 		int result = DPFunction.toDoorModifyPassWord(doorIpAddr, newpassword);
 		if (result == 0) {
-			if (!(mCallback.getTokensCount(PUSH_AND_TOKEN) == 0)) {
+			if (!(mCallback.getTokensCount(Constant.PUSH_AND_TOKEN) == 0)) {
 				CloudIntercom.poushToAnd(mContext.getString(R.string.push_edit_opendoor_password));
 			}
-			if (!(mCallback.getTokensCount(PUSH_IOS_TOKEN) == 0)) {
+			if (!(mCallback.getTokensCount(Constant.PUSH_IOS_TOKEN) == 0)) {
 				CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password));
 			}
 			Log.i(LICHAO, "DoorPassword success:" + newpassword);
