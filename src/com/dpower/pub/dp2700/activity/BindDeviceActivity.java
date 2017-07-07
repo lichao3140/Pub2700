@@ -16,10 +16,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.dpower.cloudintercom.CloudIntercom;
+import com.dpower.cloudintercom.Constant;
 import com.dpower.domain.AddrInfo;
+import com.dpower.dpsiplib.service.DPSIPService;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.application.App;
@@ -30,6 +33,7 @@ import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.RebootUT;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.CommonUT;
+import com.dpower.util.DPDBHelper;
 import com.dpower.util.ProjectConfigure;
 import com.google.zxing.WriterException;
 
@@ -40,10 +44,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		OnClickListener {
 	private static final String TAG = "BindDeviceActivity";
 	
-	private static final String CHARSET = "UTF-8";
 	private final int CODE_COLOR = Color.parseColor("#000000");
 	private ImageView mImageQRCode;
 	private TextView mTextQRCode;
+	private Button btnRegister;
 	private CloudLoginChangeReceiver mCloudLoginReceiver;
 	private SharedPreferences sharedPreferences;
 	private ArrayList<AddrInfo> mMonitorLists;
@@ -64,8 +68,8 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 				String encode = null;
 				try {
 					JniBase64Code base = new JniBase64Code();
-					byte[] b = base.enBase(new_QRString.getBytes(CHARSET));
-					encode = new String(b, CHARSET);
+					byte[] b = base.enBase(new_QRString.getBytes(Constant.CHARSET));
+					encode = new String(b, Constant.CHARSET);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -89,11 +93,21 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cloud_intercom);
+		
 		mImageQRCode = (ImageView) findViewById(R.id.image_qr_code);
 		mTextQRCode = (TextView) findViewById(R.id.tv_qrcode);
+		btnRegister = (Button)findViewById(R.id.btn_register);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_login).setOnClickListener(this);
 		findViewById(R.id.btn_reboot).setOnClickListener(this);
+		btnRegister.setOnClickListener(this);
+		if(DPFunction.isOnline()) {
+			btnRegister.setVisibility(View.GONE);
+			btnRegister.setClickable(false);
+		} else {
+			btnRegister.setClickable(true);
+		}
+		
 		if(!readQRCodeInfo("encode").equals("") && readCodeInfo()) {
 			showQRCode(readQRCodeInfo("encode"));
 		} else {
@@ -145,9 +159,31 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		case R.id.btn_back:
 			finish();
 			break;
+		case R.id.btn_register:
+			int sipcount = DPDBHelper.countIndoorSip();
+			if(sipcount >= 1) {
+				MyToast.show(R.string.cloud_is_register);
+			} else {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						if(DPSIPService.ping()) {
+							CloudIntercom.registerIndoor();
+						} else {
+							MyToast.show(R.string.cloud_network_faile);
+						}
+					}
+				}).start();
+			}
+			break;
 		case R.id.btn_login:
-			CloudIntercom.startLogin();
-			MyToast.show(R.string.cloud_login_restar);
+			if(!DPFunction.isOnline()) {//²»ÔÚÏß
+				CloudIntercom.startLogin();
+				MyToast.show(R.string.cloud_login_restar);
+			} else {
+				MyToast.show(R.string.cloud_is_logined);
+			}
 			break;
 		case R.id.btn_reboot:
 			TipsDialog dialog = new TipsDialog(this);

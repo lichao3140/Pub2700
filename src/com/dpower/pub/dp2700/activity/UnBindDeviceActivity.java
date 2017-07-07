@@ -2,6 +2,8 @@ package com.dpower.pub.dp2700.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.dpower.cloudintercom.Constant;
 import com.dpower.domain.BindAccountInfo;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
 import com.dpower.dpsiplib.service.DPSIPService;
@@ -32,7 +34,6 @@ import android.widget.ListView;
  */
 public class UnBindDeviceActivity extends BaseActivity implements OnClickListener {
 	
-	private static final String UNBIND_MSG_PHONE = "07";
 	private static final int PHONE_TYPE_AND = 1;
 	private static final int PHONE_TYPE_IOS = 2;
 	private static final int PHONE_TYPE_ALL = 0;
@@ -210,7 +211,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 							String sip_phone = mAdapter.getDevicesList().get(mAdapter.checkID).accountname;
 							String msg_body = DPFunction.getRoomCode();
 							DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_ONE;
-							DPSIPService.sendInstantMessage(sip_phone, DPSIPService.getMsgCommand(new PhoneMessageMod(UNBIND_MSG_PHONE, msg_body, "0")));
+							DPSIPService.sendInstantMessage(sip_phone, DPSIPService.getMsgCommand(new PhoneMessageMod(Constant.PHONE_CLOUD_UNBIND, msg_body, "0")));
 						}
 					});
 					dialog.show();
@@ -264,7 +265,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 		List<String> accounts = DPFunction.getAccountByPhoneType(type);
 		for (String account : accounts) {
 			String msg_body = DPFunction.getRoomCode();
-			DPSIPService.sendInstantMessage(account, DPSIPService.getMsgCommand(new PhoneMessageMod(UNBIND_MSG_PHONE, msg_body, "0")));
+			DPSIPService.sendInstantMessage(account, DPSIPService.getMsgCommand(new PhoneMessageMod(Constant.PHONE_CLOUD_UNBIND, msg_body, "0")));
 		}
 	}
 	

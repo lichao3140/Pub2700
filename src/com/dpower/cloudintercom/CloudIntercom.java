@@ -51,45 +51,9 @@ public class CloudIntercom {
 	private static final String TAG = "CloudIntercom";
 	private static final String LICHAO = "lichao";
 
-	/** SIP服务器IP */
-	private static final String SIP_SERVER_IP = "192.168.10.10";// QuHwa
-	//private static final String SIP_SERVER_IP = "120.25.126.228";
-	/** SIP服务器端口 */
-	private static final int SIP_SERVER_PORT = 5060; // 登陆服务器端口
-
-	/** 服务器端口 */
-	private static final int SERVER_PORT = 8080; // 登陆服务器端口
-
-	/** 服务器IP和端口 */
-	public static final String IP_PORT = "http://" + SIP_SERVER_IP + ":"
-			+ SERVER_PORT;
-
-	/** 室内机SIP注册 */
-	private static final String REG_SIP_URL = IP_PORT
-			+ "/smarthomeservice/rest/device/login";
-
-	/** 推送消息给Android */
-	private static final String PUSH_AND_URL = IP_PORT
-			+ "/smarthomeservice/rest/push/client/pushToAndroidClient";
-
-	/** 推送消息给IOS */
-	private static final String PUSH_IOS_URL = IP_PORT
-			+ "/smarthomeservice/rest/push/client/pushToIosClient";
-	
-	/** 上传开门记录到服务器 */
-	private static final String UPLOAD_OPEN_DOOR_RECORD = IP_PORT
-			+ "/smarthomeservice/rest/unlock/add";
-	
-	
 	private static final String LAN_NETWORK_CARD_ETH0 = "eth0";
 	private static final String LAN_NETWORK_CARD_ETH1 = "eth1";
 	private static final String WLAN_NETWORK_CARD = "wlan0";
-	private static final String CHARSET = "UTF-8";
-	private static final int NEW_CALL = 101;
-	private static final int CALL_OUT = 102;
-	private static final int HANGUP = 103;
-	private static final int LOGIN = 104;
-	private static final int SIP_LOGOUT = 105;
 	private static SIPHandler mHandler = null;
 	private static NetworkBroadcastReceiver mNetworkReceiver = null;
 	private static boolean mIsEthernet = false;
@@ -159,7 +123,7 @@ public class CloudIntercom {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case NEW_CALL:
+			case Constant.NEW_CALL:
 				if (mCallback.getCallInSize() == 0
 						&& mCallback.getCallOutSize() == 0) {
 					SIPIntercom.setMic(1);
@@ -168,7 +132,7 @@ public class CloudIntercom {
 					SIPIntercom.hangupForBusy();
 				}
 				break;
-			case CALL_OUT:
+			case Constant.CALL_OUT:
 				if (!(mCallback.getTokensCount(Constant.PUSH_AND_TOKEN) == 0)) {
 					poushToAnd(mContext.getString(R.string.push_visitor_call));
 				}
@@ -182,15 +146,15 @@ public class CloudIntercom {
 							+ ", callID " + call.getId());
 				}
 				break;
-			case HANGUP:
+			case Constant.HANGUP:
 				SIPIntercom.hangup();
 				break;
-			case LOGIN:
+			case Constant.LOGIN:
 				if (!SIPIntercom.isOnline()) {
 					startLogin();
 				}
 				break;
-			case SIP_LOGOUT:
+			case Constant.SIP_LOGOUT:
 				if (SIPIntercom.isOnline()) {
 					SIPIntercom.logout();
 				}
@@ -207,7 +171,7 @@ public class CloudIntercom {
 			SIPIntercomLog.print(TAG, "新来电");
 			SIPIntercomLog.print(TAG, "sessionID " + sessionID);
 			Log.i(LICHAO, "CloudIntercom newCall" + "sessionID:" + sessionID);
-			mHandler.sendEmptyMessage(NEW_CALL);
+			mHandler.sendEmptyMessage(Constant.NEW_CALL);
 		}
 
 		@Override
@@ -248,9 +212,9 @@ public class CloudIntercom {
 				Log.e(LICHAO, "sipConnectChange:" + reason);
 			}
 			if (reason != null && reason.equals(NetworkUntil.NETWORK_ERROR)) {
-				mHandler.sendEmptyMessageDelayed(LOGIN, 10000);
+				mHandler.sendEmptyMessageDelayed(Constant.LOGIN, 10000);
 			} else {
-				mHandler.sendEmptyMessage(LOGIN);
+				mHandler.sendEmptyMessage(Constant.LOGIN);
 			}
 			mHandler.post(new Runnable() {
 				
@@ -264,7 +228,7 @@ public class CloudIntercom {
 		@Override
 		public void sipServiceStart() {
 			SIPIntercomLog.print(SIPIntercomLog.ERROR, "serviceStart");
-			mHandler.sendEmptyMessage(LOGIN);
+			mHandler.sendEmptyMessage(Constant.LOGIN);
 		}
 
 		@Override
@@ -303,7 +267,7 @@ public class CloudIntercom {
 		maps.put("tokens", token);
 		OkHttpUtil.getDefault()
 				.doPostAsync(
-						HttpInfo.Builder().setUrl(PUSH_IOS_URL).addParams(maps)
+						HttpInfo.Builder().setUrl(Constant.PUSH_IOS_URL).addParams(maps)
 								.build(), new Callback() {
 
 							@Override
@@ -335,7 +299,7 @@ public class CloudIntercom {
 		maps.put("tokens", token);
 		OkHttpUtil.getDefault()
 				.doPostAsync(
-						HttpInfo.Builder().setUrl(PUSH_AND_URL).addParams(maps)
+						HttpInfo.Builder().setUrl(Constant.PUSH_AND_URL).addParams(maps)
 								.build(), new Callback() {
 
 							@Override
@@ -355,7 +319,7 @@ public class CloudIntercom {
 	}
 
 	/** 注册室内机SIP账号 */
-	private static void registerIndoor() {
+	public static void registerIndoor() {
 		final HashMap<String, String> maps = new HashMap<String, String>();
 		String roomNum = mCallback.getRoomCode();
 		String mac = getMacAddress();
@@ -378,7 +342,7 @@ public class CloudIntercom {
 		maps.put("unitNo", roomNum.substring(5, 7));
 		maps.put("houseNo", roomNum.substring(7, 11));
 		OkHttpUtil.getDefault().doPostAsync(
-				HttpInfo.Builder().setUrl(REG_SIP_URL).addParams(maps).build(),
+				HttpInfo.Builder().setUrl(Constant.REG_SIP_URL).addParams(maps).build(),
 				new Callback() {
 
 					@Override
@@ -418,7 +382,7 @@ public class CloudIntercom {
 		maps.put("type", "1");
 		maps.put("fromSipid", sip);
 		OkHttpUtil.getDefault().doPostAsync(
-				HttpInfo.Builder().setUrl(UPLOAD_OPEN_DOOR_RECORD).addParams(maps).build(),
+				HttpInfo.Builder().setUrl(Constant.UPLOAD_OPEN_DOOR_RECORD).addParams(maps).build(),
 				new Callback() {
 					
 					@Override
@@ -454,7 +418,7 @@ public class CloudIntercom {
 				if (TextUtils.isEmpty(account))
 					return false;
 				SIPIntercomLog.print("start login =" + account);
-				ret = SIPIntercom.login(account, sipPwd, SIP_SERVER_IP + ":" + SIP_SERVER_PORT);
+				ret = SIPIntercom.login(account, sipPwd, Constant.SIP_SERVER_IP + ":" + Constant.SIP_SERVER_PORT);
 				return ret;
 			}
 		}
@@ -872,7 +836,7 @@ public class CloudIntercom {
 		if (mCallback == null) {
 			return;
 		}
-		mHandler.sendEmptyMessage(HANGUP);
+		mHandler.sendEmptyMessage(Constant.HANGUP);
 	}
 
 	/** 呼叫所有手机 */
@@ -881,7 +845,7 @@ public class CloudIntercom {
 			Log.e(LICHAO, "CloudIntercom callPhone=" + SIPIntercom.isOnline() + mCallback);
 			return false;
 		}
-		mHandler.sendEmptyMessage(CALL_OUT);
+		mHandler.sendEmptyMessage(Constant.CALL_OUT);
 		return true;
 	}
 
@@ -913,10 +877,10 @@ public class CloudIntercom {
 			return;
 		}
 		if (SIPIntercom.isOnline()) {
-			mHandler.sendEmptyMessage(SIP_LOGOUT);
+			mHandler.sendEmptyMessage(Constant.SIP_LOGOUT);
 		}
 		SIPIntercomLog.print(SIPIntercomLog.ERROR, "修改房号，重新登录");
-		mHandler.sendEmptyMessage(LOGIN);
+		mHandler.sendEmptyMessage(Constant.LOGIN);
 	}
 
 	/** 室内机是否在线 */
@@ -1056,10 +1020,10 @@ public class CloudIntercom {
 			if (!NetworkUntil.getLanConnectState(mNetworkCard)) {
 				SIPIntercomLog.print(SIPIntercomLog.ERROR, mNetworkCard + " 网络关闭");
 				if (SIPIntercom.isOnline()) {
-					mHandler.sendEmptyMessage(SIP_LOGOUT);
+					mHandler.sendEmptyMessage(Constant.SIP_LOGOUT);
 				} else {
 					SIPIntercomLog.print(SIPIntercomLog.ERROR, mNetworkCard + " 网络开启");
-					mHandler.sendEmptyMessage(LOGIN);
+					mHandler.sendEmptyMessage(Constant.LOGIN);
 				}
 			}
 		}
@@ -1081,8 +1045,8 @@ public class CloudIntercom {
 			String sip[] = sip_no.split("@");
 			String isdecode_str = null;
 			jniCode = new JniBase64Code();
-			byte[] b_decode = jniCode.deBase(msgbody.getBytes(CHARSET));
-			isdecode_str = new String(b_decode, CHARSET);
+			byte[] b_decode = jniCode.deBase(msgbody.getBytes(Constant.CHARSET));
+			isdecode_str = new String(b_decode, Constant.CHARSET);
 			Log.i(LICHAO, "isdecode_str:" + isdecode_str);
 			JsonParser gson = new JsonParser();
 			PhoneMessageMod phoneMsg = gson.getObject(isdecode_str, PhoneMessageMod.class);
@@ -1122,11 +1086,11 @@ public class CloudIntercom {
 	 * @param status 开锁类型
 	 */
 	private static void OpenLockMessage(String doorCode, String phoneSip, String status) {
-		if (status.equals("1")) {//手机直接开锁
+		if (status.equals(Constant.MSG_STATUS_ONE)) {//手机直接开锁
 			DPFunction.phoneopenlock(doorCode);
 			uploadOpenDoorRecord(phoneSip);
 			
-		} else if (status.equals("2")) {//手机来电开锁
+		} else if (status.equals(Constant.MSG_STATUS_TWO)) {//手机来电开锁
 			DPFunction.phoneopenlock(CallInFromDoorActivity.mRoomCode);
 			uploadOpenDoorRecord(phoneSip);
 		}
