@@ -1,7 +1,6 @@
 package com.dpower.dpsiplib.service;
 
 import java.io.Serializable;
-
 import org.pjsip.pjsua2.AudioMedia;
 import org.pjsip.pjsua2.Call;
 import org.pjsip.pjsua2.CallInfo;
@@ -15,7 +14,6 @@ import org.pjsip.pjsua2.pjmedia_type;
 import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsua2;
 import org.pjsip.pjsua2.pjsua_call_media_status;
-
 import com.dpower.dpsiplib.utils.SIPIntercomLog;
 
 public class MyCall extends Call implements Serializable {
@@ -23,7 +21,6 @@ public class MyCall extends Call implements Serializable {
 	public VideoWindow videoWindow;
 	public AudioMedia audioMedia;
 	public int micLevel = -1;
-	public int volumeLevel = -1;
 	private static final long serialVersionUID = -6470574927973900913L;
 
 	MyCall(MyAccount account, int call_id) {
@@ -70,14 +67,6 @@ public class MyCall extends Call implements Serializable {
 					try {
 						audioMedia.adjustRxLevel(micLevel);
 						SIPIntercomLog.print(SIPIntercomLog.ERROR, "设置麦克风：设置麦克风：" + micLevel);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				if (volumeLevel != -1) {
-					try {
-						audioMedia.adjustTxLevel(volumeLevel);
-						SIPIntercomLog.print(SIPIntercomLog.ERROR, "设置音频：设置音频：" + volumeLevel);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

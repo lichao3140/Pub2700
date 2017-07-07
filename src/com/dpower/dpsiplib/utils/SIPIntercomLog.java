@@ -1,7 +1,5 @@
 package com.dpower.dpsiplib.utils;
 
-import com.dpower.dpsiplib.service.MyApp;
-
 import android.util.Log;
 
 public class SIPIntercomLog {
@@ -16,12 +14,6 @@ public class SIPIntercomLog {
 	
 	public static void setLogPrint(boolean isShowLog) {
 		mIsShowLog = isShowLog;
-		if(MyApp.endpoint!= null){
-			if(isShowLog)
-				MyApp.endpoint.setLogPrint(1);
-			else
-				MyApp.endpoint.setLogPrint(0);
-		}
 	}
 	
 	public static boolean getLogPrint() {

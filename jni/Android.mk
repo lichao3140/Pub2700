@@ -41,6 +41,11 @@ LOCAL_SRC_FILES := libtalkServer.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := webrtc
+LOCAL_SRC_FILES := libwebrtc.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := YunClient
 LOCAL_SRC_FILES := libYunClient.so
 include $(PREBUILT_SHARED_LIBRARY)

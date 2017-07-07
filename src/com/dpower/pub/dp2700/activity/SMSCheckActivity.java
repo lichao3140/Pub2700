@@ -1,11 +1,9 @@
 package com.dpower.pub.dp2700.activity;
 
 import java.io.File;
-
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.ConstConf;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;

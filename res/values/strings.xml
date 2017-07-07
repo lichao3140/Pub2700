@@ -539,4 +539,6 @@
     <string name="letter_n">n</string>
     <string name="letter_m">m</string>
     
+    <string name="push_edit_opendoor_password">您的开锁密码已修改</string>
+    <string name="push_visitor_call">访客来电</string>
 </resources>

@@ -1089,6 +1089,8 @@ public final class R {
         public static final int playing_record_audio=0x7f080180;
         public static final int please_input_correct=0x7f0800b4;
         public static final int preview=0x7f080164;
+        public static final int push_edit_opendoor_password=0x7f080218;
+        public static final int push_visitor_call=0x7f080219;
         public static final int quick_music_play=0x7f080132;
         public static final int quick_security=0x7f080131;
         public static final int reboot_cancal=0x7f0801de;

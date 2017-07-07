@@ -1,19 +1,15 @@
 package com.dpower.dpsiplib.sipintercom;
 
 import java.util.List;
-
-import org.pjsip.pjsua2.VideoWindow;
-
 import com.dpower.dpsiplib.callback.SIPCallback;
 import com.dpower.dpsiplib.service.DPSIPService;
 import com.dpower.dpsiplib.service.MyCall;
-
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 
 public class SIPIntercom {
-	private static final String LICHAO = "lichao";
 	private static SIPCallback mSIPCallback = null;
 	private static Context mContext = null;
 	
@@ -76,10 +72,21 @@ public class SIPIntercom {
 		}
 	}
 	
-	/** 设置音频, 0-静音, 1-有声音 */
-	public static void setVolume(int level) {
+	/** 视频回调 */
+	public static Callback getCallback() {
 		if (DPSIPService.getInstance() != null) {
-			DPSIPService.getInstance().setVolume(level);
+			return DPSIPService.getInstance().getCallback();
+		} else {
+			if (mSIPCallback != null) {
+				mSIPCallback.sipServiceStop();
+			}
+			return null;
+		}
+	}
+	
+	public static void setSurfaceHolder(SurfaceHolder holder) {
+		if (DPSIPService.getInstance() != null) {
+			DPSIPService.getInstance().setSurfaceHolder(holder);
 		} else {
 			if (mSIPCallback != null) {
 				mSIPCallback.sipServiceStop();
@@ -96,18 +103,6 @@ public class SIPIntercom {
 				mSIPCallback.sipServiceStop();
 			}
 			return false;
-		}
-	}
-	
-	/** 获取通话视频 */
-	public static VideoWindow getVideoWindow() {
-		if (DPSIPService.getInstance() != null) {
-			return DPSIPService.getInstance().getVideoWindow();
-		} else {
-			if (mSIPCallback != null) {
-				mSIPCallback.sipServiceStop();
-			}
-			return null;
 		}
 	}
 	
@@ -132,7 +127,6 @@ public class SIPIntercom {
 		if (DPSIPService.getInstance() != null) {
 			return DPSIPService.getInstance().callOut(user);
 		} else {
-			Log.i(LICHAO, "SIPIntercom callout user null");
 			if (mSIPCallback != null) {
 				mSIPCallback.sipServiceStop();
 			}
@@ -181,6 +175,24 @@ public class SIPIntercom {
 			if (mSIPCallback != null) {
 				mSIPCallback.sipServiceStop();
 			}
+		}
+	}
+	
+	/**
+	 * 发送JSON数据
+	 * @param json JSON数据的字符串
+	 * @param remoteUser 对方账号
+	 * @param isEncryption true-加密,false-不加密
+	 * @return 0-成功，非0-失败
+	 */
+	public static int sendMessage(String json, String remoteUser, boolean isEncryption) {
+		if (DPSIPService.getInstance() != null) {
+			return DPSIPService.getInstance().sendMessage(json, remoteUser, isEncryption);
+		} else {
+			if (mSIPCallback != null) {
+				mSIPCallback.sipServiceStop();
+			}
+			return -3;
 		}
 	}
 }

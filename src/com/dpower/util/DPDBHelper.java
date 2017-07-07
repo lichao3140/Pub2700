@@ -132,7 +132,7 @@ public class DPDBHelper {
 					+ TBL_ACCOUNT_LIST
 					+ "("
 					+ "_id integer primary key autoincrement,accountname varchar(256) not null" 
-					+ ",accountpwd varchar(256) not null,isonline int not null,token varchar(256) not null,phonetype varchar(2) not null)");
+					+ ",accountpwd varchar(256) not null,isonline int not null,token varchar(256) not null,phonetype varchar(50) not null)");
 			MyLog.print("create table " + TBL_ACCOUNT_LIST + " success");
 		}
 
@@ -740,7 +740,7 @@ public class DPDBHelper {
 				sql = "update " + TBL_APP_STATUS + " set statusvalue=" + value
 						+ " where statusname='" + key + "'";
 				mDatabase.execSQL(sql);
-				MyLog.print(sql);
+				MyLog.print("setStatusValue sql=" + sql);
 			}
 		}
 	}
@@ -841,6 +841,29 @@ public class DPDBHelper {
 		cursor.close();
 		return ret;
 	}
+	
+	/**
+	 * 查询绑定设备信息在室内机数据库是否存在
+	 * @param accountname
+	 * @param token
+	 * @param phonetype
+	 * @return
+	 */
+	public static boolean isExistData(String accountname, String token, String phonetype) {
+		boolean ret = false;
+		DBOpen();
+		String sql = "select * from " + TBL_ACCOUNT_LIST
+				+ " where accountname='" + accountname + "'"
+				+ " and token='" + token + "'"
+				+ " and phonetype='" + phonetype + "'";
+		MyLog.print(sql);
+		Cursor cursor = mDatabase.rawQuery(sql, null);
+		if (cursor.moveToFirst()) {
+			ret = true;
+		}
+		cursor.close();
+		return ret;
+	}
 
 	/**
 	 * 添加帐号
@@ -851,14 +874,14 @@ public class DPDBHelper {
 	 */
 	public static int addAccount(String account, String token, String mobiletype) {
 		synchronized (mLock) {
-			if (isTokenExist(token))
+			if (isExistData(account, token, mobiletype))
 				return -2;
 			if (getAccountCount() >= ACCOUNT_MACNUM)
 				return -1;
 			DBOpen();
 			String sql = "insert into " + TBL_ACCOUNT_LIST + " values(null, '"
 					+ account + "', '" + account + "', 1, '" + token + "', '" + mobiletype + "')";
-			MyLog.print(sql);
+			MyLog.print("addAccount sql=" + sql);
 			mDatabase.execSQL(sql);
 		}
 		return 0;
@@ -1051,7 +1074,8 @@ public class DPDBHelper {
 	public static ArrayList<BindAccountInfo> getAccountByPhonetpye(String type) {
 		ArrayList<BindAccountInfo> list = new ArrayList<BindAccountInfo>();
 		DBOpen();
-		String sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=" + type;
+		//表字段PhoneType中第一个字符的查询
+		String sql = "select * from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'";
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
@@ -1065,6 +1089,7 @@ public class DPDBHelper {
 				list.add(bindaccount);
 			}
 		}
+		MyLog.print("sql=" + sql + " listSize=" + list.size());
 		return list;
 	}
 	

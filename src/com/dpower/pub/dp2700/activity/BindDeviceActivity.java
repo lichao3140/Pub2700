@@ -1,5 +1,6 @@
 package com.dpower.pub.dp2700.activity;
 
+import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -12,11 +13,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.dpower.cloudintercom.CloudIntercom;
+import com.dpower.domain.AddrInfo;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.application.App;
@@ -35,13 +38,15 @@ import com.google.zxing.WriterException;
  */
 public class BindDeviceActivity extends BaseFragmentActivity implements
 		OnClickListener {
-
+	private static final String TAG = "BindDeviceActivity";
+	
 	private static final String CHARSET = "UTF-8";
 	private final int CODE_COLOR = Color.parseColor("#000000");
 	private ImageView mImageQRCode;
 	private TextView mTextQRCode;
 	private CloudLoginChangeReceiver mCloudLoginReceiver;
 	private SharedPreferences sharedPreferences;
+	private ArrayList<AddrInfo> mMonitorLists;
 	private Editor editor;
 	
 	@SuppressLint("HandlerLeak") 
@@ -50,10 +55,16 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			switch (msg.what) {
 			case 0:
 				String QRString = (String) msg.obj;
+				mMonitorLists = DPFunction.getCellSeeList();
+				for(int i=0; i< mMonitorLists.size(); i++) {
+					QRString = QRString + "_" + mMonitorLists.get(i).getCode();
+				}
+				String new_QRString = QRString + "_" + mMonitorLists.size();
+				Log.i(TAG, "new QRString = " + new_QRString);
 				String encode = null;
 				try {
 					JniBase64Code base = new JniBase64Code();
-					byte[] b = base.enBase(QRString.getBytes(CHARSET));
+					byte[] b = base.enBase(new_QRString.getBytes(CHARSET));
 					encode = new String(b, CHARSET);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +117,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 					+ (DPFunction.isOnline() ? "YES" : "NO");
 		} else {// CloudMessage不用，MSG显示SIP状态
 			msg = getString(R.string.account) + account + "\n" + getString(R.string.cloud_login_status)
-					+ (DPFunction.sipIsOnline() ? getString(R.string.cloud_login_success) : getString(R.string.cloud_login_failed));
+					+ (DPFunction.isOnline() ? getString(R.string.cloud_login_success) : getString(R.string.cloud_login_failed));
 		}
 		mTextQRCode.setText(msg);
 	}
@@ -178,8 +189,8 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private boolean readCodeInfo(){
 		boolean flag = true;
 		if(!readQRCodeInfo("code").equals("")) {
-			String newcode = readQRCodeInfo("code").substring(6, 32).replaceAll("_", "");
-			String account = CloudIntercom.getAccount();
+			String newcode = readQRCodeInfo("code").substring(6, 19);
+			String account = CloudIntercom.getRoomId();
 			if(!newcode.equals(account)){
 				flag = false;
 			}
@@ -187,8 +198,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		return flag;
 	}
 	
-	/** 读取二维码加密信息 
-	 * @return */
+	/** 读取二维码加密信息  */
 	private String readQRCodeInfo(String keystr){
 		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
 		String encode = sharedPreferences.getString(keystr, "");

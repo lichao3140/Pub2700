@@ -51,7 +51,7 @@ public class CallInFromDoorActivity extends BaseActivity implements
 	private Button mButtonAccept;
 	private Button mButtonHangUp;
 	private int mAcceptSessionID = 0;
-	private String mRoomCode;
+	public static String mRoomCode;
 	private CallReceiver mCallReceiver;
 	private AlarmFinishCallBroadcast mAlarmBroadcast;
 	private ImageButton mVolumeUp, mVolumeDown;

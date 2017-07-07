@@ -500,4 +500,7 @@
     <string name="no_message_body">No message content</string>
     <string name="not_record">Please record first</string>
     
+    <string name="push_edit_opendoor_password">Your unlock password has been modified</string>
+    <string name="push_visitor_call">Visitor Calling</string>
+    
 </resources>

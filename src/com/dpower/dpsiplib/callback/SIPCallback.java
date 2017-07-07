@@ -1,7 +1,5 @@
 package com.dpower.dpsiplib.callback;
 
-import com.dpower.dpsiplib.service.MyCall;
-
 public interface SIPCallback {
 	
 	/** 收到对方的呼叫
@@ -21,12 +19,6 @@ public interface SIPCallback {
 	 * 通话建立连接时当前状态
 	 */
 	public void callState(int sessionID, String state);
-	
-	/**
-	 * 通话媒体流
-	 * @param call
-	 */
-	public void callMediaState(MyCall call);
 	
 	/**
 	 * 客户端与sip连接状态改变

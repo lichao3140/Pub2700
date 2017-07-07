@@ -29,11 +29,11 @@ import org.pjsip.pjsua2.JsonDocument;
 import org.pjsip.pjsua2.LogConfig;
 import org.pjsip.pjsua2.LogEntry;
 import org.pjsip.pjsua2.LogWriter;
+import org.pjsip.pjsua2.MediaConfig;
 import org.pjsip.pjsua2.StringVector;
 import org.pjsip.pjsua2.TransportConfig;
 import org.pjsip.pjsua2.UaConfig;
 import org.pjsip.pjsua2.pjsip_transport_type_e;
-
 import com.dpower.dpsiplib.callback.MyAppCallback;
 import com.dpower.dpsiplib.utils.SIPIntercomLog;
 
@@ -43,7 +43,6 @@ public class MyApp {
 	public static MyAppCallback callback = null;
 	private static final String CONFIG_NAME = "pjsua2.json";
 	private static final int SIP_PORT = 5060;// sip¶Ë¿Ú
-	
 	private ArrayList<MyAccount> mAccounts = null;
 	private ArrayList<MyAccountConfig> mAccountConfigs = null;
 	private TransportConfig mTransportConfig;
@@ -52,8 +51,15 @@ public class MyApp {
 	private EpConfig mEpConfig;
 	
 	public MyApp() {
+		endpoint = new Endpoint();
 		mLogWriter  = new MyLogWriter();
+		mTransportConfig = new TransportConfig();
+		mAccounts = new ArrayList<MyAccount>();
+		mAccountConfigs = new ArrayList<MyAccountConfig>();
 		mEpConfig = new EpConfig();
+		MediaConfig mc = mEpConfig.getMedConfig();
+        mc.setEcOptions(3);
+        mc.setEcTailLen(5);
 //		epConfig.getLogConfig().setLevel(LOG_LEVEL);
 //		epConfig.getLogConfig().setConsoleLevel(LOG_LEVEL);
 
@@ -64,16 +70,6 @@ public class MyApp {
 //		log_cfg.setDecor(log_cfg.getDecor()
 //				& ~(pj_log_decoration.PJ_LOG_HAS_CR.swigValue() | pj_log_decoration.PJ_LOG_HAS_NEWLINE
 //						.swigValue()));
-
-		endpoint = new Endpoint();
-		if(SIPIntercomLog.getLogPrint()) {
-			endpoint.setLogPrint(1);
-		} else {
-			endpoint.setLogPrint(0);
-		}
-		mTransportConfig = new TransportConfig();
-		mAccounts = new ArrayList<MyAccount>();
-		mAccountConfigs = new ArrayList<MyAccountConfig>();
 	}
 
 	public void init(MyAppCallback obs, String app_dir, String localip) {
@@ -98,7 +94,7 @@ public class MyApp {
 			loadConfig(configPath);
 		} else {
 			/* Set 'default' values */
-			mTransportConfig.setPort(SIP_PORT);
+//			mTransportConfig.setPort(SIP_PORT);
 		}
 
 		/* Override log level setting */
@@ -115,7 +111,8 @@ public class MyApp {
 //
 		/* Set ua config. */
 		UaConfig ua_cfg = mEpConfig.getUaConfig();
-		ua_cfg.setUserAgent("Pjsua2 Android " + endpoint.libVersion().getFull());
+//		ua_cfg.setUserAgent("Pjsua2 Android " + endpoint.libVersion().getFull());
+		ua_cfg.setUserAgent("DpAndroidDevice");
 		StringVector stun_servers = new StringVector();
 //		stun_servers.add("192.168.1.1");
 		ua_cfg.setStunServer(stun_servers);
@@ -130,15 +127,26 @@ public class MyApp {
 		} catch (Exception e) {
 			return;
 		}
+		
+		try {
+			endpoint.codecSetPriority("SILK/8000", (short) 250);
+			endpoint.codecSetPriority("PCMU/8000", (short) 240);
+			endpoint.codecSetPriority("PCMA/8000", (short) 230);
+			endpoint.codecSetPriority("SILK/16000", (short) 220);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 		/* Create transports. */
 		try {
+			mTransportConfig.setPort(SIP_PORT);
 			endpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP,
 					mTransportConfig);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
+			mTransportConfig.setPort(SIP_PORT);
 			endpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TCP,
 					mTransportConfig);
 		} catch (Exception e) {
@@ -148,13 +156,6 @@ public class MyApp {
 		/* Start. */
 		try {
 			endpoint.libStart();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			endpoint.libRegisterThread("mainThread");
-			SIPIntercomLog.print(SIPIntercomLog.ERROR, "×¢²áÏß³Ì");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -302,6 +303,7 @@ public class MyApp {
 		try {
 			System.loadLibrary("openh264");
 			System.loadLibrary("yuv");
+			System.loadLibrary("webrtc");
 		} catch (UnsatisfiedLinkError e) {
 			e.printStackTrace();
 		}

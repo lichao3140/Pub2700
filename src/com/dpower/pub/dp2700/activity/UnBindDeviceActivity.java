@@ -31,6 +31,7 @@ import android.widget.ListView;
  * ÊÖ»ú½â°ó
  */
 public class UnBindDeviceActivity extends BaseActivity implements OnClickListener {
+	
 	private static final String UNBIND_MSG_PHONE = "07";
 	private static final int PHONE_TYPE_AND = 1;
 	private static final int PHONE_TYPE_IOS = 2;

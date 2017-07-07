@@ -3,13 +3,17 @@ package com.dpower.pub.dp2700.activity;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.tools.SPreferences;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * ºô½Ð×ªÒÆ
+ * @author LiChao
+ *
+ */
 public class CallForwardingActivity extends BaseFragmentActivity 
 		implements OnClickListener {
 	

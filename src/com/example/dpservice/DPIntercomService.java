@@ -2,14 +2,12 @@ package com.example.dpservice;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-
 import com.dpower.domain.CallInfomation;
 import com.dpower.function.DPFunction;
 import com.dpower.util.MyLog;

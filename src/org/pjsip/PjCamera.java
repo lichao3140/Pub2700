@@ -18,13 +18,13 @@
  */
 package org.pjsip;
 
+import java.io.IOException;
+
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.util.Log;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-
-import java.io.IOException;
+import android.view.SurfaceView;
 
 public class PjCamera implements Camera.PreviewCallback, SurfaceHolder.Callback
 {

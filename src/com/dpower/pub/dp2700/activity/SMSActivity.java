@@ -2,7 +2,6 @@ package com.dpower.pub.dp2700.activity;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import com.dpower.domain.MessageInfo;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;

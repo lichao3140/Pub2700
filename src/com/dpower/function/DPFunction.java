@@ -343,6 +343,7 @@ public class DPFunction {
 			}
 			String saveTime = null;
 			boolean personal = true;
+			//<type>标签,personal字段
 			String type = getXmlVal("type", infos);
 			if (type == null) {
 				personal = false;
@@ -357,6 +358,7 @@ public class DPFunction {
 				String infoItem = new String(infos.substring(start + 6, end));
 				MessageInfo msgInfo = new MessageInfo();
 				msgInfo.setPersonal(personal);
+				//<time>标签
 				String val = getXmlVal("time", infoItem);
 				if (val != null) {
 					msgInfo.setTime(val);
@@ -366,17 +368,23 @@ public class DPFunction {
 						DPDBHelper.setUpdateMsgTime(saveTime);
 					}
 				}
+				//<title>标签
 				val = getXmlVal("title", infoItem);
 				if (val != null) {
 					msgInfo.setTitle(val);
 				} else {
 					return;
 				}
+				//<body>标签
 				val = getXmlVal("body", infoItem);
 				if (val != null) {
 					msgInfo.setBody(val);
 				}
+				//<URL>标签 讲链接地址暂时保存到body字段里面
 				val = getXmlVal("url", infoItem);
+				if (val != null) {
+					msgInfo.setBody(val);
+				}
 				if (val != null) {
 					val = val.replace("\\", File.separator);
 					if (val.contains("htm")) {
@@ -394,6 +402,7 @@ public class DPFunction {
 						}
 					}
 				}
+				//<JPG>标签
 				val = getXmlVal("jpg", infoItem);
 				if (val != null) {
 					val = val.replace("\\", File.separator);
@@ -2582,7 +2591,7 @@ public class DPFunction {
 			// 判断是否门口机呼入
 			if (doorCode == null) {
 				return false;
-			}
+			} 
 			Iterator<CallInfomation> iterator = mCallInSessionIDList.iterator();
 			while (iterator.hasNext()) {
 				CallInfomation callinfo = iterator.next();
@@ -3079,8 +3088,6 @@ public class DPFunction {
 					}
 				}
 				MyLog.print("mCallInSessionIDList size = "
-						+ mCallInSessionIDList.size());
-				Log.i(LICHAO, "mCallInSessionIDList size = "
 						+ mCallInSessionIDList.size());
 				Iterator<CallInfomation> iterator_out = mCallOutSessionIDList.iterator();
 				while (iterator_out.hasNext()) {
@@ -3854,11 +3861,6 @@ public class DPFunction {
 	/** 帐号是否在线 */
 	public static boolean isOnline() {
 		return CloudIntercom.isOnline();
-	}
-	
-	/** SIP是否在线 */
-	public static boolean sipIsOnline() {
-		return CloudIntercom.sipIsOnline();
 	}
 	
 	/** MSG是否在线 */

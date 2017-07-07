@@ -9,8 +9,7 @@ import com.dpower.dpsiplib.service.MyCall;
 
 public interface MyAppCallback {
 	
-	abstract void notifyRegState(pjsip_status_code code, String reason,
-			int expiration);
+	abstract void notifyRegState(pjsip_status_code code, String reason, int expiration);
 
 	abstract void notifyIncomingCall(MyCall call);
 
