@@ -26,7 +26,7 @@ import com.example.dpservice.DPSafeService;
 public class DPDBHelper {
 	
 	private static final int MAX_COUNT = 50; // 存储记录的最大数量
-	private static final int ACCOUNT_MACNUM = 50; // 室内机绑定手机的最大数量
+	public static final int ACCOUNT_MACNUM = 5; // 室内机绑定手机的最大数量
 	private static final String DB_NAME = "lib2700_db.db";
 
 	/** 键值对 */
@@ -788,13 +788,13 @@ public class DPDBHelper {
 	
 	/**
 	 * 找出不同类型的总数
-	 * @param tokentype
+	 * @param phonetype
 	 * @return
 	 */
-	public static int getTokensCount(String tokentype) {
+	public static int getTokensCount(String phonetype) {
 		int ret = 0;
 		DBOpen();
-		String sql = "select count(*) from " + TBL_ACCOUNT_LIST + " where phonetype=" + tokentype + " and isonline=1";
+		String sql = "select count(*) from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + phonetype + "'" + " and isonline=1";
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
 			ret = cursor.getInt(0);
@@ -855,7 +855,7 @@ public class DPDBHelper {
 		String sql = "select * from " + TBL_ACCOUNT_LIST
 				+ " where accountname='" + accountname + "'"
 				+ " and token='" + token + "'"
-				+ " and phonetype='" + phonetype + "'";
+				+ " where substr(phonetype, 1, 1) = " + "'" + phonetype + "'";
 		MyLog.print(sql);
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
@@ -910,7 +910,7 @@ public class DPDBHelper {
 			if(type == 0) {
 				sql = "delete from " + TBL_ACCOUNT_LIST;
 			} else {
-				sql = "delete from " + TBL_ACCOUNT_LIST + " where phonetype=" + type;
+				sql = "delete from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'";
 			}
 			MyLog.print(sql);
 			mDatabase.execSQL(sql);
@@ -1051,7 +1051,7 @@ public class DPDBHelper {
 	public static List<String> getTokenByTypeList(String type) {
 		List<String> tokens = new ArrayList<String>();
 		DBOpen();
-		String sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=" + type + " and isonline=1";
+		String sql = "select * from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'" + " and isonline=1";
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
 			String acc = cursor.getString(4);
@@ -1062,7 +1062,7 @@ public class DPDBHelper {
 			tokens.add(acc);
 		}
 		cursor.close();
-		MyLog.print("tokens size= " + tokens.size());
+		MyLog.print("sql:" + sql +" tokens size= " + tokens.size());
 		return tokens;
 	}
 	

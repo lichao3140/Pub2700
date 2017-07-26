@@ -26,4 +26,9 @@ public class ReceiverAction {
 	/** 室内机解绑苹果手机失败发送广播的Action */
 	public final static String ACTION_UNBIND_PHONE_IOS_FAILED = "action.unbind.phone.ios.failed";
 	
+	/** 室内机绑定账号已存在 */
+	public final static String ACTION_ACCOUNT_IS_EXIST = "action.account.is.exist";
+	
+	/** 室内机绑定账号数量已到最大  */
+	public final static String ACTION_ACCOUNT_IS_MAX = "action.account.is.max";
 }

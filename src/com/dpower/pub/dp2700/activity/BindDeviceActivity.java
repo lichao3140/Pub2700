@@ -35,6 +35,7 @@ import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.CommonUT;
 import com.dpower.util.DPDBHelper;
 import com.dpower.util.ProjectConfigure;
+import com.dpower.util.ReceiverAction;
 import com.google.zxing.WriterException;
 
 /**
@@ -52,6 +53,9 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private SharedPreferences sharedPreferences;
 	private ArrayList<AddrInfo> mMonitorLists;
 	private Editor editor;
+	private IntentFilter filterlogin;
+	private IntentFilter filtermax;
+	private IntentFilter filterexist;
 	
 	@SuppressLint("HandlerLeak") 
 	private Handler handler = new Handler() {
@@ -114,9 +118,14 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			DPFunction.getQRString(handler);
 		}
 		updateLoginStatus();
-		IntentFilter filter = new IntentFilter(DPFunction.ACTION_CLOUD_LOGIN_CHANGED);
+		filterlogin = new IntentFilter(DPFunction.ACTION_CLOUD_LOGIN_CHANGED);
+		filterexist = new IntentFilter(ReceiverAction.ACTION_ACCOUNT_IS_EXIST);
+		filtermax = new IntentFilter(ReceiverAction.ACTION_ACCOUNT_IS_MAX);
 		mCloudLoginReceiver = new CloudLoginChangeReceiver();
-		App.getInstance().getContext().registerReceiver(mCloudLoginReceiver, filter);
+		App.getInstance().getContext().registerReceiver(mCloudLoginReceiver, filterlogin);
+		App.getInstance().getContext().registerReceiver(mCloudLoginReceiver, filterexist);
+		App.getInstance().getContext().registerReceiver(mCloudLoginReceiver, filtermax);
+		
 	}
 
 	private void updateLoginStatus() {
@@ -246,6 +255,12 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if(action.equals(ReceiverAction.ACTION_ACCOUNT_IS_EXIST)) {
+				MyToast.show(R.string.bind_device_is_exist);
+			} else if(action.equals(ReceiverAction.ACTION_ACCOUNT_IS_MAX)) {
+				MyToast.show(R.string.bind_device_is_max + DPDBHelper.ACCOUNT_MACNUM);
+			}
 			updateLoginStatus();
 		}
 	} 

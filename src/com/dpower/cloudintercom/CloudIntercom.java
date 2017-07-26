@@ -27,6 +27,7 @@ import com.dpower.pub.dp2700.model.IndoorInfoMod;
 import com.dpower.pub.dp2700.model.IndoorSipInfo;
 import com.dpower.pub.dp2700.tools.JniBase64Code;
 import com.dpower.pub.dp2700.tools.MyToast;
+import com.dpower.util.ReceiverAction;
 import com.google.gson.Gson;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
@@ -189,9 +190,9 @@ public class CloudIntercom {
 				SIPIntercomLog.print(SIPIntercomLog.ERROR, TAG, reason);
 				Log.e(LICHAO, "CloudIntercom callEnd reason " + reason);
 				if (reason.equals(Constant.NOT_FOUND)) {
-					
+					SIPIntercomLog.print(TAG, "Not Found");
 				} else if (reason.equals(Constant.REQUEST_TIMEOUT)) {
-					
+					SIPIntercomLog.print(TAG, "Request Timeout");
 				} else if (!reason.equals(Constant.OFFLINE)) {
 					mCallback.hangUp(sessionID);
 				} 
@@ -1106,13 +1107,18 @@ public class CloudIntercom {
 	 * @param mobiletype
 	 *            手机类型 1为Android 2为IOS
 	 */
-	private static void BindPhoneMessage(String phoneSip, String token, String mobiletype) {
+	private static void BindPhoneMessage(String phoneSip, String token, String mobiletype) {	
+		Intent intent = new Intent();
 		int add_result = mCallback.addAccount(phoneSip, token, mobiletype);
 		if (add_result == 0) {
 			Log.i(LICHAO, "account success:" + phoneSip);
 		} else if (add_result == -2) {
+			intent .setAction(ReceiverAction.ACTION_ACCOUNT_IS_EXIST);
+			mContext.sendBroadcast(intent);
 			Log.i(LICHAO, "account isexist:" + phoneSip);
 		} else if (add_result == -1) {
+			intent .setAction(ReceiverAction.ACTION_ACCOUNT_IS_MAX);
+			mContext.sendBroadcast(intent);
 			Log.i(LICHAO, "account is max num,cann't add");
 		}
 	}

@@ -62,8 +62,8 @@ public class Constant {
 	public static final int SIP_LOGOUT = 105;
 	
 	/** SIP服务器IP */
-	public static final String SIP_SERVER_IP = "192.168.10.10";// QuHwa
-	//private static final String SIP_SERVER_IP = "120.25.126.228";
+	//public static final String SIP_SERVER_IP = "192.168.10.10";// QuHwa
+	public static final String SIP_SERVER_IP = "120.25.126.228";
 	
 	/** SIP服务器端口 */
 	public static final int SIP_SERVER_PORT = 5060; // 登陆服务器端口
