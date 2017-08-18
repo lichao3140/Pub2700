@@ -233,10 +233,18 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	/** 判断保存的二维码信息是否要更新  */
 	private boolean readCodeInfo(){
 		boolean flag = true;
-		if(!readQRCodeInfo("code").equals("")) {
-			String newcode = readQRCodeInfo("code").substring(6, 19);
+		String savecode = readQRCodeInfo("code");//保存的二维码信息
+		String door = "";
+		if(!savecode.equals("")) {
+			String newcode = savecode.substring(6, 19);//保存的室内机信息
+			String doorcode = savecode.substring(31, savecode.length());//保存的门口机信息
 			String account = CloudIntercom.getRoomId();
-			if(!newcode.equals(account)){
+			mMonitorLists = DPFunction.getCellSeeList();
+			for(int i=0; i< mMonitorLists.size(); i++) {
+				door = door + "_" + mMonitorLists.get(i).getCode();
+			}
+			
+			if(!newcode.equals(account) || !doorcode.equals(door)){
 				flag = false;
 			}
 		}

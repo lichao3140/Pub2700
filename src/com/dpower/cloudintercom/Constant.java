@@ -43,6 +43,12 @@ public class Constant {
 	/** 请求超时  */
 	public static final String REQUEST_TIMEOUT = "Request Timeout";
 	
+	/** 拒接  */
+	public static final String DECLINE = "Decline";
+	
+	/** 正常挂断  */
+	public static final String NORMAL_CALL_END = "Normal call clearing";
+	
 	/** 转码UTF-8 */
 	public static final String CHARSET = "UTF-8";
 	

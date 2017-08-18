@@ -26,7 +26,6 @@ import com.dpower.pub.dp2700.activity.CallInFromDoorActivity;
 import com.dpower.pub.dp2700.model.IndoorInfoMod;
 import com.dpower.pub.dp2700.model.IndoorSipInfo;
 import com.dpower.pub.dp2700.tools.JniBase64Code;
-import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.util.ReceiverAction;
 import com.google.gson.Gson;
 import com.okhttplib.HttpInfo;
@@ -70,6 +69,7 @@ public class CloudIntercom {
 	private static String doorIpAddr;
 	private static String account;
 	private static String sipPwd;
+	private static ArrayList<String> notFoundList;
 
 	public static void init(Context context, CloudIntercomCallback callback) {
 		mCloudMessage = CloudMessage.getInstance(mMessageCallback);
@@ -171,7 +171,7 @@ public class CloudIntercom {
 		public void newCall(int sessionID, String remoteAccount) {
 			SIPIntercomLog.print(TAG, "新来电");
 			SIPIntercomLog.print(TAG, "sessionID " + sessionID);
-			Log.i(LICHAO, "CloudIntercom newCall" + "sessionID:" + sessionID);
+			Log.i(LICHAO, "CloudIntercom newCall " + "sessionID:" + sessionID);			
 			mHandler.sendEmptyMessage(Constant.NEW_CALL);
 		}
 
@@ -183,19 +183,37 @@ public class CloudIntercom {
 		}
 
 		@Override
-		public void callEnd(int sessionID, String reason) {
+		public void callEnd(int sessionID, String reason, String remoteAccount) {
 			SIPIntercomLog.print(TAG, "通话结束 sessionID = " + sessionID);
-			Log.i(LICHAO, "CloudIntercom callEnd" + "sessionID:" + sessionID);
 			if (reason != null) {
 				SIPIntercomLog.print(SIPIntercomLog.ERROR, TAG, reason);
 				Log.e(LICHAO, "CloudIntercom callEnd reason " + reason);
 				if (reason.equals(Constant.NOT_FOUND)) {
-					SIPIntercomLog.print(TAG, "Not Found");
+					notFoundList = new ArrayList<String>();
+					notFoundList.add(remoteAccount);
+					
+					Thread reCall = new Thread(new Runnable() {					
+						@Override
+						public void run() {
+							try {
+								Thread.sleep(1000);
+								for (int i=0; i<notFoundList.size(); i++) {
+									SIPIntercom.callOut(notFoundList.get(i));
+									Log.e(LICHAO, "not found account:" + notFoundList.get(i));
+								}
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+					reCall.start();
+					
 				} else if (reason.equals(Constant.REQUEST_TIMEOUT)) {
 					SIPIntercomLog.print(TAG, "Request Timeout");
-				} else if (!reason.equals(Constant.OFFLINE)) {
+					
+				} else if (reason.equals(Constant.OFFLINE) || reason.equals(Constant.NORMAL_CALL_END)) {
 					mCallback.hangUp(sessionID);
-				} 
+				}
 			}
 		}
 
@@ -352,13 +370,18 @@ public class CloudIntercom {
 						SIPIntercomLog.print("regiter success:" + result);
 						IndoorInfoMod sipInfoMod = new Gson().fromJson(result, IndoorInfoMod.class);
 						sipinfo = sipInfoMod.getData();
-						count_sip = mCallback.countIndoorSip();
-						if (count_sip == 0) {
-							mCallback.addIndoorSip(sipinfo); 
-						}
-						if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
-							mCallback.modifyIndoorSip(sipinfo);
-						}
+						String message = sipInfoMod.getMessage();
+						if(message.equals("")) {
+							count_sip = mCallback.countIndoorSip();
+							if (count_sip == 0) {
+								mCallback.addIndoorSip(sipinfo); 
+							}
+							if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
+								mCallback.modifyIndoorSip(sipinfo);
+							}
+						} else {
+							SIPIntercomLog.print("get SIP account faile!");
+						}						
 					}
 
 					@Override
@@ -405,7 +428,8 @@ public class CloudIntercom {
 		if (getMacAddress() != null
 				&& NetworkUntil.getLanConnectState(mNetworkCard)) {
 			if (!SIPIntercom.isOnline()) {
-				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " + SIPIntercom.isOnline());
+				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " 
+						+ SIPIntercom.isOnline());
 				boolean ret = false;
 				count_sip = mCallback.countIndoorSip();
 				if (count_sip == 0) {//室内机数据库SIP为空就去注册
@@ -1142,10 +1166,8 @@ public class CloudIntercom {
 				CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password));
 			}
 			Log.i(LICHAO, "DoorPassword success:" + newpassword);
-			MyToast.show(sipaccount + R.string.change_succeeded);
 		} else {
 			Log.i(LICHAO, "DoorPassword fail");
-			MyToast.show(R.string.change_failed);
 		}
 	}
 

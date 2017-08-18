@@ -222,7 +222,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 
 				@Override
 				public void run() {
-					if (ping()) {
+					if (!ping()) {
 						SIPIntercomLog.print("网络不通");
 						mIsOnline = false;
 						mIsAllowLogin = true;
@@ -233,20 +233,18 @@ public class DPSIPService extends Service implements MyAppCallback {
 					}
 					mServerUrl = url;
 					AccountConfig accCfg = new AccountConfig();
-					accCfg.setIdUri("sip:" + ACCOUNT_CHECK + username + "@"
-							+ url);
+					accCfg.setIdUri("lichao<sip:" + username + "@" + url + ">");
 					accCfg.getRegConfig().setRegistrarUri("sip:" + url);
 					accCfg.getRegConfig().setTimeoutSec(120);
 					accCfg.getRegConfig().setRetryIntervalSec(120);
 					accCfg.getNatConfig().setIceEnabled(true);
 					accCfg.getVideoConfig().setAutoTransmitOutgoing(true);
-					accCfg.getVideoConfig().setAutoShowIncoming(true);
+					accCfg.getVideoConfig().setAutoShowIncoming(true);					
 					if (mAccount != null) {
 						mAccount.delacc();
 					}
 					mAccount = mApp.addAccount(accCfg);
-					AuthCredInfoVector creds = accCfg.getSipConfig()
-							.getAuthCreds();
+					AuthCredInfoVector creds = accCfg.getSipConfig().getAuthCreds();
 					creds.clear();
 					creds.add(new AuthCredInfo("Digest", "*", ACCOUNT_CHECK
 							+ username, 0, ACCOUNT_CHECK + password));
@@ -254,8 +252,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 					accCfg.getNatConfig().setIceEnabled(false);
 					/* Finally */
 					try {
-						Log.i(LICHAO, "login sip:" + ACCOUNT_CHECK + username
-								+ "@" + url);
+						Log.i(LICHAO, "login sip:" + ACCOUNT_CHECK + username + "@" + url);
 						SIPIntercomLog.print("connecting to sip server");
 						mAccount.modify(accCfg);
 					} catch (Exception e) {
@@ -307,8 +304,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 			if (mCurrentCall != null) {
 				if (mCurrentCall.audioMedia != null) {
 					mCurrentCall.audioMedia.adjustRxLevel(level);
-					SIPIntercomLog.print(SIPIntercomLog.ERROR, "设置麦克风： "
-							+ level);
+					SIPIntercomLog.print(SIPIntercomLog.ERROR, "设置麦克风： " + level);
 				} else {
 					mCurrentCall.micLevel = level;
 				}
@@ -424,8 +420,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 			CallOpParam prm = new CallOpParam();
 			prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 			try {
-				SIPIntercomLog.print(SIPIntercomLog.ERROR, "hangup id = "
-						+ call.getId());
+				SIPIntercomLog.print(SIPIntercomLog.ERROR, "hangup id = " + call.getId());
 				call.hangup(prm);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -474,8 +469,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 
 	// 登录返回结果
 	@Override
-	public void notifyRegState(pjsip_status_code code, String reason,
-			int expiration) {
+	public void notifyRegState(pjsip_status_code code, String reason, int expiration) {
 		mIsAllowLogin = true;
 		if (expiration == 0) {
 			return;
@@ -499,8 +493,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 				mIsOnline = false;
 				hangup();
 				if (SIPIntercom.getSIPCallback() != null) {
-					SIPIntercom.getSIPCallback()
-							.sipConnectChange(false, reason);
+					SIPIntercom.getSIPCallback().sipConnectChange(false, reason);
 				}
 			}
 		} catch (Exception e) {
@@ -606,8 +599,12 @@ public class DPSIPService extends Service implements MyAppCallback {
 						mCalls.remove(i);
 						i = mCalls.size();
 						if (SIPIntercom.getSIPCallback() != null) {
+							int indexStart = callInfo.getRemoteUri().indexOf(":");
+							int indexEnd = callInfo.getRemoteUri().indexOf("@");
+							String user = callInfo.getRemoteUri().substring(indexStart + 1, indexEnd);
 							SIPIntercom.getSIPCallback().callEnd(call.getId(),
-									callInfo.getLastReason());
+										callInfo.getLastReason(), user);
+							
 						}
 					}
 				}

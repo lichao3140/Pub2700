@@ -13,7 +13,7 @@ public interface SIPCallback {
 	/** 通话断开连接 
 	 * @param reason 挂断原因
 	 */
-	public void callEnd(int sessionID, String reason);
+	public void callEnd(int sessionID, String reason, String remoteAccount);
 	
 	/**
 	 * 通话建立连接时当前状态

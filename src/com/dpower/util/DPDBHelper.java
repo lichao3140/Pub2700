@@ -855,7 +855,7 @@ public class DPDBHelper {
 		String sql = "select * from " + TBL_ACCOUNT_LIST
 				+ " where accountname='" + accountname + "'"
 				+ " and token='" + token + "'"
-				+ " where substr(phonetype, 1, 1) = " + "'" + phonetype + "'";
+				+ " and substr(phonetype, 1, 1) = " + "'" + phonetype + "'";
 		MyLog.print(sql);
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
