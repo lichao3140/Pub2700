@@ -15,6 +15,7 @@ import com.dpower.cloudmessage.MessageCallback;
 import com.dpower.domain.AddrInfo;
 import com.dpower.dpsiplib.callback.SIPCallback;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
+import com.dpower.dpsiplib.service.DPSIPService;
 import com.dpower.dpsiplib.service.MyCall;
 import com.dpower.dpsiplib.sipintercom.SIPIntercom;
 import com.dpower.dpsiplib.utils.JsonParser;
@@ -195,14 +196,9 @@ public class CloudIntercom {
 					Thread reCall = new Thread(new Runnable() {					
 						@Override
 						public void run() {
-							try {
-								Thread.sleep(1000);
-								for (int i=0; i<notFoundList.size(); i++) {
-									SIPIntercom.callOut(notFoundList.get(i));
-									Log.e(LICHAO, "not found account:" + notFoundList.get(i));
-								}
-							} catch (InterruptedException e) {
-								e.printStackTrace();
+							for (int i=0; i<notFoundList.size(); i++) {
+								SIPIntercom.callOut(notFoundList.get(i));
+								Log.e(LICHAO, "not found account:" + notFoundList.get(i));
 							}
 						}
 					});
@@ -1110,14 +1106,27 @@ public class CloudIntercom {
 	 * @param phoneSip 手机sip账号
 	 * @param status 开锁类型
 	 */
-	private static void OpenLockMessage(String doorCode, String phoneSip, String status) {
+	private static void OpenLockMessage(final String doorCode, final String phoneSip, final String status) {
 		if (status.equals(Constant.MSG_STATUS_ONE)) {//手机直接开锁
-			DPFunction.phoneopenlock(doorCode);
-			uploadOpenDoorRecord(phoneSip);
-			
+			boolean result_phone = DPFunction.phoneopenlock(doorCode);
+			if (result_phone) {
+				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(
+					Constant.PHONE_TYPE_UNLOCK, "", "1")));
+				uploadOpenDoorRecord(phoneSip);
+			} else {
+				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(
+					Constant.PHONE_TYPE_UNLOCK, "", "0")));
+			}
 		} else if (status.equals(Constant.MSG_STATUS_TWO)) {//手机来电开锁
-			DPFunction.phoneopenlock(CallInFromDoorActivity.mRoomCode);
-			uploadOpenDoorRecord(phoneSip);
+			boolean result_calling = DPFunction.phoneopenlock(CallInFromDoorActivity.mRoomCode);
+			if (result_calling) {
+				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(
+					Constant.PHONE_TYPE_UNLOCK, "", "1")));
+				uploadOpenDoorRecord(phoneSip);
+			} else {
+				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(
+					Constant.PHONE_TYPE_UNLOCK, "", "0")));
+			}
 		}
 	}
 
@@ -1166,8 +1175,12 @@ public class CloudIntercom {
 				CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password));
 			}
 			Log.i(LICHAO, "DoorPassword success:" + newpassword);
+			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+				Constant.PHONE_TYPE_SETPWD, "", "1")));			
 		} else {
 			Log.i(LICHAO, "DoorPassword fail");
+			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+				Constant.PHONE_TYPE_SETPWD, "", "0")));	
 		}
 	}
 
@@ -1189,8 +1202,12 @@ public class CloudIntercom {
 		int result = DPFunction.toDoorModifyPassWord(doorIpAddr, visitormsg[0] + ",600");
 		if (result == 0) {
 			Log.i(LICHAO, "VisitorPassword success:" + visitormsg[0]);
+			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+				Constant.PHONE_TYPE_VISITORPWD, "", "1")));
 		} else {
 			Log.i(LICHAO, "VisitorPassword fail");
+			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+				Constant.PHONE_TYPE_VISITORPWD, "", "0")));
 		}
 	}
 	

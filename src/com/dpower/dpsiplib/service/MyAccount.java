@@ -82,7 +82,7 @@ public class MyAccount extends Account {
 		SIPIntercomLog.print("Rdata    : " + prm.getRdata());
 		SIPIntercomLog.print("Contact  : " + prm.getContactUri());
 		SIPIntercomLog.print("Mimetype : " + prm.getContentType());
-		SIPIntercomLog.print("Body     : " + prm.getMsgBody());
+		SIPIntercomLog.print("Body     : " + prm.getMsgBody());	
 		SIPIntercomLog.print(SIPIntercomLog.ERROR, "---------------Now time " + new Date().getTime());
 		SIPIntercomLog.print(SIPIntercomLog.ERROR, "onInstantMessage body len=" + prm.getMsgBody().length());
 	}
@@ -94,9 +94,10 @@ public class MyAccount extends Account {
 		SIPIntercomLog.print("======== onInstantMessageStatus ======== ");
 		SIPIntercomLog.print("To       : " + prm.getToUri());
 		SIPIntercomLog.print("Reason   : " + prm.getReason());
-		SIPIntercomLog.print("Code     : " + prm.getCode());
+		SIPIntercomLog.print("onInstantMessageStatus Code: " + prm.getCode());
 		SIPIntercomLog.print("Body     : " + prm.getMsgBody());
 		SIPIntercomLog.print("Rdata    : " + prm.getRdata());
 		SIPIntercomLog.print("UserData : " + prm.getUserData());
+		
 	}
 }
