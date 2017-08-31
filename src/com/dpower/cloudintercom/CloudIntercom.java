@@ -367,10 +367,11 @@ public class CloudIntercom {
 						IndoorInfoMod sipInfoMod = new Gson().fromJson(result, IndoorInfoMod.class);
 						sipinfo = sipInfoMod.getData();
 						String message = sipInfoMod.getMessage();
-						if(message.equals("")) {
+						Log.e("lichao", "·þÎñÆ÷·µ»Ø:" + message);
+						if((message == null) || message.isEmpty()) {
 							count_sip = mCallback.countIndoorSip();
 							if (count_sip == 0) {
-								mCallback.addIndoorSip(sipinfo); 
+								mCallback.addIndoorSip(sipinfo);
 							}
 							if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
 								mCallback.modifyIndoorSip(sipinfo);

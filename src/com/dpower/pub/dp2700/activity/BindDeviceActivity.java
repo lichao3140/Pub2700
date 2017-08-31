@@ -56,6 +56,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private IntentFilter filterlogin;
 	private IntentFilter filtermax;
 	private IntentFilter filterexist;
+	private int sipcount;
 	
 	@SuppressLint("HandlerLeak") 
 	private Handler handler = new Handler() {
@@ -97,6 +98,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cloud_intercom);
+		sipcount = DPDBHelper.countIndoorSip();
 		
 		mImageQRCode = (ImageView) findViewById(R.id.image_qr_code);
 		mTextQRCode = (TextView) findViewById(R.id.tv_qrcode);
@@ -105,7 +107,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		findViewById(R.id.btn_login).setOnClickListener(this);
 		findViewById(R.id.btn_reboot).setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-		if(DPFunction.isOnline()) {
+		if(!DPFunction.isOnline() || (sipcount != 0)) {
 			btnRegister.setVisibility(View.GONE);
 			btnRegister.setClickable(false);
 		} else {
@@ -168,8 +170,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		case R.id.btn_back:
 			finish();
 			break;
-		case R.id.btn_register:
-			int sipcount = DPDBHelper.countIndoorSip();
+		case R.id.btn_register:			
 			if(sipcount >= 1) {
 				MyToast.show(R.string.cloud_is_register);
 			} else {
