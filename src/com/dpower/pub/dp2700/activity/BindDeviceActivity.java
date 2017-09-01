@@ -254,7 +254,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	
 	/** 读取二维码加密信息  */
 	private String readQRCodeInfo(String keystr){
-		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
+		sharedPreferences = getSharedPreferences("RoomCode", Activity.MODE_PRIVATE);
 		String encode = sharedPreferences.getString(keystr, "");
 		return encode;
 	}

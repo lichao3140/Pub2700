@@ -219,10 +219,10 @@ public class DPIntercomService extends Service {
 						DPFunction.callHangUp();
 						return;
 					} else {
+						callIn.setClass(mContext, DPFunction.callInFromDoorActivity);
 						if (DPFunction.getCallToPhone()) {
 							DPFunction.callPhone();
 						}
-						callIn.setClass(mContext, DPFunction.callInFromDoorActivity);
 					}
 				} else {
 					/** 管理中心或室内机呼入 */

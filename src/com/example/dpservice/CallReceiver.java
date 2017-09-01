@@ -1,11 +1,17 @@
 package com.example.dpservice;
 
-import com.dpower.util.MyLog;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import com.dpower.util.MyLog;
 
+/**
+ * 室内机门口机通话信息广播
+ */
 public class CallReceiver extends BroadcastReceiver {
 	
 	/** 请在服务中接收此广播,界面中不要注册此广播 */
@@ -18,6 +24,7 @@ public class CallReceiver extends BroadcastReceiver {
 	public static final String SEE_ACTION = "android.intent.action.SEE";
 	private IntercomCallback mCallback = null;
 	private IntentFilter mFilter = null;
+	private Context context;
 
 	public CallReceiver(IntercomCallback back, String action) {
 		mCallback = back;
@@ -35,11 +42,13 @@ public class CallReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		this.context = context;
 		int CallSessionID = intent.getIntExtra("SessionID", 0);
 		int MsgType = intent.getIntExtra("MsgType", 0);
 		String MsgContent = intent.getStringExtra("MsgContent");
 		String roomCode = intent.getStringExtra("code");
-		MyLog.print("CallReceiver", "" + MsgType + ", " + MsgContent);
+		saveRoomCode(MsgContent);
+		MyLog.print("CallReceiver=", "" + MsgType + ", " + MsgContent);
 		switch (MsgType) {
 			case JniPhoneClass.MSG_PHONE_ACCEPT:
 				mCallback.onPhoneAccept();
@@ -100,5 +109,16 @@ public class CallReceiver extends BroadcastReceiver {
 			default:
 				break;
 		}
+	}
+	
+	/**
+	 * 保存门口机号码
+	 * @param roomcode
+	 */
+	private void saveRoomCode(String roomcode) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences("RoomCode", Activity.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.putString("roomcode", roomcode);
+		editor.commit();
 	}
 }

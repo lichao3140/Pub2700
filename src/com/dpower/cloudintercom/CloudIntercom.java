@@ -2,7 +2,6 @@ package com.dpower.cloudintercom;
 
 import java.io.IOException;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,8 +143,7 @@ public class CloudIntercom {
 				List<String> accounts = mCallback.getAccountList();
 				for (String account : accounts) {
 					MyCall call = SIPIntercom.callOut(account);
-					Log.i(LICHAO, "CloudIntercom callout accounts:" + account
-							+ ", callID " + call.getId());
+					Log.i(LICHAO, "callout accounts:" + account + ", callID " + call.getId());
 				}
 				break;
 			case Constant.HANGUP:
@@ -367,7 +365,6 @@ public class CloudIntercom {
 						IndoorInfoMod sipInfoMod = new Gson().fromJson(result, IndoorInfoMod.class);
 						sipinfo = sipInfoMod.getData();
 						String message = sipInfoMod.getMessage();
-						Log.e("lichao", "服务器返回:" + message);
 						if((message == null) || message.isEmpty()) {
 							count_sip = mCallback.countIndoorSip();
 							if (count_sip == 0) {
@@ -454,8 +451,7 @@ public class CloudIntercom {
 		String strMacAddr = "";
 		byte[] b;
 		try {
-			NetworkInterface NIC = NetworkInterface
-					.getByName(LAN_NETWORK_CARD_ETH0);
+			NetworkInterface NIC = NetworkInterface.getByName(LAN_NETWORK_CARD_ETH0);
 			b = NIC.getHardwareAddress();
 			StringBuffer buffer = new StringBuffer();
 			for (int i = 0; i < b.length; i++) {
@@ -463,7 +459,7 @@ public class CloudIntercom {
 				buffer.append(str.length() == 1 ? 0 + str : str);
 			}
 			strMacAddr = buffer.toString().toUpperCase();
-		} catch (SocketException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return strMacAddr;
@@ -1119,6 +1115,8 @@ public class CloudIntercom {
 					Constant.PHONE_TYPE_UNLOCK, "", "0")));
 			}
 		} else if (status.equals(Constant.MSG_STATUS_TWO)) {//手机来电开锁
+			Log.e(LICHAO, "mxk:" + getRoomCode());
+			Log.e(LICHAO, "================");
 			boolean result_calling = DPFunction.phoneopenlock(CallInFromDoorActivity.mRoomCode);
 			if (result_calling) {
 				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(
@@ -1232,7 +1230,11 @@ public class CloudIntercom {
 	 * @param account
 	 * @param token
 	 */
-	private static void UnBindDevice(String account, String token){
+	private static void UnBindDevice(String account, String token) {
 		mCallback.delAccountByToken(account, token);
+	}
+	
+	public static String getRoomCode() {
+		return CallInFromDoorActivity.mRoomCode;
 	}
 }

@@ -21,6 +21,8 @@ import org.pjsip.pjsua2.pjmedia_dir;
 import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsip_role_e;
 import org.pjsip.pjsua2.pjsip_status_code;
+
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -28,6 +30,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -65,6 +68,8 @@ public class DPSIPService extends Service implements MyAppCallback {
 	/** PJSIP返回消息类型 */
 	public static int currentMsgType = 0;
 	private final String ACCOUNT_CHECK = "";
+	private String USERNAME_LOGIN = "";
+	private String SERVER_URL = "";
 	private static DPSIPService mInstance = null;
 	private WakeLock mWakeLock = null;
 	private MyApp mApp = null;
@@ -79,14 +84,16 @@ public class DPSIPService extends Service implements MyAppCallback {
 	private boolean mIsFirstLogin = true;
 	private boolean mIsAllowLogin = true;
 	private static String mServerUrl = "120.25.126.228:5060";
+	private SharedPreferences sharedPreferences;
 
 	/** 通话列表 */
 	private List<MyCall> mCalls = null;
 	private SurfaceHolder mSurfaceHolder = null;
 	private Callback mCallBack = null;
+	private AccountConfig accCfg;
 
 	@Override
-	public IBinder onBind(Intent arg0) {
+	public IBinder onBind(Intent intent) {
 		return null;
 	}
 
@@ -194,8 +201,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 	 *            服务器地址
 	 * @return
 	 */
-	public boolean login(final String username, final String password,
-			final String url) {
+	public boolean login(final String username, final String password, final String url) {	
 		if (!mIsAllowLogin) {
 			return false;
 		} else {
@@ -204,6 +210,8 @@ public class DPSIPService extends Service implements MyAppCallback {
 		if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)
 				|| TextUtils.isEmpty(url))
 			return false;
+		this.USERNAME_LOGIN = username;
+		this.SERVER_URL = url;
 		SIPIntercomLog.print("username= " + username);
 		SIPIntercomLog.print("password= " + password);
 		SIPIntercomLog.print("url= " + url);
@@ -218,7 +226,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 			mIsAllowLogin = true;
 			return false;
 		} else {
-			new Thread(new Runnable() {
+			new Thread(new Runnable() {			
 
 				@Override
 				public void run() {
@@ -232,14 +240,14 @@ public class DPSIPService extends Service implements MyAppCallback {
 						}
 					}
 					mServerUrl = url;
-					AccountConfig accCfg = new AccountConfig();
-					accCfg.setIdUri("lichao<sip:" + username + "@" + url + ">");
+					accCfg = new AccountConfig();
+					accCfg.setIdUri("<sip:" + username + "@" + url + ">");
 					accCfg.getRegConfig().setRegistrarUri("sip:" + url);
 					accCfg.getRegConfig().setTimeoutSec(120);
 					accCfg.getRegConfig().setRetryIntervalSec(120);
 					accCfg.getNatConfig().setIceEnabled(true);
 					accCfg.getVideoConfig().setAutoTransmitOutgoing(true);
-					accCfg.getVideoConfig().setAutoShowIncoming(true);					
+					accCfg.getVideoConfig().setAutoShowIncoming(true);
 					if (mAccount != null) {
 						mAccount.delacc();
 					}
@@ -342,9 +350,13 @@ public class DPSIPService extends Service implements MyAppCallback {
 		SIPIntercomLog.print("呼叫 " + user);
 		MyCall call = new MyCall(mAccount, -1);
 		CallOpParam prm = new CallOpParam(true);
-		try {
-			call.makeCall("sip:" + ACCOUNT_CHECK + user + "@" + mServerUrl, prm);
+		try {		
+			accCfg.setIdUri(readRoomCode() + "<sip:" + USERNAME_LOGIN + "@" + SERVER_URL + ">");	
+			mAccount.modify(accCfg);
+			call.makeCall("sip:" + ACCOUNT_CHECK + user + "@" + mServerUrl, prm);		
+			Log.i(LICHAO, "getLocalUri=" + call.getInfo().getLocalUri().toString());
 		} catch (Exception e) {
+			e.printStackTrace();
 			call.delete();
 			return null;
 		}
@@ -566,8 +578,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 				/* Default button texts are already 'Accept' & 'Reject' */
 			} else {
 				SIPIntercomLog.print("call state " + callInfo.getStateText());
-				Log.e(LICHAO,
-						"DPSIPService call state " + callInfo.getStateText());
+				Log.e(LICHAO, "DPSIPService call state " + callInfo.getStateText());
 				if (SIPIntercom.getSIPCallback() != null) {
 					SIPIntercom.getSIPCallback().callState(call.getId(),
 							callInfo.getStateText());
@@ -815,4 +826,14 @@ public class DPSIPService extends Service implements MyAppCallback {
 		}
 	}
 
+	/**
+	 * 获取门口机号码
+	 * @return 门口机号码
+	 */
+	private String readRoomCode() {
+		sharedPreferences = getSharedPreferences("RoomCode", Activity.MODE_PRIVATE);
+//		sharedPreferences.edit().clear().commit();
+		String roomcode = sharedPreferences.getString("roomcode", "");
+		return roomcode;
+	}
 }

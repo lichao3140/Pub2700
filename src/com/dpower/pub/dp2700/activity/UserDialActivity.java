@@ -2,7 +2,6 @@ package com.dpower.pub.dp2700.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.dpower.domain.AddrInfo;
 import com.dpower.domain.CallInfomation;
 import com.dpower.function.DPFunction;
@@ -11,7 +10,6 @@ import com.dpower.pub.dp2700.tools.EditTextTool;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.pub.dp2700.view.MyEditText;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;

@@ -1,7 +1,6 @@
 package com.dpower.pub.dp2700.activity;
 
 import java.io.File;
-
 import com.dpower.cloudintercom.CloudIntercom;
 import com.dpower.domain.CallInfomation;
 import com.dpower.function.DPFunction;
@@ -154,7 +153,7 @@ public class CallInFromDoorActivity extends BaseActivity implements
 		}
 		mRoomCode = intent.getStringExtra("code");
 		Log.i("lichao", "mCallSessionID = " + mAcceptSessionID);
-		Log.i("lichao", "mRoomCode = " + mRoomCode);
+		Log.i("lichao", "mRoomCode = " + mRoomCode);		
 		MyLog.print("mCallSessionID = " + mAcceptSessionID);
 		MyLog.print("mRoomCode = " + mRoomCode);
 		mCallReceiver = new CallReceiver(this, CallReceiver.CALL_IN_ACTION);
