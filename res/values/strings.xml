@@ -89,8 +89,10 @@
     <string name="text_system_reset">系统复位</string>
     <string name="set_roomcode_success">房号设置成功</string>
     <string name="set_roomcode_fail">房号设置失败，请重试</string>
+    <string name="set_roomcode_hint_00">00</string>
+    <string name="set_roomcode_hint_0000">0000</string>
     <string name="roomcode_exist">该房号已存在</string>
-    <string name="input_13_length_roomcode">请输入13位房号！</string>
+    <string name="input_13_length_roomcode">请输入16位房号！</string>
     <string name="back">返回</string>
     <string name="is_monitoring">正在监视：</string>
     <string name="number_hao">号</string>
@@ -172,6 +174,7 @@
     <string name="music_enjoy">音乐欣赏</string>
     <string name="movie_enjoy">影视欣赏</string>
     <string name="text_recently_record">最近通话</string>
+    <string name="text_area_no">小区</string>
     <string name="text_area">区</string>
     <string name="text_building">栋</string>
     <string name="text_unit">单元</string>
@@ -487,11 +490,13 @@
     <string name="calling_guard">正在呼叫保安分机</string>
     <string name="calling_management_center">正在呼叫管理中心</string>
     <string name="reboot_cancal">点击可取消重启</string>
+    <string name="area_input_no">请输入小区编号</string>
     <string name="area_input">请输入区号</string>
     <string name="building_input">请输入栋号</string>
     <string name="unit_input">请输入单元号</string>
     <string name="room_input">请输入室号</string>
     <string name="extension_input">请输入分机号</string>
+    <string name="area_no_input_error">请输入4位的小区编号</string>
     <string name="area_input_error">请输入2位的区号</string>
     <string name="building_input_error">请输入2位的栋号</string>
     <string name="unit_input_error">请输入2位的单元号</string>

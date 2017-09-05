@@ -6,6 +6,8 @@ import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.ProjectConfigure;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -27,6 +29,7 @@ public class SystemInfoActivity extends BaseActivity {
 	private TextView mTextSystemType;
 	private TextView mTextFirmwareVersion;
 	private String mDeviceType;
+	private SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,11 @@ public class SystemInfoActivity extends BaseActivity {
 		} else {
 			mDeviceType = getVersionName();
 		}
+		
+		init();
+	}
+	
+	private void init() {
 		mTextRoomNum = (TextView) findViewById(R.id.room_num);
 		mTextIp = (TextView) findViewById(R.id.ip);
 		mTextNetCfgVer = (TextView) findViewById(R.id.net_cfg_ver);
@@ -54,19 +62,41 @@ public class SystemInfoActivity extends BaseActivity {
 		mTextDeviceType = (TextView) findViewById(R.id.device_type);
 		mTextSystemType =(TextView) findViewById(R.id.system_type);
 		mTextFirmwareVersion =(TextView) findViewById(R.id.firmware_version);
-		String roomNum = DPFunction.getRoomCode();
-		String areaStr = roomNum.substring(1, 3);
-		String mewsStr = roomNum.substring(3, 5);
-		String unitStr = roomNum.substring(5, 7);
-		String roomStr = roomNum.substring(7, 11);
-		String extensionStr = roomNum.substring(11, 13);
-		String roomName = getString(R.string.system_info_room) 
-							+ areaStr + getString(R.string.text_area) 
-							+ mewsStr + getString(R.string.text_building) 
-							+ unitStr + getString(R.string.text_unit)
-							+ roomStr + getString(R.string.text_room) 
-							+ extensionStr + getString(R.string.text_extension);
-		mTextRoomNum.setText(roomName);
+		
+		sharedPreferences = getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
+		String roomInfo = sharedPreferences.getString("show_room_info", "");
+		if (roomInfo.equals("")) {
+			String roomNum = DPFunction.getRoomCode();
+			String areaStr = roomNum.substring(1, 3);
+			String mewsStr = roomNum.substring(3, 5);
+			String unitStr = roomNum.substring(5, 7);
+			String roomStr = roomNum.substring(7, 11);
+			String extensionStr = roomNum.substring(11, 13);
+			String roomName = getString(R.string.system_info_room)
+								+ "1001" + getString(R.string.text_area_no)
+								+ areaStr + getString(R.string.text_area) 
+								+ mewsStr + getString(R.string.text_building) 
+								+ unitStr + getString(R.string.text_unit)
+								+ roomStr + getString(R.string.text_room) 
+								+ extensionStr + getString(R.string.text_extension);
+			mTextRoomNum.setText(roomName);
+		} else {
+			String areaNoStr = roomInfo.substring(0, 4);
+			String areaStr = roomInfo.substring(4, 6);
+			String mewsStr = roomInfo.substring(6, 9);
+			String unitStr = roomInfo.substring(9, 11);
+			String roomStr = roomInfo.substring(11, 15);
+			String extensionStr = roomInfo.substring(15, 17);
+			String roomName = getString(R.string.system_info_room)
+								+ areaNoStr + getString(R.string.text_area_no)
+								+ areaStr + getString(R.string.text_area) 
+								+ mewsStr + getString(R.string.text_building) 
+								+ unitStr + getString(R.string.text_unit)
+								+ roomStr + getString(R.string.text_room) 
+								+ extensionStr + getString(R.string.text_extension);
+			mTextRoomNum.setText(roomName);
+		}
+		
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
 		if (info == null) {
 			finish();

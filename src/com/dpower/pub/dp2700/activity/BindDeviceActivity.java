@@ -56,7 +56,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private IntentFilter filterlogin;
 	private IntentFilter filtermax;
 	private IntentFilter filterexist;
-	private int sipcount;
 	
 	@SuppressLint("HandlerLeak") 
 	private Handler handler = new Handler() {
@@ -69,7 +68,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 					QRString = QRString + "_" + mMonitorLists.get(i).getCode();
 				}
 				String new_QRString = QRString + "_" + mMonitorLists.size();
-				Log.i(TAG, "new QRString = " + new_QRString);
+				Log.i(TAG, "new QRString:" + new_QRString);
 				String encode = null;
 				try {
 					JniBase64Code base = new JniBase64Code();
@@ -82,7 +81,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 					QRString = "DISABLED";
 				}
 				showQRCode(encode);
-				saveQRCodeInfo(QRString, encode);
+				saveQRCodeInfo(new_QRString, encode);
 				break;
 			case 1:
 				String error = (String) msg.obj;
@@ -98,7 +97,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cloud_intercom);
-		sipcount = DPDBHelper.countIndoorSip();
 		
 		mImageQRCode = (ImageView) findViewById(R.id.image_qr_code);
 		mTextQRCode = (TextView) findViewById(R.id.tv_qrcode);
@@ -107,14 +105,13 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		findViewById(R.id.btn_login).setOnClickListener(this);
 		findViewById(R.id.btn_reboot).setOnClickListener(this);
 		btnRegister.setOnClickListener(this);
-		if(!DPFunction.isOnline() || (sipcount != 0)) {
+		if(!DPFunction.isOnline() && (DPDBHelper.countIndoorSip() == 0)) {
+			btnRegister.setClickable(true);
+		} else {
 			btnRegister.setVisibility(View.GONE);
 			btnRegister.setClickable(false);
-		} else {
-			btnRegister.setClickable(true);
 		}
-		
-		if(!readQRCodeInfo("encode").equals("") && readCodeInfo()) {
+		if((readQRCodeInfo("encode").length() > 0) && CodeIsChange()) {
 			showQRCode(readQRCodeInfo("encode"));
 		} else {
 			DPFunction.getQRString(handler);
@@ -171,7 +168,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			finish();
 			break;
 		case R.id.btn_register:			
-			if(sipcount >= 1) {
+			if(DPDBHelper.countIndoorSip() >= 1) {
 				MyToast.show(R.string.cloud_is_register);
 			} else {
 				new Thread(new Runnable() {
@@ -222,29 +219,38 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		}
 	}
 	
-	/** 存储二维码加密信息 */
+	/**
+	 * 存储二维码加密信息
+	 * @param code    未加密二维码信息
+	 * @param encode  已加密二维码信息
+	 */
 	private void saveQRCodeInfo(String code, String encode) {
 		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
 		editor = sharedPreferences.edit();
 		editor.putString("code", code);
 		editor.putString("encode", encode);
-		editor.apply();
+		editor.commit();
 	}
 	
-	/** 判断保存的二维码信息是否要更新  */
-	private boolean readCodeInfo(){
+	/**
+	 * 判断保存的二维码信息是否改变
+	 * True    未改变
+	 * False   已改变
+	 */
+	private boolean CodeIsChange(){
 		boolean flag = true;
 		String savecode = readQRCodeInfo("code");//保存的二维码信息
+		Log.i(TAG, "savecode=" + savecode);
 		String door = "";
 		if(!savecode.equals("")) {
-			String newcode = savecode.substring(6, 19);//保存的室内机信息
-			String doorcode = savecode.substring(31, savecode.length());//保存的门口机信息
-			String account = CloudIntercom.getRoomId();
+			String newcode = savecode.substring(6, 23);//保存的室内机信息
+			String doorcode = savecode.substring(35, savecode.length() - 2);//保存的门口机信息
+			String account = CloudIntercom.getRoomInfo();
+			
 			mMonitorLists = DPFunction.getCellSeeList();
 			for(int i=0; i< mMonitorLists.size(); i++) {
 				door = door + "_" + mMonitorLists.get(i).getCode();
 			}
-			
 			if(!newcode.equals(account) || !doorcode.equals(door)){
 				flag = false;
 			}
@@ -252,11 +258,16 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		return flag;
 	}
 	
-	/** 读取二维码加密信息  */
+	/**
+	 * 读取二维码加密信息
+	 * @param keystr
+	 * @return
+	 */
 	private String readQRCodeInfo(String keystr){
-		sharedPreferences = getSharedPreferences("RoomCode", Activity.MODE_PRIVATE);
-		String encode = sharedPreferences.getString(keystr, "");
-		return encode;
+		sharedPreferences = getSharedPreferences("QRinfo", Activity.MODE_PRIVATE);
+		String readcode = sharedPreferences.getString(keystr, "");
+		Log.i(TAG, "readencode=" + readcode);
+		return readcode;
 	}
 
 	/** SIP登录状态更新显示 */

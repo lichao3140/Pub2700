@@ -49,7 +49,7 @@
                 android:layout_width="@dimen/keyboard_number_button_width"
                 android:layout_height="@dimen/keyboard_number_button_height"
                 style="@style/style_keyboard_number_small"
-                android:text="1"/>
+                android:text="@string/number_1"/>
 
             <Button
                 android:id="@+id/btn_num_2"
@@ -57,7 +57,7 @@
                 android:layout_height="@dimen/keyboard_number_button_height"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="2" />
+                android:text="@string/number_2" />
 
             <Button
                 android:id="@+id/btn_num_3"
@@ -65,7 +65,7 @@
                 android:layout_height="@dimen/keyboard_number_button_height"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="3" />
+                android:text="@string/number_3" />
 
             <Button
                 android:id="@+id/btn_num_4"
@@ -73,7 +73,7 @@
                 android:layout_height="@dimen/keyboard_number_button_height"
                 android:layout_marginTop="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="4" />
+                android:text="@string/number_4" />
 
             <Button
                 android:id="@+id/btn_num_5"
@@ -82,7 +82,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="5" />
+                android:text="@string/number_5" />
 
             <Button
                 android:id="@+id/btn_num_6"
@@ -91,7 +91,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="6" />
+                android:text="@string/number_6" />
 
             <Button
                 android:id="@+id/btn_num_7"
@@ -99,7 +99,7 @@
                 android:layout_height="@dimen/keyboard_number_button_height"
                 android:layout_marginTop="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="7" />
+                android:text="@string/number_7" />
 
             <Button
                 android:id="@+id/btn_num_8"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="8" />
+                android:text="@string/number_8" />
 
             <Button
                 android:id="@+id/btn_num_9"
@@ -117,7 +117,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginLeft="1dp"
                 style="@style/style_keyboard_number_small"
-                android:text="9" />
+                android:text="@string/number_9" />
 
             <Button
                 android:id="@+id/btn_num_0"
@@ -126,7 +126,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_columnSpan="3"
                 style="@style/style_keyboard_number_small"
-                android:text="0" />
+                android:text="@string/number_0" />
             
         </GridLayout>
         
@@ -145,9 +145,33 @@
                 android:orientation="horizontal" >
 
                 <com.dpower.pub.dp2700.view.MyEditText
+                    android:id="@+id/et_area_no"
+                    style="@style/style_EditTextWhite"
+                    android:hint="@string/set_roomcode_hint_0000"
+                    android:inputType="number"
+                    android:maxLength="4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/info_window_button_margin_left"
+                    android:text="@string/text_area_no"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/title_bar_text_size" />
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.dpower.pub.dp2700.view.MyEditText
                     android:id="@+id/et_area"
                     style="@style/style_EditTextWhite"
-                    android:hint="00"
+                    android:hint="@string/set_roomcode_hint_00"
                     android:inputType="number"
                     android:maxLength="2" />
 
@@ -171,7 +195,7 @@
                 <com.dpower.pub.dp2700.view.MyEditText
                     android:id="@+id/et_building"
                     style="@style/style_EditTextWhite"
-                    android:hint="00"
+                    android:hint="@string/set_roomcode_hint_00"
                     android:inputType="number"
                     android:maxLength="2" />
 
@@ -195,7 +219,7 @@
                 <com.dpower.pub.dp2700.view.MyEditText
                     android:id="@+id/et_unit"
                     style="@style/style_EditTextWhite"
-                    android:hint="00"
+                    android:hint="@string/set_roomcode_hint_00"
                     android:inputType="number"
                     android:maxLength="2" />
 
@@ -219,7 +243,7 @@
                 <com.dpower.pub.dp2700.view.MyEditText
                     android:id="@+id/et_room"
                     style="@style/style_EditTextWhite"
-                    android:hint="0000"
+                    android:hint="@string/set_roomcode_hint_0000"
                     android:inputType="number"
                     android:maxLength="4" />
 
@@ -243,7 +267,7 @@
                 <com.dpower.pub.dp2700.view.MyEditText
                     android:id="@+id/et_extension"
                     style="@style/style_EditTextWhite"
-                    android:hint="00"
+                    android:hint="@string/set_roomcode_hint_00"
                     android:inputType="number"
                     android:maxLength="2" />
 

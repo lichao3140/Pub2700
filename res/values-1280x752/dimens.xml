@@ -90,6 +90,7 @@
     <dimen name="keyboard_number_height">503dp</dimen>
     <dimen name="edit_text_width">156dp</dimen>
     <dimen name="edit_text_margin">20dp</dimen>
+    <dimen name="room_num_set_edit_text_margin">15dp</dimen>
     <dimen name="project_layout_height">65dp</dimen>
     <dimen name="project_button_layout_height">559dp</dimen>
     <dimen name="area_item_height">62dp</dimen>

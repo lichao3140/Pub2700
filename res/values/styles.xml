@@ -160,8 +160,8 @@
 	<style name="style_EditTextWhite">
 	    <item name="android:layout_width">@dimen/edit_text_width</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/edit_text_margin</item>
-        <item name="android:layout_marginBottom">@dimen/edit_text_margin</item>
+        <item name="android:layout_marginTop">@dimen/room_num_set_edit_text_margin</item>
+        <item name="android:layout_marginBottom">@dimen/room_num_set_edit_text_margin</item>
         <item name="android:layout_marginLeft">@dimen/info_window_button_margin_left</item>
         <item name="android:layout_marginRight">@dimen/info_window_button_margin_left</item>
         <item name="android:background">@drawable/bg_edit_text_white</item>

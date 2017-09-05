@@ -3879,7 +3879,7 @@ public class DPFunction {
 	 * 获取室内机的帐号
 	 */
 	public static String getAccount() {
-		return CloudIntercom.getAccount();
+		return CloudIntercom.getRoomInfo();
 	}
 	
 	/**

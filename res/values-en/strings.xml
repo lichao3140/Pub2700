@@ -87,6 +87,8 @@
     <string name="text_system_reset">System Reset</string>
     <string name="set_roomcode_success">Room Number Setting Completed</string>
     <string name="set_roomcode_fail">Room Number Setting Failed</string>
+    <string name="set_roomcode_hint_00">00</string>
+    <string name="set_roomcode_hint_0000">0000</string>
     <string name="roomcode_exist">Room Number Existed</string>
     <string name="input_13_length_roomcode">Input 13 Digit Room Number</string>
     <string name="back">Back</string>
@@ -154,6 +156,7 @@
     <string name="music_enjoy">Music</string>
     <string name="movie_enjoy">Video</string>
     <string name="text_recently_record">Dialogue</string>
+    <string name="text_area_no">NO</string>
     <string name="text_area">Zone</string>
     <string name="text_building">Block</string>
     <string name="text_unit">Unit</string>
@@ -486,11 +489,13 @@
     <string name="calling_guard">Calling guard</string>
     <string name="calling_management_center">Calling management center</string>
     <string name="reboot_cancal">Touch to cancal</string>
+    <string name="area_input_no">Please enter the area no</string>
     <string name="area_input">Please enter the area code</string>
     <string name="building_input">Please enter the store</string>
     <string name="unit_input">Please enter the unit number</string>
     <string name="room_input">Please enter the room no.</string>
     <string name="extension_input">Please enter the extension</string>
+    <string name="area_no_input_error">Please enter the area no for four</string>
     <string name="area_input_error">Please enter the area code for two</string>
     <string name="building_input_error">Please enter the store for two</string>
     <string name="unit_input_error">Please enter the unit number for two</string>

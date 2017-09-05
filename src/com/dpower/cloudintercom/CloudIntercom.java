@@ -31,10 +31,12 @@ import com.google.gson.Gson;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.callback.Callback;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -70,6 +72,7 @@ public class CloudIntercom {
 	private static String account;
 	private static String sipPwd;
 	private static ArrayList<String> notFoundList;
+	private static SharedPreferences sharedPreferences;
 
 	public static void init(Context context, CloudIntercomCallback callback) {
 		mCloudMessage = CloudMessage.getInstance(mMessageCallback);
@@ -94,7 +97,7 @@ public class CloudIntercom {
 		filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
 		filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
 		mNetworkReceiver = new NetworkBroadcastReceiver();
-		mContext.registerReceiver(mNetworkReceiver, filter);
+		mContext.registerReceiver(mNetworkReceiver, filter);		
 	}
 
 	public static void deinit() {
@@ -337,23 +340,24 @@ public class CloudIntercom {
 		String roomNum = mCallback.getRoomCode();
 		String mac = getMacAddress();
 		StringBuilder  sb = new StringBuilder (mac);  
-		sb.insert(10, ":");  
-		sb.insert(8, ":");
-		sb.insert(6, ":");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		sb.insert(4, ":");  
-		sb.insert(2, ":");  
+		sb.insert(10, ":");  sb.insert(8, ":");  sb.insert(6, ":");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		sb.insert(4, ":");   sb.insert(2, ":");  
 		String macStrNew = sb.toString();  
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
-		maps.put("deviceName", "1001" + roomNum.substring(1, roomNum.length()));
-		maps.put("deviceType", "01");
-		maps.put("device_status", "1");
-		maps.put("mac", macStrNew);
-		maps.put("regionNo", roomNum.substring(1, 3));
-		maps.put("areaNo", "1001");
-		maps.put("ip", info.getIp());
-		maps.put("buildingNo", roomNum.substring(3, 5));
-		maps.put("unitNo", roomNum.substring(5, 7));
-		maps.put("houseNo", roomNum.substring(7, 11));
+		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
+		String areaNo = sharedPreferences.getString("area", "");
+		
+		maps.put("deviceName", areaNo + roomNum.substring(1, roomNum.length()));  //设备名
+		maps.put("deviceType", "01");  //设备类型
+		maps.put("device_status", "1");  //设备状态
+		maps.put("mac", macStrNew);  //MAC
+		maps.put("ip", info.getIp());  //IP
+		maps.put("areaNo", areaNo);  //小区编号
+		maps.put("regionNo", sharedPreferences.getString("region", ""));  //区
+		maps.put("buildingNo", "0" + sharedPreferences.getString("building", ""));  //栋
+		maps.put("unitNo", sharedPreferences.getString("unit", ""));  //单元
+		maps.put("houseNo", sharedPreferences.getString("house", ""));  //室
+		
 		OkHttpUtil.getDefault().doPostAsync(
 				HttpInfo.Builder().setUrl(Constant.REG_SIP_URL).addParams(maps).build(),
 				new Callback() {
@@ -373,6 +377,10 @@ public class CloudIntercom {
 							if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
 								mCallback.modifyIndoorSip(sipinfo);
 							}
+						} else if (message == "2") {
+							SIPIntercomLog.print("area not exist!");
+						} else if (message == "14") {
+							SIPIntercomLog.print("house exist device!");
 						} else {
 							SIPIntercomLog.print("get SIP account faile!");
 						}						
@@ -932,9 +940,9 @@ public class CloudIntercom {
 				} else {
 					sipId = mCallback.queryFistSip().getSipId().toString();
 				}
-				String qr = mCallback.getRoomCode();
-				String myqr = "QUHWA_" + qr + "_" + sipId;
-				SIPIntercomLog.print("getQRAccount: " + myqr);
+				//String qr = mCallback.getRoomCode();
+				String myqr = "QUHWA_" + getRoomInfo() + "_" + sipId;
+				SIPIntercomLog.print("getQRAccount:" + myqr);
 				if (!myqr.equals("") && myqr.length() > 0 && !sipId.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(0);
 					msg.obj = myqr;
@@ -971,10 +979,20 @@ public class CloudIntercom {
 		if (mCallback == null) {
 			return null;
 		}
-		String mac = getMacAddress();
-		String account = mac + mCallback.getRoomCode();
+		String account = mCallback.getRoomCode();
 		SIPIntercomLog.print("getAccount " + account);
 		return account;
+	}
+	
+	/**
+	 * 从SP中获取房间号
+	 * @return
+	 */
+	public static String getRoomInfo(){
+		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
+		String room_info = sharedPreferences.getString("show_room_info", "");
+		SIPIntercomLog.print("getRoomInfo:" + room_info);
+		return room_info;
 	}
 
 	public static String getRoomId() {
@@ -1115,8 +1133,6 @@ public class CloudIntercom {
 					Constant.PHONE_TYPE_UNLOCK, "", "0")));
 			}
 		} else if (status.equals(Constant.MSG_STATUS_TWO)) {//手机来电开锁
-			Log.e(LICHAO, "mxk:" + getRoomCode());
-			Log.e(LICHAO, "================");
 			boolean result_calling = DPFunction.phoneopenlock(CallInFromDoorActivity.mRoomCode);
 			if (result_calling) {
 				DPSIPService.sendInstantMessage(phoneSip, DPSIPService.getMsgCommand(new PhoneMessageMod(

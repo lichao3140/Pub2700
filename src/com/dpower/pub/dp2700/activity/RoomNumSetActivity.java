@@ -2,7 +2,6 @@ package com.dpower.pub.dp2700.activity;
 
 import java.io.File;
 import java.io.IOException;
-
 import com.dpower.domain.AddrInfo;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
@@ -15,9 +14,11 @@ import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.pub.dp2700.view.MyEditText;
 import com.dpower.util.ConstConf;
 import com.dpower.util.MyLog;
-
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -48,6 +49,7 @@ public class RoomNumSetActivity extends BaseActivity
 	private final int SET_SUCCESS = 102;
 	private final int SET_FAILED = 103;
 	private EditTextTool mEditTool;
+	private MyEditText mEditAreaNo; // 社区编号
 	private MyEditText mEditArea; // 区
 	private MyEditText mEditBuilding; // 栋
 	private MyEditText mEditUnit; // 单元
@@ -56,6 +58,8 @@ public class RoomNumSetActivity extends BaseActivity
 	private PopupWindow mPopupWindow;
 	private String mAction;
 	private boolean mIsUpdateNetCfgOK = false;
+	private SharedPreferences sharedPreferences;
+	private Editor editor;
 	
 	private Handler mHandler = new Handler() {
 		
@@ -98,6 +102,7 @@ public class RoomNumSetActivity extends BaseActivity
 			mAction = "default";
 		}
 		mEditTool = EditTextTool.getInstance();
+		mEditAreaNo = (MyEditText) findViewById(R.id.et_area_no);
 		mEditArea = (MyEditText) findViewById(R.id.et_area);
 		mEditBuilding = (MyEditText) findViewById(R.id.et_building);
 		mEditUnit = (MyEditText) findViewById(R.id.et_unit);
@@ -123,6 +128,13 @@ public class RoomNumSetActivity extends BaseActivity
 		String extensionStr = roomNum.substring(11, 13);
 		MyLog.print(TAG, "本机房号: " + areaStr + "区" + mewsStr + "栋" + unitStr + "单元"
 				+ roomStr + "室" + extensionStr + "分机");
+		sharedPreferences = getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
+		String room_info_area = sharedPreferences.getString("area", "");
+		if (!room_info_area.equals("")) {
+			mEditAreaNo.setText(room_info_area);
+		} else {
+			mEditAreaNo.setText("1001");
+		}
 		mEditArea.setText(areaStr);
 		mEditBuilding.setText(mewsStr);
 		mEditUnit.setText(unitStr);
@@ -191,7 +203,11 @@ public class RoomNumSetActivity extends BaseActivity
 	}
 	
 	private void onKeyboardClick(String key) {
-		if (mEditArea.hasFocus()) {
+		if (mEditAreaNo.hasFocus()) {
+			if (key.equals("-1") || mEditAreaNo.getText().toString().length() < 4) {
+				editText(mEditAreaNo, key);
+			}
+		} else if (mEditArea.hasFocus()) {
 			if (key.equals("-1") || mEditArea.getText().toString().length() < 2) {
 				editText(mEditArea, key);
 			}
@@ -227,6 +243,13 @@ public class RoomNumSetActivity extends BaseActivity
 	 * 读取设置的房号
 	 */
 	protected String getRoomCode() {
+		if (TextUtils.isEmpty(mEditAreaNo.getText().toString())) {
+			MyToast.show(R.string.area_input_no);
+			return null;
+		} else if (mEditAreaNo.getText().toString().length() < 2) {
+			MyToast.show(R.string.area_no_input_error);
+			return null;
+		}
 		if (TextUtils.isEmpty(mEditArea.getText().toString())) {
 			MyToast.show(R.string.area_input);
 			return null;
@@ -273,6 +296,22 @@ public class RoomNumSetActivity extends BaseActivity
 		buffer.append(mEditUnit.getText().toString());
 		buffer.append(mEditRoom.getText().toString());
 		buffer.append(mEditExtension.getText().toString());
+		//保存房间信息
+		sharedPreferences = getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
+		editor = sharedPreferences.edit();
+		editor.putString("area", mEditAreaNo.getText().toString());//小区编号
+		editor.putString("region", mEditArea.getText().toString());//区
+		editor.putString("building", mEditBuilding.getText().toString());//栋
+		editor.putString("unit", mEditUnit.getText().toString());//单元
+		editor.putString("house", mEditRoom.getText().toString());//室
+		//房号:小区  区域 楼栋 单元 房间号  分机号  1001 01 001 01 0103 01
+		editor.putString("show_room_info", mEditAreaNo.getText().toString()
+				+ mEditArea.getText().toString() 
+				+ "0" + mEditBuilding.getText().toString()
+				+ mEditUnit.getText().toString()
+				+ mEditRoom.getText().toString()
+				+ mEditExtension.getText().toString());
+		editor.commit();
 		return buffer.toString();
 	}
 	
@@ -422,8 +461,7 @@ public class RoomNumSetActivity extends BaseActivity
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
 		popupWindow.setTouchable(false);
 		popupWindow.setFocusable(true);
-		popupWindow.showAtLocation(findViewById(R.id.root_view),
-				Gravity.CENTER, 0, 0);
+		popupWindow.showAtLocation(findViewById(R.id.root_view), Gravity.CENTER, 0, 0);
 		
 		try {
 			FileOperate fileOperate = new FileOperate();

@@ -351,7 +351,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 		MyCall call = new MyCall(mAccount, -1);
 		CallOpParam prm = new CallOpParam(true);
 		try {		
-			accCfg.setIdUri(readRoomCode() + "<sip:" + USERNAME_LOGIN + "@" + SERVER_URL + ">");	
+			accCfg.setIdUri(readRoomCode() + "_<sip:" + USERNAME_LOGIN + "@" + SERVER_URL + ">");	
 			mAccount.modify(accCfg);
 			call.makeCall("sip:" + ACCOUNT_CHECK + user + "@" + mServerUrl, prm);		
 			Log.i(LICHAO, "getLocalUri=" + call.getInfo().getLocalUri().toString());
