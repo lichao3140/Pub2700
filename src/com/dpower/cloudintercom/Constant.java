@@ -96,4 +96,8 @@ public class Constant {
 	/** 上传开门记录到服务器 */
 	public static final String UPLOAD_OPEN_DOOR_RECORD = IP_PORT
 			+ "/smarthomeservice/rest/unlock/add";
+	
+	/** 上传小区消息到服务器 */
+	public static final String UPLOAD_NOTICE_INFO = IP_PORT
+			+ "/smarthomeservice/rest/notice/add";
 }

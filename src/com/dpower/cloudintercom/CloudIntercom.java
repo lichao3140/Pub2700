@@ -378,11 +378,11 @@ public class CloudIntercom {
 								mCallback.modifyIndoorSip(sipinfo);
 							}
 						} else if (message == "2") {
-							SIPIntercomLog.print("area not exist!");
+							SIPIntercomLog.print(4, "area not exist!");
 						} else if (message == "14") {
-							SIPIntercomLog.print("house exist device!");
+							SIPIntercomLog.print(4, "house exist device!");
 						} else {
-							SIPIntercomLog.print("get SIP account faile!");
+							SIPIntercomLog.print(4, "get SIP account faile!");
 						}						
 					}
 
@@ -390,7 +390,7 @@ public class CloudIntercom {
 					public void onFailure(HttpInfo info) throws IOException {
 						String result = info.getRetDetail();
 						String responseStr = info.getUrl().toString();
-						SIPIntercomLog.print("regiter failure:" + result + "URL:" + responseStr);
+						SIPIntercomLog.print(4, "regiter failure:" + result + "URL:" + responseStr);
 					}
 				});
 	}
@@ -420,7 +420,38 @@ public class CloudIntercom {
 					@Override
 					public void onFailure(HttpInfo info) throws IOException {
 						String result = info.getRetDetail();
-						SIPIntercomLog.print("Door Open Record Failuer:" + result);
+						SIPIntercomLog.print(4, "Door Open Record Failuer:" + result);
+					}
+				});
+	}
+	
+	/**
+	 * 上传小区消息到服务器
+	 * @param title
+	 * @param content
+	 * @param type
+	 */
+	public static void uploadAreaMessage(String title, String content, String type) {
+		final HashMap<String, String> maps = new HashMap<String, String>();
+		maps.put("title", title);
+		maps.put("content", content);
+		maps.put("status", "1");
+		maps.put("type", type);
+		maps.put("roomNo", getRoomInfo());
+		OkHttpUtil.getDefault().doPostAsync(
+				HttpInfo.Builder().setUrl(Constant.UPLOAD_NOTICE_INFO).addParams(maps).build(), 
+				new Callback() {
+					
+					@Override
+					public void onSuccess(HttpInfo info) throws IOException {
+						String result = info.getRetDetail();
+						SIPIntercomLog.print("Area Message Success:" + result);
+					}
+					
+					@Override
+					public void onFailure(HttpInfo info) throws IOException {
+						String result = info.getRetDetail();
+						SIPIntercomLog.print(4, "Area Message Failuer:" + result);
 					}
 				});
 	}
@@ -940,7 +971,6 @@ public class CloudIntercom {
 				} else {
 					sipId = mCallback.queryFistSip().getSipId().toString();
 				}
-				//String qr = mCallback.getRoomCode();
 				String myqr = "QUHWA_" + getRoomInfo() + "_" + sipId;
 				SIPIntercomLog.print("getQRAccount:" + myqr);
 				if (!myqr.equals("") && myqr.length() > 0 && !sipId.equals("DISABLED")) {

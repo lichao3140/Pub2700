@@ -21,7 +21,6 @@ import org.pjsip.pjsua2.pjmedia_dir;
 import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsip_role_e;
 import org.pjsip.pjsua2.pjsip_status_code;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -797,33 +796,32 @@ public class DPSIPService extends Service implements MyAppCallback {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TurnPhoneMsg();
+			String body = intent.getStringExtra("msg_body");
+			Log.e(LICHAO, "msg_body=" + body);
+			uploadMsgService(body);
 		}
 	}
 
 	/**
-	 * 发送小区消息给手机
+	 * 小区消息上传到服务器
+	 * @param body   消息内容是否
 	 */
-	public static void TurnPhoneMsg() {
+	public static void uploadMsgService(String body) {
 		MessageInfo msgInfo = DPDBHelper.queryLasgMessage();
-		// 室内机本地HTML文件地址
-		String filesrc = ConstConf.MESSAGE_PATH + File.separator
-				+ msgInfo.getResName().toString();
-		JsoupUtil.getInfoFromFile(filesrc);
+		String title = msgInfo.getTitle().toString();
+		boolean personal = msgInfo.isPersonal();
+		if(body.equals("NotNull")) {
+			// 室内机本地HTML文件地址
+			String filesrc = ConstConf.MESSAGE_PATH + File.separator + msgInfo.getResName().toString();
+			String content = JsoupUtil.getInfoFromFile(filesrc);
+			CloudIntercom.uploadAreaMessage(title, content, (personal? "1":"2"));			
+			Log.i(LICHAO, "Jsoup content:" + content);
+		} else if(body.equals("IsNull")) {
+			CloudIntercom.uploadAreaMessage(title, null, (personal? "1":"2"));
+		}
 		// 中心管理软件HTML链接
 		// String MsgUrl = msgInfo.getBody().toString();
-		// JsoupUtil.getInfoFromUrl(MsgUrl);
-		String title = msgInfo.getTitle().toString();
-		String time = msgInfo.getTime().toString();
-		boolean personal = msgInfo.isPersonal();
-		String msgbody = "title=" + title + ",time=" + time + ",personal="
-				+ personal;
-		List<String> accounts = DPDBHelper.getAccountList();
-		for (String account : accounts) {
-			Log.i(LICHAO, "sip account:" + account);
-			sendInstantMessage(account, getMsgCommand(new PhoneMessageMod(
-					Constant.TURN_MSG_PHONE, msgbody, "")));
-		}
+		// JsoupUtil.getInfoFromUrl(MsgUrl);		
 	}
 
 	/**
@@ -832,7 +830,6 @@ public class DPSIPService extends Service implements MyAppCallback {
 	 */
 	private String readRoomCode() {
 		sharedPreferences = getSharedPreferences("RoomCode", Activity.MODE_PRIVATE);
-//		sharedPreferences.edit().clear().commit();
 		String roomcode = sharedPreferences.getString("roomcode", "");
 		return roomcode;
 	}

@@ -425,9 +425,16 @@ public class DPFunction {
 				DPDBHelper.addMessageLog(msgInfo);
 				Log.i(LICHAO, "UpdateInfoMsg " + msgInfo.toString());
 				infos = new String(infos.substring(end + 7));
+				Intent msg_Intent = new Intent();
+				msg_Intent.setAction(MessageInfo.ACTION_MESSAGE);				
+				if(!msgInfo.getBody().toString().equals("")) {  //消息内容不为空
+					msg_Intent.putExtra("msg_body", "NotNull");
+					mContext.sendBroadcast(msg_Intent);					
+				} else {  //消息内容为空
+					msg_Intent.putExtra("msg_body", "IsNull");
+					mContext.sendBroadcast(msg_Intent);
+				}
 			}
-
-			mContext.sendBroadcast(new Intent(MessageInfo.ACTION_MESSAGE));
 			// 播放提示音
 			playNewMsgRing();
 			toPhoneNewMsg(personal, count);		
