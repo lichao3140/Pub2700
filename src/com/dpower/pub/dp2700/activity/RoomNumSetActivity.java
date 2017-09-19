@@ -42,7 +42,7 @@ import android.widget.TextView;
 public class RoomNumSetActivity extends BaseActivity 
 		implements OnClickListener {
 	private static final String TAG = "RoomNumSetActivity";
-	
+
 	/** 外置SD卡升级包 */
 	private final String APK_EXTSD = "mnt/extsd/Pub2700.apk";
 	private final int ROOM_CODE_NOT_EXIST = 100;
@@ -422,10 +422,9 @@ public class RoomNumSetActivity extends BaseActivity
 		// 检查版本号
 		PackageManager pm = getPackageManager();
 		PackageInfo packageInfo = pm.getPackageArchiveInfo(APK_EXTSD,
-				PackageManager.GET_ACTIVITIES);
-		String pkg_name = packageInfo.versionName;		
+				PackageManager.GET_ACTIVITIES);	
 		int versionCode = packageInfo.versionCode;
-		Log.e("lichao", "pkg_name=" + pkg_name);
+		Log.e("lichao", "versionCode:" + versionCode);
 		try {
 			PackageInfo apkInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
