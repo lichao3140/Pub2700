@@ -294,6 +294,8 @@
     <string name="save_success">Saved</string>
     <string name="save_fail">Not Saved</string>
     <string name="social_message">Message</string>
+    <string name="poush_person_message">Person Message</string>
+    <string name="poush_area_message">Area Message</string>  
     <string name="building_monitor">Monitor</string>
     <string name="quick_security">Alarm Shortcut</string>
     <string name="quick_music_play">Music</string>

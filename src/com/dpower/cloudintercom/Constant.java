@@ -43,6 +43,9 @@ public class Constant {
 	/** 请求超时  */
 	public static final String REQUEST_TIMEOUT = "Request Timeout";
 	
+	/** 连接被重置  */
+	public static final String RESET_BY_PEER = "Connection reset by peer";
+	
 	/** 拒接  */
 	public static final String DECLINE = "Decline";
 	

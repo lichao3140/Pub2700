@@ -2,7 +2,7 @@ package com.dpower.pub.dp2700.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.dpower.cloudintercom.CloudIntercom;
 import com.dpower.cloudintercom.Constant;
 import com.dpower.domain.BindAccountInfo;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
@@ -209,7 +209,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 						@Override
 						public void onClick() {
 							String sip_phone = mAdapter.getDevicesList().get(mAdapter.checkID).accountname;
-							String msg_body = DPFunction.getRoomCode();
+							String msg_body = CloudIntercom.getRoomInfo();
 							DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_ONE;
 							DPSIPService.sendInstantMessage(sip_phone, DPSIPService.getMsgCommand(new PhoneMessageMod(Constant.PHONE_CLOUD_UNBIND, msg_body, "0")));
 						}
@@ -264,7 +264,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	public void unBindPhone(int type){
 		List<String> accounts = DPFunction.getAccountByPhoneType(type);
 		for (String account : accounts) {
-			String msg_body = DPFunction.getRoomCode();
+			String msg_body = CloudIntercom.getRoomInfo();
 			DPSIPService.sendInstantMessage(account, DPSIPService.getMsgCommand(new PhoneMessageMod(Constant.PHONE_CLOUD_UNBIND, msg_body, "0")));
 		}
 	}

@@ -145,8 +145,10 @@ public class CloudIntercom {
 				}
 				List<String> accounts = mCallback.getAccountList();
 				for (String account : accounts) {
-					MyCall call = SIPIntercom.callOut(account);
-					Log.i(LICHAO, "callout accounts:" + account + ", callID " + call.getId());
+					SIPIntercom.callOut(account);
+					Log.i(LICHAO, "callout accounts:" + account);
+//					MyCall call = SIPIntercom.callOut(account);
+//					Log.i(LICHAO, "callout accounts:" + account + ", callID " + call.getId());
 				}
 				break;
 			case Constant.HANGUP:
@@ -427,17 +429,17 @@ public class CloudIntercom {
 	
 	/**
 	 * 上传小区消息到服务器
-	 * @param title
-	 * @param content
-	 * @param type
+	 * @param title  消息主题
+	 * @param content   消息内容
+	 * @param type   消息类型-个人消息:小区消息
 	 */
-	public static void uploadAreaMessage(String title, String content, String type) {
+	public static void uploadAreaMessage(final String title, final String content, final String type) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
 		maps.put("title", title);
 		maps.put("content", content);
 		maps.put("status", "1");
 		maps.put("type", type);
-		maps.put("roomNo", getRoomInfo());
+		maps.put("roomNo", getRoomInfo().substring(0, getRoomInfo().length()-2));
 		OkHttpUtil.getDefault().doPostAsync(
 				HttpInfo.Builder().setUrl(Constant.UPLOAD_NOTICE_INFO).addParams(maps).build(), 
 				new Callback() {
@@ -445,6 +447,7 @@ public class CloudIntercom {
 					@Override
 					public void onSuccess(HttpInfo info) throws IOException {
 						String result = info.getRetDetail();
+						poushAreaMessge(title, type);
 						SIPIntercomLog.print("Area Message Success:" + result);
 					}
 					
@@ -455,14 +458,23 @@ public class CloudIntercom {
 					}
 				});
 	}
+	
+	private static void poushAreaMessge(String title, String type) {
+		if (type.equals("1")) {//个人消息
+			poushToIos(mContext.getString(R.string.poush_person_message) + ":" + title);
+			poushToAnd(mContext.getString(R.string.poush_person_message) + ":" + title);
+		} else if(type.equals("2")) {//公共消息
+			poushToIos(mContext.getString(R.string.poush_area_message) + ":" + title);
+			poushToAnd(mContext.getString(R.string.poush_area_message) + ":" + title);
+		}
+	}
 
 	/** 登录到服务器 */
 	public static boolean startLogin() {
 		if (getMacAddress() != null
 				&& NetworkUntil.getLanConnectState(mNetworkCard)) {
 			if (!SIPIntercom.isOnline()) {
-				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " 
-						+ SIPIntercom.isOnline());
+				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " + SIPIntercom.isOnline());
 				boolean ret = false;
 				count_sip = mCallback.countIndoorSip();
 				if (count_sip == 0) {//室内机数据库SIP为空就去注册

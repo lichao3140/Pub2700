@@ -314,6 +314,8 @@
     <string name="save_success">保存成功</string>
     <string name="save_fail">保存失败</string>
     <string name="social_message">小区消息</string>
+    <string name="poush_person_message">个人消息</string>
+    <string name="poush_area_message">小区消息</string>
     <string name="building_monitor">楼栋监控</string>
     <string name="quick_security">一键布防</string>
     <string name="quick_music_play">音乐播放</string>

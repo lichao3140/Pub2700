@@ -894,8 +894,8 @@ public class DPDBHelper {
 		synchronized (mLock) {
 			DBOpen();
 			String sql = "delete from " + TBL_ACCOUNT_LIST;
-			MyLog.print(sql);
-			mDatabase.execSQL(sql);
+			MyLog.print("clearAccount:" + sql);
+			mDatabase.execSQL(sql);			
 		}
 	}
 	
@@ -912,7 +912,7 @@ public class DPDBHelper {
 			} else {
 				sql = "delete from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'";
 			}
-			MyLog.print(sql);
+			MyLog.print("clearAccount by type:" + sql);
 			mDatabase.execSQL(sql);
 		}
 	}
@@ -928,7 +928,7 @@ public class DPDBHelper {
 			DBOpen();
 			String sql = "delete from " + TBL_ACCOUNT_LIST
 					+ " where accountname='" + account + "'";
-			MyLog.print(sql);
+			MyLog.print("delAccount:" + sql);
 			mDatabase.execSQL(sql);
 		}
 	}
@@ -947,7 +947,7 @@ public class DPDBHelper {
 			DBOpen();
 			String sql = "delete from " + TBL_ACCOUNT_LIST
 					+ " where accountname='" + account + "'" + " and token='" + token + "'";
-			MyLog.print(sql);
+			MyLog.print("delAccountByToken:" + sql);
 			mDatabase.execSQL(sql);
 		}
 	}

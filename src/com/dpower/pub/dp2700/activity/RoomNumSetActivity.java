@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -422,7 +423,9 @@ public class RoomNumSetActivity extends BaseActivity
 		PackageManager pm = getPackageManager();
 		PackageInfo packageInfo = pm.getPackageArchiveInfo(APK_EXTSD,
 				PackageManager.GET_ACTIVITIES);
+		String pkg_name = packageInfo.versionName;		
 		int versionCode = packageInfo.versionCode;
+		Log.e("lichao", "pkg_name=" + pkg_name);
 		try {
 			PackageInfo apkInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
