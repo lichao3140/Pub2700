@@ -34,9 +34,9 @@ import android.widget.ListView;
  */
 public class UnBindDeviceActivity extends BaseActivity implements OnClickListener {
 	
-	private static final int PHONE_TYPE_AND = 1;
-	private static final int PHONE_TYPE_IOS = 2;
-	private static final int PHONE_TYPE_ALL = 0;
+	private static final String PHONE_TYPE_AND = "1";
+	private static final String PHONE_TYPE_IOS = "2";
+	private static final String PHONE_TYPE_ALL = "0";
 	private ListView mListView;
 	private DevicesListAdapter mAdapter;
 	private UnBindPhoneReceiver unBindPhoneReceiver;
@@ -261,7 +261,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	 * 按手机类型解绑手机
 	 * @param type
 	 */
-	public void unBindPhone(int type){
+	public void unBindPhone(String type){
 		List<String> accounts = DPFunction.getAccountByPhoneType(type);
 		for (String account : accounts) {
 			String msg_body = CloudIntercom.getRoomInfo();

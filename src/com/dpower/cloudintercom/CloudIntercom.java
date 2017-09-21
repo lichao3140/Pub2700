@@ -146,6 +146,11 @@ public class CloudIntercom {
 				List<String> accounts = mCallback.getAccountList();
 				for (String account : accounts) {
 					SIPIntercom.callOut(account);
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					Log.i(LICHAO, "callout accounts:" + account);
 //					MyCall call = SIPIntercom.callOut(account);
 //					Log.i(LICHAO, "callout accounts:" + account + ", callID " + call.getId());
@@ -230,7 +235,7 @@ public class CloudIntercom {
 				Log.e(LICHAO, "sipConnectChange:" + reason);
 			}
 			if (reason != null && reason.equals(NetworkUntil.NETWORK_ERROR)) {
-				mHandler.sendEmptyMessageDelayed(Constant.LOGIN, 10000);
+				mHandler.sendEmptyMessageDelayed(Constant.LOGIN, 5000);
 			} else {
 				mHandler.sendEmptyMessage(Constant.LOGIN);
 			}
@@ -379,6 +384,7 @@ public class CloudIntercom {
 							if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
 								mCallback.modifyIndoorSip(sipinfo);
 							}
+							mHandler.sendEmptyMessage(Constant.LOGIN);
 						} else if (message == "2") {
 							SIPIntercomLog.print(4, "area not exist!");
 						} else if (message == "14") {
@@ -912,6 +918,14 @@ public class CloudIntercom {
 	public static boolean callPhone() {
 		if (mCallback == null || !SIPIntercom.isOnline()) {
 			Log.e(LICHAO, "CloudIntercom callPhone=" + SIPIntercom.isOnline() + mCallback);
+			Thread re_login = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					mHandler.sendEmptyMessage(Constant.LOGIN);
+				}
+			});
+			re_login.start();
 			return false;
 		}
 		mHandler.sendEmptyMessage(Constant.CALL_OUT);

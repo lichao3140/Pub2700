@@ -111,6 +111,7 @@ public class MyApp {
 //
 		/* Set ua config. */
 		UaConfig ua_cfg = mEpConfig.getUaConfig();
+		ua_cfg.setMaxCalls(7);
 //		ua_cfg.setUserAgent("Pjsua2 Android " + endpoint.libVersion().getFull());
 		ua_cfg.setUserAgent("DpAndroidDevice");
 		StringVector stun_servers = new StringVector();

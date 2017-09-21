@@ -26,7 +26,7 @@ import com.example.dpservice.DPSafeService;
 public class DPDBHelper {
 	
 	private static final int MAX_COUNT = 50; // 存储记录的最大数量
-	public static final int ACCOUNT_MACNUM = 5; // 室内机绑定手机的最大数量
+	public static final int ACCOUNT_MACNUM = 10; // 室内机绑定手机的最大数量
 	private static final String DB_NAME = "lib2700_db.db";
 
 	/** 键值对 */
@@ -903,13 +903,15 @@ public class DPDBHelper {
 	 * 删除某类型的所有设备
 	 * @param type
 	 */
-	public static void clearAccount(int type) {
+	public static void clearAccount(String type) {
 		synchronized (mLock) {
-			String sql;
+			String sql = null;
 			DBOpen();
-			if(type == 0) {
+			if(type.equals("0")) {
 				sql = "delete from " + TBL_ACCOUNT_LIST;
-			} else {
+			} else if(type.equals("1")) {
+				sql = "delete from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'";
+			} else if(type.equals("2")){
 				sql = "delete from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) = " + "'" + type + "'";
 			}
 			MyLog.print("clearAccount by type:" + sql);
@@ -997,15 +999,15 @@ public class DPDBHelper {
 	 * @param type
 	 * @return
 	 */
-	public static List<String> getAccountByPhoneType(int type){
+	public static List<String> getAccountByPhoneType(String type){
 		List<String> accounts = new ArrayList<String>();
 		DBOpen();
 		String sql = null;
-		if (type == 1) {
+		if (type.equals("1")) {
 			sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=1";
-		} else if (type == 2) {
-			sql = "select * from " + TBL_ACCOUNT_LIST + " where phonetype=2";
-		} else if (type == 0) {
+		} else if (type.equals("2")) {
+			sql = "select * from " + TBL_ACCOUNT_LIST + " where substr(phonetype, 1, 1) ='2'";
+		} else if (type.equals("0")) {
 			sql = "select * from " + TBL_ACCOUNT_LIST;
 		}
 		Cursor cursor = mDatabase.rawQuery(sql, null);
@@ -1018,6 +1020,7 @@ public class DPDBHelper {
 			accounts.add(acc);
 		}
 		cursor.close();
+		MyLog.print("getAccountByPhoneType sql:" + sql);
 		MyLog.print("accounts size= " + accounts.size());
 		return accounts;
 	}

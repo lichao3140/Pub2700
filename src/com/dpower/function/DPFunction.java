@@ -3341,13 +3341,13 @@ public class DPFunction {
 	 * @param type
 	 * @return
 	 */
-	public static List<String> getAccountByPhoneType(int type){
+	public static List<String> getAccountByPhoneType(String type){
 		return DPDBHelper.getAccountByPhoneType(type);
 	}
 	/**
 	 * 解绑所有设备
 	 */
-	public static void clearAccount(int type){
+	public static void clearAccount(String type){
 		DPDBHelper.clearAccount(type);
 	}
 	
