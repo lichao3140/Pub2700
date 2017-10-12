@@ -387,10 +387,32 @@ public class CloudIntercom {
 							mHandler.sendEmptyMessage(Constant.LOGIN);
 						} else if (message == "2") {
 							SIPIntercomLog.print(4, "area not exist!");
+						} else if (message == "3") {
+							SIPIntercomLog.print(4, "area region not exist!");
+						} else if (message == "4") {
+							SIPIntercomLog.print(4, "area building not exist!");
+						} else if (message == "5") {
+							SIPIntercomLog.print(4, "area unit not exist!");
+						} else if (message == "6") {
+							SIPIntercomLog.print(4, "area house not exist!");
+						} else if (message == "7") {
+							SIPIntercomLog.print(4, "area device type not exist!");
+						} else if (message == "8") {
+							SIPIntercomLog.print(4, "device name repeat!");
+						} else if (message == "9") {
+							SIPIntercomLog.print(4, "device ip repeat!");
+						} else if (message == "10") {
+							SIPIntercomLog.print(4, "device position repeat!");
+						} else if (message == "11") {
+							SIPIntercomLog.print(4, "device position not exist!");
+						} else if (message == "12") {
+							SIPIntercomLog.print(4, "device house num not exist!");
+						} else if (message == "13") {
+							SIPIntercomLog.print(4, "device ip not exist!");
 						} else if (message == "14") {
 							SIPIntercomLog.print(4, "house exist device!");
-						} else {
-							SIPIntercomLog.print(4, "get SIP account faile!");
+						} else if(message == "15"){
+							SIPIntercomLog.print(4, "house and ip confilct!");
 						}						
 					}
 

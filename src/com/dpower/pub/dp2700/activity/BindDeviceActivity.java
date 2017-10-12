@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -178,7 +179,11 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 						if(DPSIPService.ping()) {
 							CloudIntercom.registerIndoor();
 						} else {
+							Log.e(TAG, "NO INTERNET");
+							//Looper解决Toast在子线程使用异常
+							Looper.prepare();  
 							MyToast.show(R.string.cloud_network_faile);
+							Looper.loop();
 						}
 					}
 				}).start();

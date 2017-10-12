@@ -331,6 +331,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 
 	/** ÕËºÅÊÇ·ñÔÚÏß */
 	public boolean isOnline() {
+		Log.e(LICHAO, "DPSIPService isOnline:" + mIsOnline);
 		return mIsOnline;
 	}
 
@@ -493,6 +494,7 @@ public class DPSIPService extends Service implements MyAppCallback {
 				mIsOnline = true;
 				if (SIPIntercom.getSIPCallback() != null) {
 					SIPIntercom.getSIPCallback().sipConnectChange(true, null);
+					Log.e(LICHAO, "notifyRegState:SIP µÇÂ¼³É¹¦");
 				}
 			} else if ((code.swigValue() == 401 || code.swigValue() == 407)
 					&& mIsFirstLogin) {
@@ -500,11 +502,12 @@ public class DPSIPService extends Service implements MyAppCallback {
 			} else {
 				if (mIsFirstLogin)
 					mIsFirstLogin = false;
-				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP µÇÂ¼Ê§°Ü");
+				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP µÇÂ¼Ê§°Ü");				
 				mIsOnline = false;
 				hangup();
 				if (SIPIntercom.getSIPCallback() != null) {
 					SIPIntercom.getSIPCallback().sipConnectChange(false, reason);
+					Log.e(LICHAO, "notifyRegState:SIP µÇÂ¼Ê§°Ü" + reason);
 				}
 			}
 		} catch (Exception e) {
