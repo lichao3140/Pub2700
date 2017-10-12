@@ -10,7 +10,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -46,7 +50,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		OnClickListener {
 	private static final String TAG = "BindDeviceActivity";
 	
-	private final int CODE_COLOR = Color.parseColor("#000000");
+	private final int CODE_COLOR_BACK = Color.parseColor("#000000");
 	private ImageView mImageQRCode;
 	private TextView mTextQRCode;
 	private Button btnRegister;
@@ -168,8 +172,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		case R.id.btn_back:
 			finish();
 			break;
-		case R.id.btn_register:			
-			if(DPDBHelper.countIndoorSip() >= 1) {
+		case R.id.btn_register:
+			if(DPDBHelper.countIndoorSip() == 0) {
+				MyToast.show(R.string.cloud_status_tip);
+			} else if(DPDBHelper.countIndoorSip() >= 1) {
 				MyToast.show(R.string.cloud_is_register);
 			} else {
 				new Thread(new Runnable() {
@@ -190,7 +196,9 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			}
 			break;
 		case R.id.btn_login:
-			if(!DPFunction.isOnline()) {//不在线
+			if(DPDBHelper.countIndoorSip() == 0) {
+				MyToast.show(R.string.cloud_status_tip);
+			} else if(!DPFunction.isOnline()) {//不在线
 				CloudIntercom.startLogin();
 				MyToast.show(R.string.cloud_login_restar);
 			} else {
@@ -217,8 +225,22 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	/** 显示二维码 */
 	private void showQRCode(String QRString) {
 		try {
-			Bitmap bm = CommonUT.createQRCode(QRString, 300, CODE_COLOR);
-			mImageQRCode.setImageBitmap(bm);
+			if(DPDBHelper.countIndoorSip() == 0) {
+				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip),
+						300, 30);
+				mImageQRCode.setImageBitmap(bm);
+			}else {
+//				Bitmap qrBitmap  = CommonUT.createQRCode(QRString, 300, CODE_COLOR_BACK);
+//				Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+//				Bitmap bitmap = CommonUT.addLogo(qrBitmap, logoBitmap);
+//				mImageQRCode.setImageBitmap(bitmap);
+				
+				Bitmap logoBitmap = modifyLogo(
+						BitmapFactory.decodeResource(getResources(), R.drawable.qrcode_white_bg), 
+						BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+				Bitmap codeBitmap = CommonUT.createCode(QRString, logoBitmap);
+				mImageQRCode.setImageBitmap(codeBitmap);
+			}
 		} catch (WriterException e) {
 			e.printStackTrace();
 		}
@@ -288,6 +310,29 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			}
 			updateLoginStatus();
 		}
-	} 
-
+	}
+	
+	/**
+	 * @return 返回带有白色背景框logo
+	 */
+	public Bitmap modifyLogo(Bitmap bgBitmap, Bitmap logoBitmap) {
+		//读取背景图片，并构建绘图对象
+		int bgWidth = bgBitmap.getWidth()*3/4;
+		int bgHeigh = bgBitmap.getHeight()*3/4;
+		//通过ThumbnailUtils压缩原图片，并指定宽高为背景图的3/4
+		logoBitmap = ThumbnailUtils.extractThumbnail(logoBitmap,bgWidth*3/4, bgHeigh*3/4, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+		Bitmap cvBitmap = Bitmap.createBitmap(bgWidth, bgHeigh, Config.ARGB_8888);
+		Canvas canvas = new Canvas(cvBitmap);
+		// 开始绘制图片
+		canvas.drawBitmap(bgBitmap, 0, 0, null);
+		canvas.drawBitmap(logoBitmap,(bgWidth - logoBitmap.getWidth()) /2,(bgHeigh - logoBitmap.getHeight()) / 2, null);
+		canvas.save(Canvas.ALL_SAVE_FLAG);// 保存
+		canvas.restore();
+		if(cvBitmap.isRecycled()){
+			cvBitmap.recycle();
+		}
+		return cvBitmap;
+	}
+	
+	
 }

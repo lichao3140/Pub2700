@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -344,6 +346,8 @@ public class CloudIntercom {
 	/** ×¢²áÊÒÄÚ»úSIPÕËºÅ */
 	public static void registerIndoor() {
 		final HashMap<String, String> maps = new HashMap<String, String>();
+		ArrayList<AddrInfo> mMonitorLists = DPFunction.getCellSeeList();
+		String doorNo_list = StringUtils.join(mMonitorLists, "_");
 		String roomNum = mCallback.getRoomCode();
 		String mac = getMacAddress();
 		StringBuilder  sb = new StringBuilder (mac);  
@@ -1014,12 +1018,14 @@ public class CloudIntercom {
 		new Thread(){
 			public void run() {
 				String sipId = null;
+				String deviceNo = null;
 				if(mCallback.countIndoorSip() == 0) {
 					sipId = "DISABLED";
 				} else {
 					sipId = mCallback.queryFistSip().getSipId().toString();
+					deviceNo = mCallback.queryFistSip().getDeviceNo().toString();
 				}
-				String myqr = "QUHWA_" + getRoomInfo() + "_" + sipId;
+				String myqr = "QUHWA_" + getRoomInfo() + "_" + sipId + "_" + deviceNo;
 				SIPIntercomLog.print("getQRAccount:" + myqr);
 				if (!myqr.equals("") && myqr.length() > 0 && !sipId.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(0);

@@ -351,16 +351,17 @@ public final class R {
         public static final int lqh_logo=0x7f020098;
         public static final int progress_bar_horizontal=0x7f020099;
         public static final int progress_bar_large=0x7f02009a;
-        public static final int seek_bar_progress=0x7f02009b;
-        public static final int seek_bar_thumb=0x7f02009c;
-        public static final int seek_bar_thumb_normal=0x7f02009d;
-        public static final int seek_bar_thumb_pressed=0x7f02009e;
-        public static final int test_wallpaper1=0x7f02009f;
-        public static final int test_wallpaper2=0x7f0200a0;
-        public static final int test_wallpaper3=0x7f0200a1;
-        public static final int test_wallpaper4=0x7f0200a2;
-        public static final int wheel_bg=0x7f0200a3;
-        public static final int wheel_val=0x7f0200a4;
+        public static final int qrcode_white_bg=0x7f02009b;
+        public static final int seek_bar_progress=0x7f02009c;
+        public static final int seek_bar_thumb=0x7f02009d;
+        public static final int seek_bar_thumb_normal=0x7f02009e;
+        public static final int seek_bar_thumb_pressed=0x7f02009f;
+        public static final int test_wallpaper1=0x7f0200a0;
+        public static final int test_wallpaper2=0x7f0200a1;
+        public static final int test_wallpaper3=0x7f0200a2;
+        public static final int test_wallpaper4=0x7f0200a3;
+        public static final int wheel_bg=0x7f0200a4;
+        public static final int wheel_val=0x7f0200a5;
     }
     public static final class id {
         public static final int advanced=0x7f0a00dc;

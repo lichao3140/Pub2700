@@ -6,7 +6,6 @@ import com.dpower.pub.dp2700.activity.CallForwardingActivity;
 import com.dpower.pub.dp2700.activity.UnBindDeviceActivity;
 import com.dpower.pub.dp2700.activity.WifiActivity;
 import com.dpower.util.ProjectConfigure;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

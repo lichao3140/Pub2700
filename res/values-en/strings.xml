@@ -39,7 +39,7 @@
     <string name="cloud_login_restar">Cloud Logining,Please wait a moment\u2026\u2026\u2026</string>
     <string name="cloud_login_success">Success</string>
     <string name="cloud_login_failed">Failed</string>
-    <string name="cloud_status_tip">Cloud Login Faile,Please Config RoomNo！</string>
+    <string name="cloud_status_tip">Please Config Room Information！</string>
     <string name="bind_device_is_max">Max bind devices num:</string>
     <string name="bind_device_is_exist">This device is binded</string>
     <string name="bind_device">Bind device</string>

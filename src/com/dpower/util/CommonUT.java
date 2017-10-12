@@ -16,19 +16,42 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
-
 import com.dpower.util.MyLog;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.os.SystemClock;
 
 public class CommonUT {
 	private static final String TAG = "CommonUT";
+	/**
+	 * 黑点颜色
+	 */
+	private static final int BLACK = 0xFF000000;
+	/**
+	 * 白色
+	 */
+	private static final int WHITE = 0xFFFFFFFF; 
+	/**
+	 * 正方形二维码宽度
+	 */
+	private static final int CODE_WIDTH = 440;
+	/**
+	 * LOGO宽度值,最大不能大于二维码20%宽度值,大于可能会导致二维码信息失效
+	 */
+	private static final int LOGO_WIDTH_MAX = CODE_WIDTH / 5;
+	/**
+	 *LOGO宽度值,最小不能小鱼二维码10%宽度值,小于影响Logo与二维码的整体搭配
+	 */
+	private static final int LOGO_WIDTH_MIN = CODE_WIDTH / 10;
 	
 	public static boolean isIp(String strIP) {
 		if (strIP == null || strIP.length() == 0)
@@ -171,9 +194,127 @@ public class CommonUT {
 				}
 			}
 		}
-		//解析颜色数组
+		//解析颜色数组  黑色--RGB_565  透明--ARGB_8888，ARGB_4444
 		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+		return bitmap;
+	}
+	
+	/**
+	 * 二维码中间添加图片
+	 * @param qrBitmap  原始二维码
+	 * @param logoBitmap  要添加的图片
+	 * @return
+	 */
+	public static Bitmap addLogo(Bitmap qrBitmap, Bitmap logoBitmap) {  
+	    int qrBitmapWidth = qrBitmap.getWidth();
+	    int qrBitmapHeight = qrBitmap.getHeight();
+	    int logoBitmapWidth = logoBitmap.getWidth();
+	    int logoBitmapHeight = logoBitmap.getHeight();
+	    
+	    Bitmap blankBitmap = Bitmap.createBitmap(qrBitmapWidth, qrBitmapHeight, Bitmap.Config.ARGB_8888);
+	    Canvas canvas = new Canvas(blankBitmap);
+	    canvas.drawBitmap(qrBitmap, 0, 0, null);
+	    canvas.save(Canvas.ALL_SAVE_FLAG);
+	    
+	    float scaleSize = 1.0f;   
+	    while((logoBitmapWidth / scaleSize) > (qrBitmapWidth / 5) || (logoBitmapHeight / scaleSize) > (qrBitmapHeight / 5)) {  
+	        scaleSize *= 2;  
+	    }
+	    
+	    float sx = 1.0f / scaleSize;
+	    canvas.scale(sx, sx, qrBitmapWidth / 2, qrBitmapHeight / 2);
+	    canvas.drawBitmap(logoBitmap, (qrBitmapWidth - logoBitmapWidth) / 2, (qrBitmapHeight - logoBitmapHeight) / 2, null);
+	    canvas.restore();
+	    return blankBitmap;
+	}
+	
+	/**
+	 * 生成带LOGO的二维码
+	 * @param content  二维码内容
+	 * @param logoBitmap  二维码添加图片
+	 * @return
+	 * @throws WriterException
+	 */
+	public static Bitmap createCode(String content, Bitmap logoBitmap) throws WriterException {
+		int logoWidth = logoBitmap.getWidth();
+		int logoHeight = logoBitmap.getHeight();
+		int logoHaleWidth = logoWidth >= CODE_WIDTH ? LOGO_WIDTH_MIN : LOGO_WIDTH_MAX;
+		int logoHaleHeight = logoHeight >= CODE_WIDTH ? LOGO_WIDTH_MIN : LOGO_WIDTH_MAX;
+		// 将logo图片按martix设置的信息缩放
+		Matrix m = new Matrix();
+		float sx = (float) 2 * logoHaleWidth / logoWidth;
+		float sy = (float) 2 * logoHaleHeight / logoHeight;
+		m.setScale(sx, sy);// 设置缩放信息
+		Bitmap newLogoBitmap = Bitmap.createBitmap(logoBitmap, 0, 0, logoWidth,
+				logoHeight, m, false);
+		int newLogoWidth = newLogoBitmap.getWidth();
+		int newLogoHeight = newLogoBitmap.getHeight();
+		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);//设置容错级别,H为最高
+		hints.put(EncodeHintType.MAX_SIZE, LOGO_WIDTH_MAX);// 设置图片的最大值
+		hints.put(EncodeHintType.MIN_SIZE, LOGO_WIDTH_MIN);// 设置图片的最小值
+		hints.put(EncodeHintType.MARGIN, 2);//设置白色边距值
+		// 生成二维矩阵,编码时指定大小,不要生成了图片以后再进行缩放,这样会模糊导致识别失败
+		BitMatrix matrix = new MultiFormatWriter().encode(content,
+				BarcodeFormat.QR_CODE, CODE_WIDTH, CODE_WIDTH, hints);
+		int width = matrix.getWidth();
+		int height = matrix.getHeight();
+		int halfW = width / 2;
+		int halfH = height / 2;
+		// 二维矩阵转为一维像素数组,也就是一直横着排了
+		int[] pixels = new int[width * height];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				/*
+				 * 取值范围,可以画图理解下  
+				 * halfW + newLogoWidth / 2 - (halfW - newLogoWidth / 2) = newLogoWidth
+				 * halfH + newLogoHeight / 2 - (halfH - newLogoHeight) = newLogoHeight
+				 */
+				if (x > halfW - newLogoWidth / 2 && x < halfW + newLogoWidth / 2
+						&& y > halfH - newLogoHeight / 2 && y < halfH + newLogoHeight / 2) {// 该位置用于存放图片信息
+					/*
+					 *  记录图片每个像素信息
+					 *  halfW - newLogoWidth / 2 < x < halfW + newLogoWidth / 2 
+					 *  --> 0 < x - halfW + newLogoWidth / 2 < newLogoWidth
+					 *   halfH - newLogoHeight / 2  < y < halfH + newLogoHeight / 2
+					 *   -->0 < y - halfH + newLogoHeight / 2 < newLogoHeight
+					 *   刚好取值newLogoBitmap。getPixel(0-newLogoWidth,0-newLogoHeight);
+					 */
+					pixels[y * width + x] = newLogoBitmap.getPixel(
+							x - halfW + newLogoWidth / 2, y - halfH + newLogoHeight / 2);
+				} else {
+					pixels[y * width + x] = matrix.get(x, y) ? BLACK: WHITE;// 设置信息
+				}
+			}
+		}
+		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		// 通过像素数组生成bitmap,具体参考api
+		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+		return bitmap;
+	}
+	
+	/**
+	 * 创建无效图片
+	 * @param str  图片显示文字
+	 * @param widthAndHeight  图片宽高
+	 * @param textSize  文字大小
+	 * @return
+	 */
+	public static Bitmap createDestroyImage(String str, int widthAndHeight, int textSize) {
+		Bitmap bitmap = Bitmap.createBitmap(widthAndHeight, widthAndHeight, Bitmap.Config.RGB_565);
+		Canvas canvas = new Canvas(bitmap);
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(textSize);
+		
+		//计算得出文字的绘制起始X,Y坐标
+		int posX = widthAndHeight / 2 - textSize * str.length() / 2;
+		int posY = widthAndHeight / 2 + textSize / 2;
+		
+		canvas.drawColor(Color.parseColor("#00E5EE"));
+		canvas.drawText(str, posX, posY, paint);
 		return bitmap;
 	}
 	
