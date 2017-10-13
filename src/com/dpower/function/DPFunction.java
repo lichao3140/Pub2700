@@ -1105,7 +1105,7 @@ public class DPFunction {
 	 */
 	public static int changeRoomCode(String newCode) {
 		synchronized (mutex) {
-			MyLog.print("changeRoomCode " + newCode);
+			MyLog.print("DPFunction changeRoomCode " + newCode);
 			if (newCode == null) {
 				MyLog.print(MyLog.ERROR, "changeRoomCode is null");
 				return -1;
@@ -3887,6 +3887,10 @@ public class DPFunction {
 	 */
 	public static String getAccount() {
 		return CloudIntercom.getRoomInfo();
+	}
+	
+	public static String getDBAccount() {
+		return CloudIntercom.getDbRoomInfo();
 	}
 	
 	/**

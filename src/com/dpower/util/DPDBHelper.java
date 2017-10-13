@@ -11,6 +11,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
+
 import com.dpower.domain.AlarmLog;
 import com.dpower.domain.AlarmVideo;
 import com.dpower.domain.BindAccountInfo;
@@ -1955,7 +1957,7 @@ public class DPDBHelper {
 		DBOpen();
 		String sql = "select sipid from " + TBL_INDOORSIP_INFO
 				+ " where sipid='" + sipid + "'";
-		MyLog.print(sql);
+		MyLog.print("isIndoorSipExist sql:" + sql);
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
 			ret = true;
@@ -1969,6 +1971,7 @@ public class DPDBHelper {
 	 * @param info
 	 */
 	public static void modifyIndoorSip(IndoorSipInfo info) {
+		Log.i("lichao", "modifyIndoorSip info:" + info.toString());
 		int id = info.getDb_id();
 		synchronized (mLock) {
 			DBOpen();

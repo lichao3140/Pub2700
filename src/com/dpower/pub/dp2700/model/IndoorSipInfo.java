@@ -22,7 +22,7 @@ public class IndoorSipInfo extends BaseMod {
 
 	private String ip;
 
-	private String deviceName;
+	private String deviceName = null;
 
 	private String deviceType;
 
@@ -71,7 +71,11 @@ public class IndoorSipInfo extends BaseMod {
 	}
 
 	public int getDb_id() {
-		return mDB_id;
+		return this.mDB_id;
+	}
+	
+	public void setDb_id(int db_id) {
+		this.mDB_id = db_id;
 	}
 
 	public void setDeviceNo(String deviceNo) {

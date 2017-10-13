@@ -351,7 +351,6 @@ public class CloudIntercom {
 				doorNo_list = doorNo_list + "_" + mMonitorLists.get(i).getCode();
 			}
 		}
-		String roomNum = mCallback.getRoomCode();
 		String mac = getMacAddress();
 		StringBuilder  sb = new StringBuilder (mac);  
 		sb.insert(10, ":");  sb.insert(8, ":");  sb.insert(6, ":");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -360,8 +359,9 @@ public class CloudIntercom {
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
 		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
 		String areaNo = sharedPreferences.getString("area", "");
+		String deviceName = sharedPreferences.getString("show_room_info", "");
 		Log.e(LICHAO, "门口机:" + doorNo_list);
-		maps.put("deviceName", areaNo + roomNum.substring(1, roomNum.length()));  //设备名
+		maps.put("deviceName", deviceName);
 		maps.put("deviceType", "01");  //设备类型
 		maps.put("device_status", "1");  //设备状态
 		maps.put("mac", macStrNew);  //MAC
@@ -388,8 +388,7 @@ public class CloudIntercom {
 							count_sip = mCallback.countIndoorSip();
 							if (count_sip == 0) {
 								mCallback.addIndoorSip(sipinfo);
-							}
-							if (!mCallback.isIndoorSipExist(sipinfo.getSipId())) {
+							} else {
 								mCallback.modifyIndoorSip(sipinfo);
 							}
 							mHandler.sendEmptyMessage(Constant.LOGIN);
@@ -517,7 +516,11 @@ public class CloudIntercom {
 					registerIndoor();
 					account = getSipAcount();
 					sipPwd = getSipPwd();
-				} else if (count_sip == 1) {
+				} else if(count_sip == 1 && !getDbRoomInfo().equals(getRoomInfo())) {
+					registerIndoor();
+					account = getSipAcount();
+					sipPwd = getSipPwd();
+				} else {
 					account = mCallback.queryFistSip().getSipId().toString();
 					sipPwd = mCallback.queryFistSip().getSipPwd().toString();
 				}
@@ -1076,11 +1079,19 @@ public class CloudIntercom {
 	 * 从SP中获取房间号
 	 * @return
 	 */
-	public static String getRoomInfo(){
+	public static String getRoomInfo() {
 		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
 		String room_info = sharedPreferences.getString("show_room_info", "");
 		SIPIntercomLog.print("getRoomInfo:" + room_info);
 		return room_info;
+	}
+	
+	/**
+	 * 从数据库获取房间号
+	 * @return
+	 */
+	public static String getDbRoomInfo() {
+		return mCallback.queryFistSip().getDeviceName().toString();
 	}
 
 	public static String getRoomId() {
@@ -1093,7 +1104,6 @@ public class CloudIntercom {
 	
 	/**
 	 * 获取室内机SIP账号
-	 * 
 	 * @return
 	 */
 	public static String getSipAcount() {
@@ -1109,7 +1119,6 @@ public class CloudIntercom {
 
 	/**
 	 * 获取室内机SIP密码
-	 * 
 	 * @return
 	 */
 	public static String getSipPwd() {

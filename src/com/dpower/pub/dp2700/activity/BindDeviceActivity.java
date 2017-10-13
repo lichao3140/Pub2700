@@ -135,7 +135,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 	private void updateLoginStatus() {
 		String msg;
-		String account = DPFunction.getAccount();
+		String account = DPFunction.getDBAccount();
 		if (account == null) {
 			account = "DISABLED";
 		}
