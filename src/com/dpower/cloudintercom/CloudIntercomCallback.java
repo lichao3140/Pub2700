@@ -77,7 +77,7 @@ public interface CloudIntercomCallback {
 	public boolean isIndoorSipExist(String sipid);
 	
 	/** ÃÌº”’À∫≈ */
-	public int addAccount(String account, String token, String mobiletype);
+	public int addAccount(String account);
 	
 	/** …æ≥˝’À∫≈ */
 	public void deleteAccount(String account);

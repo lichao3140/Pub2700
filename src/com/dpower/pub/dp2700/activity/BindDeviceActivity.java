@@ -68,16 +68,16 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			switch (msg.what) {
 			case 0:
 				String QRString = (String) msg.obj;
-				mMonitorLists = DPFunction.getCellSeeList();
-				for(int i=0; i< mMonitorLists.size(); i++) {
-					QRString = QRString + "_" + mMonitorLists.get(i).getCode();
-				}
-				String new_QRString = QRString + "_" + mMonitorLists.size();
-				Log.i(TAG, "new QRString:" + new_QRString);
+//				mMonitorLists = DPFunction.getCellSeeList();
+//				for(int i=0; i< mMonitorLists.size(); i++) {
+//					QRString = QRString + "_" + mMonitorLists.get(i).getCode();
+//				}
+//				String new_QRString = QRString + "_" + mMonitorLists.size();
+				Log.i(TAG, "QRString:" + QRString);
 				String encode = null;
 				try {
 					JniBase64Code base = new JniBase64Code();
-					byte[] b = base.enBase(new_QRString.getBytes(Constant.CHARSET));
+					byte[] b = base.enBase(QRString.getBytes(Constant.CHARSET));
 					encode = new String(b, Constant.CHARSET);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,8 +85,9 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 				if (QRString == null) {
 					QRString = "DISABLED";
 				}
+				Log.i(TAG, "Encode QRString:" + encode);
 				showQRCode(encode);
-				saveQRCodeInfo(new_QRString, encode);
+				saveQRCodeInfo(QRString, encode);
 				break;
 			case 1:
 				String error = (String) msg.obj;
@@ -116,11 +117,11 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			btnRegister.setVisibility(View.GONE);
 			btnRegister.setClickable(false);
 		}
-		if((readQRCodeInfo("encode").length() > 0) && CodeIsChange()) {
-			showQRCode(readQRCodeInfo("encode"));
-		} else {
+//		if((readQRCodeInfo("encode").length() > 0) && CodeIsChange()) {
+//			showQRCode(readQRCodeInfo("encode"));
+//		} else {
 			DPFunction.getQRString(handler);
-		}
+//		}
 		updateLoginStatus();
 		filterlogin = new IntentFilter(DPFunction.ACTION_CLOUD_LOGIN_CHANGED);
 		filterexist = new IntentFilter(ReceiverAction.ACTION_ACCOUNT_IS_EXIST);
@@ -196,8 +197,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			}
 			break;
 		case R.id.btn_login:
-			if(DPDBHelper.countIndoorSip() == 0) {
+			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
 				MyToast.show(R.string.cloud_status_tip);
+			} else if(DPDBHelper.countIndoorSip() == 0 && !DPFunction.getAccount().isEmpty()) {
+				MyToast.show(R.string.cloud_status_tip_regist);
 			} else if(!DPFunction.isOnline()) {//不在线
 				CloudIntercom.startLogin();
 				MyToast.show(R.string.cloud_login_restar);
@@ -225,15 +228,17 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	/** 显示二维码 */
 	private void showQRCode(String QRString) {
 		try {
-			if(DPDBHelper.countIndoorSip() == 0) {
-				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip),
-						300, 30);
+			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
+				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip), 300, 30);
+				mImageQRCode.setImageBitmap(bm);
+			} else if(DPDBHelper.countIndoorSip() == 0 && !DPFunction.getAccount().isEmpty()) {
+				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip_regist), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
 			}else {
 //				Bitmap qrBitmap  = CommonUT.createQRCode(QRString, 300, CODE_COLOR_BACK);
 //				Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 //				Bitmap bitmap = CommonUT.addLogo(qrBitmap, logoBitmap);
-//				mImageQRCode.setImageBitmap(bitmap);
+//				mImageQRCode.setImageBitmap(qrBitmap);
 				
 				Bitmap logoBitmap = modifyLogo(
 						BitmapFactory.decodeResource(getResources(), R.drawable.qrcode_white_bg), 
@@ -317,10 +322,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	 */
 	public Bitmap modifyLogo(Bitmap bgBitmap, Bitmap logoBitmap) {
 		//读取背景图片，并构建绘图对象
-		int bgWidth = bgBitmap.getWidth()*3/4;
-		int bgHeigh = bgBitmap.getHeight()*3/4;
+		int bgWidth = bgBitmap.getWidth();
+		int bgHeigh = bgBitmap.getHeight();
 		//通过ThumbnailUtils压缩原图片，并指定宽高为背景图的3/4
-		logoBitmap = ThumbnailUtils.extractThumbnail(logoBitmap,bgWidth*3/4, bgHeigh*3/4, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+		logoBitmap = ThumbnailUtils.extractThumbnail(logoBitmap, bgWidth*3/4, bgHeigh*3/4, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 		Bitmap cvBitmap = Bitmap.createBitmap(bgWidth, bgHeigh, Config.ARGB_8888);
 		Canvas canvas = new Canvas(cvBitmap);
 		// 开始绘制图片
@@ -333,6 +338,4 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		}
 		return cvBitmap;
 	}
-	
-	
 }

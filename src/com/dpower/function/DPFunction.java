@@ -3740,8 +3740,8 @@ public class DPFunction {
 		}
 
 		@Override
-		public int addAccount(String account, String token, String mobiletype) {
-			return DPDBHelper.addAccount(account, token, mobiletype);
+		public int addAccount(String account) {
+			return DPDBHelper.addAccount(account);
 		}
 
 		@Override

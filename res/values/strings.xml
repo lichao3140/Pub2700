@@ -40,6 +40,7 @@
     <string name="cloud_login_success">成功</string>
     <string name="cloud_login_failed">失败</string>
     <string name="cloud_status_tip">请先设置房号信息！</string>
+    <string name="cloud_status_tip_regist">请点击云对讲注册！</string>
     <string name="bind_device_is_max">最多绑定手机数量：</string>
     <string name="bind_device_is_exist">该设备已绑定</string>
     <string name="bind_device">绑定设备</string>

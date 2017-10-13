@@ -47,9 +47,9 @@ public class CommonUT {
 	/**
 	 * LOGO宽度值,最大不能大于二维码20%宽度值,大于可能会导致二维码信息失效
 	 */
-	private static final int LOGO_WIDTH_MAX = CODE_WIDTH / 5;
+	private static final int LOGO_WIDTH_MAX = CODE_WIDTH / 6;
 	/**
-	 *LOGO宽度值,最小不能小鱼二维码10%宽度值,小于影响Logo与二维码的整体搭配
+	 *LOGO宽度值,最小不能小于二维码10%宽度值,小于影响Logo与二维码的整体搭配
 	 */
 	private static final int LOGO_WIDTH_MIN = CODE_WIDTH / 10;
 	

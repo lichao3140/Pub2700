@@ -40,6 +40,7 @@
     <string name="cloud_login_success">Success</string>
     <string name="cloud_login_failed">Failed</string>
     <string name="cloud_status_tip">Please Config Room Information！</string>
+    <string name="cloud_status_tip_regist">Please Click Regist！</string>
     <string name="bind_device_is_max">Max bind devices num:</string>
     <string name="bind_device_is_exist">This device is binded</string>
     <string name="bind_device">Bind device</string>

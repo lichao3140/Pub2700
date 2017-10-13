@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +15,6 @@ import com.dpower.domain.AddrInfo;
 import com.dpower.dpsiplib.callback.SIPCallback;
 import com.dpower.dpsiplib.model.PhoneMessageMod;
 import com.dpower.dpsiplib.service.DPSIPService;
-import com.dpower.dpsiplib.service.MyCall;
 import com.dpower.dpsiplib.sipintercom.SIPIntercom;
 import com.dpower.dpsiplib.utils.JsonParser;
 import com.dpower.dpsiplib.utils.NetworkUntil;
@@ -347,7 +344,13 @@ public class CloudIntercom {
 	public static void registerIndoor() {
 		final HashMap<String, String> maps = new HashMap<String, String>();
 		ArrayList<AddrInfo> mMonitorLists = DPFunction.getCellSeeList();
-		String doorNo_list = StringUtils.join(mMonitorLists, "_");
+		String doorNo_list = null;
+		if(mMonitorLists.size() != 0) {
+			doorNo_list = mMonitorLists.get(0).getCode();
+			for(int i = 1; i < mMonitorLists.size(); i++) {
+				doorNo_list = doorNo_list + "_" + mMonitorLists.get(i).getCode();
+			}
+		}
 		String roomNum = mCallback.getRoomCode();
 		String mac = getMacAddress();
 		StringBuilder  sb = new StringBuilder (mac);  
@@ -357,7 +360,7 @@ public class CloudIntercom {
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
 		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
 		String areaNo = sharedPreferences.getString("area", "");
-		
+		Log.e(LICHAO, "门口机:" + doorNo_list);
 		maps.put("deviceName", areaNo + roomNum.substring(1, roomNum.length()));  //设备名
 		maps.put("deviceType", "01");  //设备类型
 		maps.put("device_status", "1");  //设备状态
@@ -368,6 +371,7 @@ public class CloudIntercom {
 		maps.put("buildingNo", "0" + sharedPreferences.getString("building", ""));  //栋
 		maps.put("unitNo", sharedPreferences.getString("unit", ""));  //单元
 		maps.put("houseNo", sharedPreferences.getString("house", ""));  //室
+		maps.put("unitDoorNo", doorNo_list);//门口机
 		
 		OkHttpUtil.getDefault().doPostAsync(
 				HttpInfo.Builder().setUrl(Constant.REG_SIP_URL).addParams(maps).build(),
@@ -587,7 +591,7 @@ public class CloudIntercom {
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					int result = mCallback.addAccount(tel, null, null);
+					int result = mCallback.addAccount(tel);
 					if (result == 0) {
 						sendMessage(
 								"{\"cmd\":\"bindTelAck\", \"r\":\"ok\", \"tel\":\""
@@ -630,8 +634,7 @@ public class CloudIntercom {
 									String telItem = jsonArray.get(i)
 											.toString();
 									if (telItem != null)
-										mCallback.addAccount(telItem, null,
-												null);
+										mCallback.addAccount(telItem);
 								}
 								return;
 							}
@@ -1017,21 +1020,22 @@ public class CloudIntercom {
 		
 		new Thread(){
 			public void run() {
-				String sipId = null;
+				//String sipId = null;
 				String deviceNo = null;
 				if(mCallback.countIndoorSip() == 0) {
-					sipId = "DISABLED";
+					//sipId = "DISABLED";
+					deviceNo = "DISABLED";
 				} else {
-					sipId = mCallback.queryFistSip().getSipId().toString();
+					//sipId = mCallback.queryFistSip().getSipId().toString();
 					deviceNo = mCallback.queryFistSip().getDeviceNo().toString();
 				}
-				String myqr = "QUHWA_" + getRoomInfo() + "_" + sipId + "_" + deviceNo;
+				String myqr = "QUHWA_" + deviceNo;
 				SIPIntercomLog.print("getQRAccount:" + myqr);
-				if (!myqr.equals("") && myqr.length() > 0 && !sipId.equals("DISABLED")) {
+				if (!myqr.equals("") && myqr.length() > 0 && !deviceNo.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(0);
 					msg.obj = myqr;
 					handler.sendMessage(msg);
-				} else if (sipId.equals("DISABLED")) {
+				} else if (deviceNo.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(1);
 					msg.obj = "DISABLED";
 					handler.sendMessage(msg);
@@ -1241,7 +1245,7 @@ public class CloudIntercom {
 	 */
 	private static void BindPhoneMessage(String phoneSip, String token, String mobiletype) {	
 		Intent intent = new Intent();
-		int add_result = mCallback.addAccount(phoneSip, token, mobiletype);
+		int add_result = mCallback.addAccount(phoneSip);
 		if (add_result == 0) {
 			Log.i(LICHAO, "account success:" + phoneSip);
 		} else if (add_result == -2) {

@@ -26,7 +26,7 @@ import com.example.dpservice.DPSafeService;
 public class DPDBHelper {
 	
 	private static final int MAX_COUNT = 50; // 存储记录的最大数量
-	public static final int ACCOUNT_MACNUM = 10; // 室内机绑定手机的最大数量
+	public static final int ACCOUNT_MACNUM = 50; // 室内机绑定手机的最大数量
 	private static final String DB_NAME = "lib2700_db.db";
 
 	/** 键值对 */
@@ -872,15 +872,15 @@ public class DPDBHelper {
 	 * @param mobiletype  手机类型  1为Android  2为IOS
 	 * @return 0-添加成功, -1 已到帐号的最大数量, -2 帐号已存在
 	 */
-	public static int addAccount(String account, String token, String mobiletype) {
+	public static int addAccount(String account) {
 		synchronized (mLock) {
-			if (isExistData(account, token, mobiletype))
+			if (isAccountExist(account))
 				return -2;
 			if (getAccountCount() >= ACCOUNT_MACNUM)
 				return -1;
 			DBOpen();
 			String sql = "insert into " + TBL_ACCOUNT_LIST + " values(null, '"
-					+ account + "', '" + account + "', 1, '" + token + "', '" + mobiletype + "')";
+					+ account + "', '" + account + "', 1)";
 			MyLog.print("addAccount sql=" + sql);
 			mDatabase.execSQL(sql);
 		}
