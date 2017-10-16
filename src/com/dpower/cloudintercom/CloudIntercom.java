@@ -512,15 +512,12 @@ public class CloudIntercom {
 				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " + SIPIntercom.isOnline());
 				boolean ret = false;
 				count_sip = mCallback.countIndoorSip();
-				if (count_sip == 0) {//室内机数据库SIP为空就去注册
+				if (count_sip==0 || (count_sip == 1 && !getDbRoomInfo().equals(getRoomInfo()))) {
+					//注册SIP情况:1、室内机数据库SIP为空;2、数据库房号和用户配置的房号不一致。
 					registerIndoor();
 					account = getSipAcount();
 					sipPwd = getSipPwd();
-				} else if(count_sip == 1 && !getDbRoomInfo().equals(getRoomInfo())) {
-					registerIndoor();
-					account = getSipAcount();
-					sipPwd = getSipPwd();
-				} else {
+				} else {//从本地数据库读取SIP
 					account = mCallback.queryFistSip().getSipId().toString();
 					sipPwd = mCallback.queryFistSip().getSipPwd().toString();
 				}
@@ -1023,22 +1020,22 @@ public class CloudIntercom {
 		
 		new Thread(){
 			public void run() {
-				//String sipId = null;
+				String sipId = null;
 				String deviceNo = null;
 				if(mCallback.countIndoorSip() == 0) {
-					//sipId = "DISABLED";
+					sipId = "DISABLED";
 					deviceNo = "DISABLED";
 				} else {
-					//sipId = mCallback.queryFistSip().getSipId().toString();
+					sipId = mCallback.queryFistSip().getSipId().toString();
 					deviceNo = mCallback.queryFistSip().getDeviceNo().toString();
 				}
-				String myqr = "QUHWA_" + deviceNo;
+				String myqr = "QUHWA_" + deviceNo + "_" + sipId;
 				SIPIntercomLog.print("getQRAccount:" + myqr);
-				if (!myqr.equals("") && myqr.length() > 0 && !deviceNo.equals("DISABLED")) {
+				if (!sipId.equals("DISABLED") && !deviceNo.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(0);
 					msg.obj = myqr;
 					handler.sendMessage(msg);
-				} else if (deviceNo.equals("DISABLED")) {
+				} else if (deviceNo.equals("DISABLED") || sipId.equals("DISABLED")) {
 					Message msg = handler.obtainMessage(1);
 					msg.obj = "DISABLED";
 					handler.sendMessage(msg);
@@ -1205,7 +1202,7 @@ public class CloudIntercom {
 			} else if (phoneMsg.getType().equals(Constant.PHONE_CLOUD_UNBIND)) {//手机解绑室内机
 				Map<String, String> map = new HashMap<String, String>();
 				map = gson.getMapFromString(phoneMsg.getMsg().toString());
-				UnBindDevice(map.get("sipId"), map.get("token"));
+				UnBindDevice(map.get("sipId"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1343,8 +1340,8 @@ public class CloudIntercom {
 	 * @param account
 	 * @param token
 	 */
-	private static void UnBindDevice(String account, String token) {
-		mCallback.delAccountByToken(account, token);
+	private static void UnBindDevice(String account) {
+		mCallback.delAccount(account);
 	}
 	
 	public static String getRoomCode() {

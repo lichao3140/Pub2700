@@ -1,6 +1,5 @@
 package com.dpower.pub.dp2700.activity;
 
-import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -26,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.dpower.cloudintercom.CloudIntercom;
 import com.dpower.cloudintercom.Constant;
-import com.dpower.domain.AddrInfo;
 import com.dpower.dpsiplib.service.DPSIPService;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
@@ -56,7 +54,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 	private Button btnRegister;
 	private CloudLoginChangeReceiver mCloudLoginReceiver;
 	private SharedPreferences sharedPreferences;
-	private ArrayList<AddrInfo> mMonitorLists;
 	private Editor editor;
 	private IntentFilter filterlogin;
 	private IntentFilter filtermax;
@@ -68,11 +65,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			switch (msg.what) {
 			case 0:
 				String QRString = (String) msg.obj;
-//				mMonitorLists = DPFunction.getCellSeeList();
-//				for(int i=0; i< mMonitorLists.size(); i++) {
-//					QRString = QRString + "_" + mMonitorLists.get(i).getCode();
-//				}
-//				String new_QRString = QRString + "_" + mMonitorLists.size();
 				Log.i(TAG, "QRString:" + QRString);
 				String encode = null;
 				try {
@@ -117,11 +109,11 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			btnRegister.setVisibility(View.GONE);
 			btnRegister.setClickable(false);
 		}
-//		if((readQRCodeInfo("encode").length() > 0) && CodeIsChange()) {
-//			showQRCode(readQRCodeInfo("encode"));
-//		} else {
+		if((readQRCodeInfo("encode").length() > 0) && CodeIsChange()) {
+			showQRCode(readQRCodeInfo("encode"));
+		} else {
 			DPFunction.getQRString(handler);
-//		}
+		}
 		updateLoginStatus();
 		filterlogin = new IntentFilter(DPFunction.ACTION_CLOUD_LOGIN_CHANGED);
 		filterexist = new IntentFilter(ReceiverAction.ACTION_ACCOUNT_IS_EXIST);
@@ -231,10 +223,10 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
-			} else if(DPDBHelper.countIndoorSip() == 0 && !DPFunction.getAccount().isEmpty()) {
+			} else if(!DPFunction.getAccount().equals(DPFunction.getDBAccount())) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip_regist), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
-			}else {
+			} else {
 //				Bitmap qrBitmap  = CommonUT.createQRCode(QRString, 300, CODE_COLOR_BACK);
 //				Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 //				Bitmap bitmap = CommonUT.addLogo(qrBitmap, logoBitmap);
@@ -273,17 +265,11 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 		boolean flag = true;
 		String savecode = readQRCodeInfo("code");//保存的二维码信息
 		Log.i(TAG, "savecode=" + savecode);
-		String door = "";
 		if(!savecode.equals("")) {
-			String newcode = savecode.substring(6, 23);//保存的室内机信息
-			String doorcode = savecode.substring(35, savecode.length() - 2);//保存的门口机信息
-			String account = CloudIntercom.getRoomInfo();
+			String SP_deviceNo = savecode.substring(6, 22);//保存的室内机deviceNo
+			String DB_deviceNo = DPDBHelper.queryFistSip().getDeviceNo().toString();//数据库deviceNo
 			
-			mMonitorLists = DPFunction.getCellSeeList();
-			for(int i=0; i< mMonitorLists.size(); i++) {
-				door = door + "_" + mMonitorLists.get(i).getCode();
-			}
-			if(!newcode.equals(account) || !doorcode.equals(door)){
+			if(!SP_deviceNo.equals(DB_deviceNo)){
 				flag = false;
 			}
 		}

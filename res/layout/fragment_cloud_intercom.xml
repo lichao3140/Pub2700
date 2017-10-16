@@ -35,7 +35,7 @@
          <com.dpower.pub.dp2700.view.DrawableCenterButton
             android:id="@+id/btn_unbind_device"
             style="@style/style_rectangle_button"
-            android:drawableTop="@drawable/cloud_intercom_bind"
+            android:drawableTop="@drawable/ic_phone_binding"
             android:text="@string/unbind_device" />
          
     </LinearLayout>

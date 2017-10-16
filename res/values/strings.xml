@@ -44,7 +44,7 @@
     <string name="bind_device_is_max">最多绑定手机数量：</string>
     <string name="bind_device_is_exist">该设备已绑定</string>
     <string name="bind_device">绑定设备</string>
-    <string name="unbind_device">设备解绑</string>
+    <string name="unbind_device">设备管理</string>
     <string name="call_forwarding">呼叫转移</string>
     <string name="call_forwarding_tips">当门口机呼叫本机时，同时呼叫手机端</string>
     <string name="call_not_forwarding">呼叫不转移</string>
@@ -53,11 +53,13 @@
     <string name="bind_device_isonline">是否被屏蔽</string>
     <string name="bind_device_on">否</string>
     <string name="bind_device_off">是</string>
-    <string name="bind_device_all">全部设备</string>
-    <string name="bind_device_and">安卓设备</string>
-    <string name="bind_device_ios">苹果设备</string>
+    <string name="bind_device_all">手机绑定</string>
+    <string name="bind_device_and">门磁绑定</string>
+    <string name="bind_device_ios">其他绑定</string>
     <string name="phone_type_and">安卓</string>
     <string name="phone_type_ios">苹果</string>
+    <string name="devices_type_phone">移动设备</string>
+    <string name="devices_type_card">门磁卡片</string>
     <string name="unbind_all_devices">全部解绑</string>
     <string name="unbind_phone_device">解绑</string>
     <string name="unbind_phone_device_success">解绑成功</string>

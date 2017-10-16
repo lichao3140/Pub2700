@@ -63,23 +63,11 @@ public class DevicesListAdapter extends BaseAdapter {
 		}
 		holder.id.setText(mDevicesList.get(position).getmDB_id() + "");
 		holder.accountName.setText(mDevicesList.get(position).getAccountname());
-		String deviceType = mDevicesList.get(position).getPhonetype();
-		String deviceNo = deviceType.substring(0, 1);
-		String deviceName;
-		if(deviceNo.equals("1")){
-			if(deviceType.length() > 2) {
-				deviceName = deviceType.substring(2, deviceType.length());
-				holder.phoneType.setText(mContext.getResources().getString(R.string.phone_type_and)+deviceName);
-			} else {
-				holder.phoneType.setText(R.string.phone_type_and);
-			}
-		} else if(deviceNo.equals("2")){
-			if(deviceType.length() > 2) {
-				deviceName = deviceType.substring(2, deviceType.length());
-				holder.phoneType.setText(mContext.getResources().getString(R.string.phone_type_ios)+deviceName);
-			} else {
-				holder.phoneType.setText(R.string.phone_type_ios);
-			}
+		String deviceType = mDevicesList.get(position).getPhonetype();		
+		if (deviceType.equals("1")) {
+			holder.phoneType.setText(R.string.devices_type_phone);
+		} else if (deviceType.equals("2")) {
+			holder.phoneType.setText(R.string.devices_type_card);
 		}
 		int line = mDevicesList.get(position).getIsonline();
 		if (line == 1){

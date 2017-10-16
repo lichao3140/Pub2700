@@ -30,13 +30,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 /**
- * 手机解绑
+ * 设备管理
  */
 public class UnBindDeviceActivity extends BaseActivity implements OnClickListener {
 	
-	private static final String PHONE_TYPE_AND = "1";
-	private static final String PHONE_TYPE_IOS = "2";
-	private static final String PHONE_TYPE_ALL = "0";
+	private static final String DEVICE_TYPE_PHONE = "1";//移动设备
+	private static final String DEVICE_TYPE_CARDS = "2";//门磁卡片
+	private static final String DEVICE_TYPE_OTHER = "0";//其他设备
 	private ListView mListView;
 	private DevicesListAdapter mAdapter;
 	private UnBindPhoneReceiver unBindPhoneReceiver;
@@ -48,12 +48,12 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	private IntentFilter filter_and_faile;
 	private IntentFilter filter_ios_success;
 	private IntentFilter filter_ios_faile;
-	/** 全部设备 */
-	private Button mButtonAllDevices;
-	/** Android设备 */
-	private Button mButtonDevicesAnd;
-	/** iPhone设备 */
-	private Button mButtonDevicesIos;
+	/** 移动设备 */
+	private Button mButtonPhoneDevices;
+	/** 门磁设备 */
+	private Button mButtonCardDevices;
+	/** 其他设备 */
+	private Button mButtonOtherDevices;
 
 	/** 当前正在显示的按键 */
 	private Button mButtonCurrent;
@@ -92,12 +92,12 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	
 	private void init() {
 		mContext = this;
-		mButtonAllDevices = (Button) findViewById(R.id.btn_all_devices);
-		mButtonAllDevices.setOnClickListener(this);
-		mButtonDevicesAnd = (Button) findViewById(R.id.btn_devices_and);
-		mButtonDevicesAnd.setOnClickListener(this);
-		mButtonDevicesIos = (Button) findViewById(R.id.btn_devices_ios);
-		mButtonDevicesIos.setOnClickListener(this);
+		mButtonPhoneDevices = (Button) findViewById(R.id.btn_all_devices);
+		mButtonPhoneDevices.setOnClickListener(this);
+		mButtonCardDevices = (Button) findViewById(R.id.btn_devices_and);
+		mButtonCardDevices.setOnClickListener(this);
+		mButtonOtherDevices = (Button) findViewById(R.id.btn_devices_ios);
+		mButtonOtherDevices.setOnClickListener(this);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_delete).setOnClickListener(this);
 		findViewById(R.id.btn_delete_all).setOnClickListener(this);
@@ -105,9 +105,9 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 		mBindAccountList = new ArrayList<BindAccountInfo>();
 		mAdapter = new DevicesListAdapter(mContext);
 		mListView.setAdapter(mAdapter);
-		mButtonCurrent = mButtonAllDevices;
+		mButtonCurrent = mButtonPhoneDevices;
 		mHandler = new Handler();
-		updateCurrentList(mButtonAllDevices);
+		updateCurrentList(mButtonPhoneDevices);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -141,12 +141,12 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private synchronized void updateData() {
-		ArrayList<BindAccountInfo> infos;
-		if (mButtonCurrent == mButtonDevicesAnd) {
+		ArrayList<BindAccountInfo> infos = null;
+		if (mButtonCurrent == mButtonCardDevices) {
 			infos = DPFunction.getAccountByPhonetpye("1");
-		} else if (mButtonCurrent == mButtonDevicesIos) {
+		} else if (mButtonCurrent == mButtonOtherDevices) {
 			infos = DPFunction.getAccountByPhonetpye("2");
-		} else {
+		} else if (mButtonCurrent == mButtonPhoneDevices) {
 			infos = DPFunction.getAccountInfoList();
 		}
 		
@@ -188,14 +188,14 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.btn_all_devices://所有设备
-				updateCurrentList(mButtonAllDevices);
+			case R.id.btn_all_devices://移动设备
+				updateCurrentList(mButtonPhoneDevices);
 				break;
 			case R.id.btn_devices_and://所有安卓设备
-				updateCurrentList(mButtonDevicesAnd);
+				updateCurrentList(mButtonCardDevices);
 				break;
 			case R.id.btn_devices_ios://所有苹果设备
-				updateCurrentList(mButtonDevicesIos);
+				updateCurrentList(mButtonOtherDevices);
 				break;
 			case R.id.btn_back://返回
 				finish();
@@ -224,9 +224,9 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 			case R.id.btn_delete_all://解绑所有设备
 				if (mAdapter.getDevicesList().size() > 0) {
 					TipsDialog dialog = new TipsDialog(mContext);
-					if (mButtonCurrent == mButtonDevicesAnd) {
+					if (mButtonCurrent == mButtonCardDevices) {
 						dialog.setContent(getString(R.string.delete_and_devices) + "?");
-					} else if (mButtonCurrent == mButtonDevicesIos) {
+					} else if (mButtonCurrent == mButtonOtherDevices) {
 						dialog.setContent(getString(R.string.delete_ios_devices) + "?");
 					} else {
 						dialog.setContent(getString(R.string.delete_all_devices) + "?");
@@ -235,15 +235,15 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 						
 						@Override
 						public void onClick() {
-							if (mButtonCurrent == mButtonDevicesAnd) {
+							if (mButtonCurrent == mButtonCardDevices) {
 								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_AND;
-								unBindPhone(PHONE_TYPE_AND);
-							} else if (mButtonCurrent == mButtonDevicesIos) {
+								unBindPhone(DEVICE_TYPE_PHONE);
+							} else if (mButtonCurrent == mButtonOtherDevices) {
 								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_IOS;
-								unBindPhone(PHONE_TYPE_IOS);
+								unBindPhone(DEVICE_TYPE_CARDS);
 							} else {
 								DPSIPService.currentMsgType = MSG_TYPE.MSG_BACK_UNBIND_PHONE_ALL;
-								unBindPhone(PHONE_TYPE_ALL);
+								unBindPhone(DEVICE_TYPE_OTHER);
 							}
 						}
 					});
@@ -307,7 +307,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 				forceUnbindPhone();
 				
 			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_AND_SUCCESS)){
-				DPFunction.clearAccount(PHONE_TYPE_AND);
+				DPFunction.clearAccount(DEVICE_TYPE_PHONE);
 				MyToast.show(R.string.unbind_phone_device_success);
 				updateCurrentList(mButtonCurrent);
 				
@@ -315,7 +315,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 				MyToast.show(R.string.unbind_phone_device_faile);
 				
 			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_IOS_SUCCESS)){
-				DPFunction.clearAccount(PHONE_TYPE_IOS);
+				DPFunction.clearAccount(DEVICE_TYPE_CARDS);
 				MyToast.show(R.string.unbind_phone_device_success);
 				updateCurrentList(mButtonCurrent);
 				
@@ -323,7 +323,7 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 				MyToast.show(R.string.unbind_phone_device_faile);
 				
 			} else if (action.equals(ReceiverAction.ACTION_UNBIND_PHONE_ALL_SUCCESS)){
-				DPFunction.clearAccount(PHONE_TYPE_ALL);
+				DPFunction.clearAccount(DEVICE_TYPE_OTHER);
 				MyToast.show(R.string.unbind_phone_device_success);
 				updateCurrentList(mButtonCurrent);
 				

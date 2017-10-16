@@ -16,7 +16,7 @@
             android:layout_height="@dimen/title_bar_icon_height"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/title_bar_icon_margin_left"
-            android:src="@drawable/ic_call_log"
+            android:src="@drawable/ic_phone_binding"
             android:contentDescription="@null" />
 
         <TextView

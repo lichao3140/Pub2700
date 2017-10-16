@@ -134,7 +134,7 @@ public class DPDBHelper {
 					+ TBL_ACCOUNT_LIST
 					+ "("
 					+ "_id integer primary key autoincrement,accountname varchar(256) not null" 
-					+ ",accountpwd varchar(256) not null,isonline int not null,token varchar(256) not null,phonetype varchar(50) not null)");
+					+ ",accountpwd varchar(256) not null,isonline int not null,token varchar(256),phonetype varchar(50))");
 			MyLog.print("create table " + TBL_ACCOUNT_LIST + " success");
 		}
 
@@ -882,7 +882,7 @@ public class DPDBHelper {
 				return -1;
 			DBOpen();
 			String sql = "insert into " + TBL_ACCOUNT_LIST + " values(null, '"
-					+ account + "', '" + account + "', 1)";
+					+ account + "', '" + account + "', 1, null, 1)";
 			MyLog.print("addAccount sql=" + sql);
 			mDatabase.execSQL(sql);
 		}

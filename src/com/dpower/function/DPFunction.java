@@ -3814,6 +3814,11 @@ public class DPFunction {
 			DPDBHelper.delAccountByToken(account, token);
 		}
 		
+		@Override
+		public void delAccount(String account) {
+			DPDBHelper.delAccount(account);
+		}
+		
 	};
 	
 	/**

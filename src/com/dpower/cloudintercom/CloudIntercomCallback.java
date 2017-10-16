@@ -114,4 +114,7 @@ public interface CloudIntercomCallback {
 	
 	/** 根据account和token解绑手机 */
 	public void delAccountByToken(String account, String token);
+	
+	/** 根据account */
+	public void delAccount(String account);
 }

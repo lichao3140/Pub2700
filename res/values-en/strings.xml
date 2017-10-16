@@ -44,7 +44,7 @@
     <string name="bind_device_is_max">Max bind devices num:</string>
     <string name="bind_device_is_exist">This device is binded</string>
     <string name="bind_device">Bind device</string>
-    <string name="unbind_device">Unbind device</string>
+    <string name="unbind_device">Device Manage</string>
     <string name="call_forwarding">callMove</string>
     <string name="call_forwarding_tips">Call to telPhone When callIn</string>
     <string name="call_not_forwarding">disable move</string>
@@ -53,11 +53,13 @@
     <string name="bind_device_isonline">Is Ignore</string>
     <string name="bind_device_on">UnIgnore</string>
     <string name="bind_device_off">Ignore</string>
-    <string name="bind_device_all">All Devices</string>
-    <string name="bind_device_and">Android Devices</string>
-    <string name="bind_device_ios">IPhone Devices</string>
+    <string name="bind_device_all">Phone Manage</string>
+    <string name="bind_device_and">Cards Manage</string>
+    <string name="bind_device_ios">Other Manage</string>
     <string name="phone_type_and">Android</string>
     <string name="phone_type_ios">IPhone</string>
+    <string name="devices_type_phone">Move Dvices</string>
+    <string name="devices_type_card">Door Cards</string>
     <string name="unbind_all_devices">Unbind All</string>
     <string name="unbind_phone_device">Unbind</string>
     <string name="unbind_phone_device_success">Unbind Success</string>
