@@ -70,9 +70,9 @@ public class DevicesListAdapter extends BaseAdapter {
 			holder.phoneType.setText(R.string.devices_type_card);
 		}
 		int line = mDevicesList.get(position).getIsonline();
-		if (line == 1){
+		if (line == 0){
 			holder.isOnline.setText(R.string.bind_device_on);
-		} else if(line == 0){
+		} else if(line == 2){
 			holder.isOnline.setText(R.string.bind_device_off);
 		}
 		holder.setCheck(checkID == position);

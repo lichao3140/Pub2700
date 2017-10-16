@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import android.content.ContentValues;
@@ -882,7 +885,7 @@ public class DPDBHelper {
 				return -1;
 			DBOpen();
 			String sql = "insert into " + TBL_ACCOUNT_LIST + " values(null, '"
-					+ account + "', '" + account + "', 1, null, 1)";
+					+ account + "', '" + account + "', 0, null, 1)";
 			MyLog.print("addAccount sql=" + sql);
 			mDatabase.execSQL(sql);
 		}
@@ -966,10 +969,10 @@ public class DPDBHelper {
 			if (!isAccountExist(account))
 				return;
 			DBOpen();
-			int isonline = online ? 1 : 0;
+			int isonline = online ? 0 : 2;
 			String sql = "update " + TBL_ACCOUNT_LIST + " set isonline="
 					+ isonline + " where accountname='" + account + "'";
-			MyLog.print(sql);
+			MyLog.print("setAccountOnline sql:" + sql);
 			mDatabase.execSQL(sql);
 		}
 	}
@@ -981,7 +984,7 @@ public class DPDBHelper {
 	public static List<String> getAccountList() {
 		List<String> accounts = new ArrayList<String>();
 		DBOpen();
-		String sql = "select * from " + TBL_ACCOUNT_LIST + " where isonline=1";
+		String sql = "select * from " + TBL_ACCOUNT_LIST + " where isonline=0";
 		Cursor cursor = mDatabase.rawQuery(sql, null);
 		if (cursor.moveToFirst()) {
 			String acc = cursor.getString(1);
@@ -1903,7 +1906,12 @@ public class DPDBHelper {
 		values.put("houseno", info.getHouseNo());
 		values.put("mac", info.getMac());
 		values.put("ip", info.getIp());
-		values.put("devicename", info.getDeviceName());
+		String DeviceName = info.getDeviceName();
+		String regEx="[^0-9]";
+		Pattern pattern = Pattern.compile(regEx);
+		Matcher matcher = pattern.matcher(DeviceName);
+		Log.e("lichao È¥ÖÐÎÄ:", matcher.replaceAll("").trim());
+		values.put("devicename", matcher.replaceAll("").trim());
 		values.put("devicetype", info.getDeviceType());
 		values.put("devicepassword", info.getDevicePassword());
 		values.put("position", info.getPosition());
@@ -1922,7 +1930,7 @@ public class DPDBHelper {
 				}
 			}
 		}
-		mDatabase.insert(TBL_INDOORSIP_INFO, null, values);		
+		mDatabase.insert(TBL_INDOORSIP_INFO, null, values);	
 	}
 	
 	/**

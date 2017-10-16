@@ -3894,8 +3894,8 @@ public class DPFunction {
 		return CloudIntercom.getRoomInfo();
 	}
 	
-	public static String getDBAccount() {
-		return CloudIntercom.getDbRoomInfo();
+	public static String getDBAccount(String name) {
+		return CloudIntercom.getDbRoomInfo(name);
 	}
 	
 	/**

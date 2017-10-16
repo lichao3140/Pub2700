@@ -127,7 +127,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 	private void updateLoginStatus() {
 		String msg;
-		String account = DPFunction.getDBAccount();
+		String account = DPFunction.getDBAccount("deviceName");
 		if (account == null) {
 			account = "DISABLED";
 		}
@@ -223,7 +223,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
-			} else if(!DPFunction.getAccount().equals(DPFunction.getDBAccount())) {
+			} else if(!DPFunction.getAccount().equals(DPFunction.getDBAccount("deviceName"))) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip_regist), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
 			} else {

@@ -90,11 +90,11 @@ public class Constant {
 
 	/** 推送消息给Android */
 	public static final String PUSH_AND_URL = IP_PORT
-			+ "/smarthomeservice/rest/push/client/pushToAndroidClient";
+			+ "/smarthomeservice/rest/push/client/pushToAndroidClientIntercom";
 
 	/** 推送消息给IOS */
 	public static final String PUSH_IOS_URL = IP_PORT
-			+ "/smarthomeservice/rest/push/client/pushToIosClient";
+			+ "/smarthomeservice/rest/push/client/pushToIosClientIntercom";
 	
 	/** 上传开门记录到服务器 */
 	public static final String UPLOAD_OPEN_DOOR_RECORD = IP_PORT

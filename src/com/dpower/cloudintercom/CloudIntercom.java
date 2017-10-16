@@ -136,12 +136,10 @@ public class CloudIntercom {
 				}
 				break;
 			case Constant.CALL_OUT:
-				if (!(mCallback.getTokensCount(Constant.PUSH_AND_TOKEN) == 0)) {
-					poushToAnd(mContext.getString(R.string.push_visitor_call));
-				}
-				if (!(mCallback.getTokensCount(Constant.PUSH_IOS_TOKEN) == 0)) {
-					poushToIos(mContext.getString(R.string.push_visitor_call));
-				}
+				poushToAnd(mContext.getString(R.string.push_visitor_call),
+						mContext.getString(R.string.push_visitor_call));
+				poushToIos(mContext.getString(R.string.push_visitor_call),
+						mContext.getString(R.string.push_visitor_call));
 				List<String> accounts = mCallback.getAccountList();
 				for (String account : accounts) {
 					SIPIntercom.callOut(account);
@@ -277,16 +275,11 @@ public class CloudIntercom {
 	}
 
 	/** 推送给IOS */
-	public static void poushToIos(String tokenmsg) {
+	public static void poushToIos(String content, String title) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		String tokenStr = getTokens(Constant.PUSH_IOS_TOKEN);
-		String token = null;
-		if (!tokenStr.equals("")) {
-			token = tokenStr.substring(0, tokenStr.length() - 1);
-		}
-		Log.e(LICHAO, "IosTokens=" + token);
-		maps.put("content", tokenmsg);
-		maps.put("tokens", token);
+		maps.put("deviceNo", getDbRoomInfo("deviceName"));
+		maps.put("content", content);
+		maps.put("title", title);
 		OkHttpUtil.getDefault()
 				.doPostAsync(
 						HttpInfo.Builder().setUrl(Constant.PUSH_IOS_URL).addParams(maps)
@@ -309,16 +302,11 @@ public class CloudIntercom {
 	}
 
 	/** 推送给Android */
-	public static void poushToAnd(String tokenmsg) {
+	public static void poushToAnd(String content, String title) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		String tokenStr = getTokens(Constant.PUSH_AND_TOKEN);
-		String token = null;
-		if (!tokenStr.equals("")) {
-			token = tokenStr.substring(0, tokenStr.length() - 1);
-		}
-		Log.e(LICHAO, "AndTokens=" + token);
-		maps.put("content", tokenmsg);
-		maps.put("tokens", token);
+		maps.put("deviceNo", getDbRoomInfo("deviceName"));
+		maps.put("content", content);
+		maps.put("title", title);
 		OkHttpUtil.getDefault()
 				.doPostAsync(
 						HttpInfo.Builder().setUrl(Constant.PUSH_AND_URL).addParams(maps)
@@ -345,6 +333,8 @@ public class CloudIntercom {
 		final HashMap<String, String> maps = new HashMap<String, String>();
 		ArrayList<AddrInfo> mMonitorLists = DPFunction.getCellSeeList();
 		String doorNo_list = null;
+		StringBuilder dn_sb = null;
+		String dnStrNew = null;
 		if(mMonitorLists.size() != 0) {
 			doorNo_list = mMonitorLists.get(0).getCode();
 			for(int i = 1; i < mMonitorLists.size(); i++) {
@@ -352,16 +342,27 @@ public class CloudIntercom {
 			}
 		}
 		String mac = getMacAddress();
-		StringBuilder  sb = new StringBuilder (mac);  
-		sb.insert(10, ":");  sb.insert(8, ":");  sb.insert(6, ":");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-		sb.insert(4, ":");   sb.insert(2, ":");  
-		String macStrNew = sb.toString();  
+		StringBuilder  mac_sb = new StringBuilder (mac);  
+		mac_sb.insert(10, ":");  mac_sb.insert(8, ":");  mac_sb.insert(6, ":");
+		mac_sb.insert(4, ":");   mac_sb.insert(2, ":");
+		String macStrNew = mac_sb.toString();
 		AddrInfo info = DPFunction.getAddrInfo(DPFunction.getRoomCode());
 		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
 		String areaNo = sharedPreferences.getString("area", "");
 		String deviceName = sharedPreferences.getString("show_room_info", "");
-		Log.e(LICHAO, "门口机:" + doorNo_list);
-		maps.put("deviceName", deviceName);
+		if (!deviceName.isEmpty()) {
+			deviceName = deviceName.substring(0, deviceName.length()-2);
+			dn_sb = new StringBuilder(deviceName);
+			dn_sb.insert(4, "小区");
+			dn_sb.insert(8, "区");
+			dn_sb.insert(12, "栋");
+			dn_sb.insert(15, "单元");
+			dn_sb.insert(21, "室");
+			dnStrNew = dn_sb.toString();
+		}
+		Log.i(LICHAO, "门口机:" + doorNo_list);
+		Log.i(LICHAO, "室内机:" + dnStrNew);
+		maps.put("deviceName", dnStrNew);
 		maps.put("deviceType", "01");  //设备类型
 		maps.put("device_status", "1");  //设备状态
 		maps.put("mac", macStrNew);  //MAC
@@ -496,11 +497,11 @@ public class CloudIntercom {
 	
 	private static void poushAreaMessge(String title, String type) {
 		if (type.equals("1")) {//个人消息
-			poushToIos(mContext.getString(R.string.poush_person_message) + ":" + title);
-			poushToAnd(mContext.getString(R.string.poush_person_message) + ":" + title);
+			poushToIos(mContext.getString(R.string.poush_person_message), title);
+			poushToAnd(mContext.getString(R.string.poush_person_message), title);
 		} else if(type.equals("2")) {//公共消息
-			poushToIos(mContext.getString(R.string.poush_area_message) + ":" + title);
-			poushToAnd(mContext.getString(R.string.poush_area_message) + ":" + title);
+			poushToIos(mContext.getString(R.string.poush_area_message), title);
+			poushToAnd(mContext.getString(R.string.poush_area_message), title);
 		}
 	}
 
@@ -512,7 +513,7 @@ public class CloudIntercom {
 				SIPIntercomLog.print(SIPIntercomLog.ERROR, "SIP = " + SIPIntercom.isOnline());
 				boolean ret = false;
 				count_sip = mCallback.countIndoorSip();
-				if (count_sip==0 || (count_sip == 1 && !getDbRoomInfo().equals(getRoomInfo()))) {
+				if (count_sip==0 || (count_sip == 1 && !getDbRoomInfo("deviceName").equals(getRoomInfo()))) {
 					//注册SIP情况:1、室内机数据库SIP为空;2、数据库房号和用户配置的房号不一致。
 					registerIndoor();
 					account = getSipAcount();
@@ -1080,15 +1081,23 @@ public class CloudIntercom {
 		sharedPreferences = mContext.getSharedPreferences("RoomInfo", Activity.MODE_PRIVATE);
 		String room_info = sharedPreferences.getString("show_room_info", "");
 		SIPIntercomLog.print("getRoomInfo:" + room_info);
-		return room_info;
+		return room_info.substring(0, room_info.length()-2);
 	}
 	
 	/**
-	 * 从数据库获取房间号
+	 * 从数据库获取数据
 	 * @return
 	 */
-	public static String getDbRoomInfo() {
-		return mCallback.queryFistSip().getDeviceName().toString();
+	public static String getDbRoomInfo(String name) {
+		String result = null;
+		if (name.equals("deviceNo")) {
+			result = mCallback.queryFistSip().getDeviceNo().toString();
+		} else if (name.equals("deviceName")) {
+			result = mCallback.queryFistSip().getDeviceName().toString();
+		} else if (name.equals("sipId")) {
+			result = mCallback.queryFistSip().getSipId().toString();
+		}
+		return result;
 	}
 
 	public static String getRoomId() {
@@ -1277,12 +1286,10 @@ public class CloudIntercom {
 		Log.e(LICHAO, "doorIpAddr=" + doorIpAddr);
 		int result = DPFunction.toDoorModifyPassWord(doorIpAddr, newpassword);
 		if (result == 0) {
-			if (!(mCallback.getTokensCount(Constant.PUSH_AND_TOKEN) == 0)) {
-				CloudIntercom.poushToAnd(mContext.getString(R.string.push_edit_opendoor_password));
-			}
-			if (!(mCallback.getTokensCount(Constant.PUSH_IOS_TOKEN) == 0)) {
-				CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password));
-			}
+			CloudIntercom.poushToAnd(mContext.getString(R.string.push_edit_opendoor_password),
+					mContext.getString(R.string.push_edit_opendoor_password));
+			CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password),
+					mContext.getString(R.string.push_edit_opendoor_password));
 			Log.i(LICHAO, "DoorPassword success:" + newpassword);
 			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
 				Constant.PHONE_TYPE_SETPWD, "", "1")));			
@@ -1326,10 +1333,10 @@ public class CloudIntercom {
 	 * @param status
 	 */
 	private static void SetCloudClose(String msg, String status) {
-		boolean isOnline = true;//默认为1,不屏蔽
-		if(status.equals("1")){//取消屏蔽		
+		boolean isOnline = true;//默认为0,不屏蔽
+		if(status.equals("0")){//取消屏蔽	
 			mCallback.setAccountOnline(msg, isOnline);
-		} else if (status.equals("0")) {//屏蔽
+		} else if (status.equals("2")) {//屏蔽
 			isOnline = false;
 			mCallback.setAccountOnline(msg, isOnline);
 		}
