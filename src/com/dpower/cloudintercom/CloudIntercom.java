@@ -232,7 +232,9 @@ public class CloudIntercom {
 				Log.e(LICHAO, "sipConnectChange:" + reason);
 			}
 			if (reason != null && reason.equals(NetworkUntil.NETWORK_ERROR)) {
-				mHandler.sendEmptyMessageDelayed(Constant.LOGIN, 5000);
+				//延迟10S将消息加入队列
+				mHandler.sendEmptyMessageDelayed(Constant.LOGIN, 10000);
+				SIPIntercomLog.print(SIPIntercomLog.ERROR, TAG, "网络错误");
 			} else {
 				mHandler.sendEmptyMessage(Constant.LOGIN);
 			}
@@ -277,7 +279,7 @@ public class CloudIntercom {
 	/** 推送给IOS */
 	public static void poushToIos(String content, String title) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		maps.put("deviceNo", getDbRoomInfo("deviceName"));
+		maps.put("deviceNo", getDbRoomInfo("deviceNo"));
 		maps.put("content", content);
 		maps.put("title", title);
 		OkHttpUtil.getDefault()
@@ -304,7 +306,7 @@ public class CloudIntercom {
 	/** 推送给Android */
 	public static void poushToAnd(String content, String title) {
 		final HashMap<String, String> maps = new HashMap<String, String>();
-		maps.put("deviceNo", getDbRoomInfo("deviceName"));
+		maps.put("deviceNo", getDbRoomInfo("deviceNo"));
 		maps.put("content", content);
 		maps.put("title", title);
 		OkHttpUtil.getDefault()

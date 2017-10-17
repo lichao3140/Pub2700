@@ -11,7 +11,6 @@ import com.dpower.pub.dp2700.activity.dialog.SetLeaveAudioDialog;
 import com.dpower.pub.dp2700.activity.dialog.SystemLightSetDialog;
 import com.dpower.pub.dp2700.activity.dialog.SetLanguageDialog;
 import com.dpower.util.ProjectConfigure;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,10 +1,12 @@
 package com.dpower.pub.dp2700.fragment;
 
+import com.dpower.cloudintercom.CloudIntercom;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.activity.BindDeviceActivity;
 import com.dpower.pub.dp2700.activity.CallForwardingActivity;
 import com.dpower.pub.dp2700.activity.UnBindDeviceActivity;
 import com.dpower.pub.dp2700.activity.WifiActivity;
+import com.dpower.pub.dp2700.dialog.TipsDialog;
 import com.dpower.util.ProjectConfigure;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,7 +51,14 @@ public class CloudIntercomFragment extends Fragment implements OnClickListener {
 				startActivity(new Intent(getActivity(), WifiActivity.class));
 				break;
 			case R.id.btn_bind_device:
-				startActivity(new Intent(getActivity(), BindDeviceActivity.class));
+				String roomCode = CloudIntercom.getAccount();
+				if (!roomCode.equals("1999999999901")) {
+					startActivity(new Intent(getActivity(), BindDeviceActivity.class));
+				} else {
+					TipsDialog dialog = new TipsDialog(getActivity());
+					dialog.setContent(R.string.cloud_status_tip);
+					dialog.show();
+				}
 				break;
 			case R.id.btn_call_forwarding:
 				startActivity(new Intent(getActivity(), CallForwardingActivity.class));

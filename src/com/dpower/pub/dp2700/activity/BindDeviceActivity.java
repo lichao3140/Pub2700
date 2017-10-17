@@ -84,7 +84,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			case 1:
 				String error = (String) msg.obj;
 				showQRCode(error);
-				MyToast.show(R.string.cloud_status_tip);
 			default:
 				break;
 			}
@@ -127,7 +126,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 	private void updateLoginStatus() {
 		String msg;
-		String account = DPFunction.getDBAccount("deviceName");
+		String account = DPFunction.getAccount();
 		if (account == null) {
 			account = "DISABLED";
 		}
@@ -166,9 +165,7 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 			finish();
 			break;
 		case R.id.btn_register:
-			if(DPDBHelper.countIndoorSip() == 0) {
-				MyToast.show(R.string.cloud_status_tip);
-			} else if(DPDBHelper.countIndoorSip() >= 1) {
+			if(DPDBHelper.countIndoorSip() >= 1) {
 				MyToast.show(R.string.cloud_is_register);
 			} else {
 				new Thread(new Runnable() {
@@ -219,11 +216,13 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 	/** 显示二维码 */
 	private void showQRCode(String QRString) {
+		Log.e("lichao", "无效二维码:" + QRString);
 		try {
 			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
-			} else if(!DPFunction.getAccount().equals(DPFunction.getDBAccount("deviceName"))) {
+			} else if(!DPFunction.getAccount().equals(DPFunction.getAccount()) || 
+					QRString.equals("DISABLED")) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip_regist), 300, 30);
 				mImageQRCode.setImageBitmap(bm);
 			} else {
