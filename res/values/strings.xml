@@ -101,6 +101,9 @@
     <string name="number_hao">号</string>
     <string name="target_off_line">无法连接该设备，请检查目标设备是否连接</string>
     <string name="num_unit_gate_phone">号门口机</string>
+    <string name="num_unit_gate_one">1号门口机</string>
+    <string name="num_unit_gate_two">2号门口机</string>
+    <string name="num_unit_gate_three">3号门口机</string>
     <string name="gate_phone">门口机</string>
     <string name="security_extension">保安分机</string>
     <string name="manger_center">管理中心</string>

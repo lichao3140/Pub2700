@@ -180,6 +180,7 @@
             android:clickable="false"
             android:text="@string/unbind_all_devices"
             android:textColor="@color/White"
+            android:visibility="gone"
             android:textSize="@dimen/info_window_button_text_size" />
         
         <Button
@@ -193,6 +194,7 @@
             android:clickable="false"
             android:text="@string/unbind_phone_device"
             android:textColor="@color/White"
+            android:visibility="gone"
             android:textSize="@dimen/info_window_button_text_size" />
         
     </LinearLayout>

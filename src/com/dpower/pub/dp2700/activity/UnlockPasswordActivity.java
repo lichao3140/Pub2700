@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 /**
  * 用户设置---开锁密码
@@ -24,6 +27,8 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 	private EditTextTool mEditTool;
 	private MyEditText mEditPassword;
 	private MyEditText mEditPasswordAgain;
+	private RadioGroup mRadioGroup;
+	private RadioButton doorNo1, doorNo2, doorNo3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,12 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 		mEditPasswordAgain = (MyEditText) findViewById(R.id.et_password_again);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_confirm).setOnClickListener(this);
+		mRadioGroup = (RadioGroup) findViewById(R.id.rd_door_no);
+		doorNo1 = (RadioButton) findViewById(R.id.rdb_door_1);
+		doorNo2 = (RadioButton) findViewById(R.id.rdb_door_2);
+		doorNo3 = (RadioButton) findViewById(R.id.rdb_door_3);
+		mRadioGroup.setOnCheckedChangeListener(listener);
+		
 		setKeyboardClickListener(R.id.bt_num_1, "1");
 		setKeyboardClickListener(R.id.bt_num_2, "2");
 		setKeyboardClickListener(R.id.bt_num_3, "3");
@@ -129,4 +140,25 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 			MyToast.show(R.string.change_failed);
 		}
 	}
+	
+	private OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+		
+		@Override
+		public void onCheckedChanged(RadioGroup group, int checkedId) {
+			ArrayList<AddrInfo> monitorLists = DPFunction.getCellSeeList();
+			String doorIpAddr = null;
+			switch (group.getCheckedRadioButtonId()) {
+				case R.id.rdb_door_1:
+					doorIpAddr = monitorLists.get(0).getIp();
+					MyToast.show(doorNo1.getText().toString());
+					break;
+				case R.id.rdb_door_2:
+					MyToast.show(doorNo2.getText().toString());
+					break;
+				case R.id.rdb_door_3:
+					MyToast.show(doorNo3.getText().toString());
+					break;
+			}
+		}
+	};
 }

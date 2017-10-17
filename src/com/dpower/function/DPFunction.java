@@ -1235,17 +1235,15 @@ public class DPFunction {
 
 	/**
 	 * 设置门口机用户开锁密码
-	 * 
-	 * @param doorIpAddr
-	 *            门口机ip
-	 * @param pwd
-	 *            新密码
+	 * @param doorIpAddr 门口机IP
+	 * @param pwd 新密码
 	 * @return
 	 */
 	public static int toDoorModifyPassWord(String doorIpAddr, String pwd) {
 		long roomID = CodetoID(getRoomCode());
-		int ret = TalkManager.toDoorModifyPassWord(doorIpAddr, roomID, pwd,
-				true);
+		Log.i(LICHAO, "toDoorModifyPassWord roomID:" + roomID + 
+					  " doorIpAddr:" + doorIpAddr + " pwd:" + pwd);
+		int ret = TalkManager.toDoorModifyPassWord(doorIpAddr, roomID, pwd, true);
 		return ret;
 	}
 	

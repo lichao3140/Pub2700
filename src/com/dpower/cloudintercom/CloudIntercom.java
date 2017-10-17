@@ -1279,26 +1279,32 @@ public class CloudIntercom {
 	/**
 	 * 设置开门密码
 	 * 
-	 * @param newpassword
-	 * @param sipaccount
+	 * @param newPassword  新密码
+	 * @param sipAccount  用户SIP
 	 */
-	private static void SetDoorPassword(String newpassword, String sipaccount) {
+	private static void SetDoorPassword(String newPassword, String sipAccount) {
+		String[] updataMsg = newPassword.split("_");
 		ArrayList<AddrInfo> monitorLists = DPFunction.getCellSeeList();
-		String doorIpAddr = monitorLists.get(0).getIp();
-		Log.e(LICHAO, "doorIpAddr=" + doorIpAddr);
-		int result = DPFunction.toDoorModifyPassWord(doorIpAddr, newpassword);
-		if (result == 0) {
+		for(int i=0; i<monitorLists.size(); i++) {
+			if(updataMsg[1].equals(monitorLists.get(i).getCode())) {
+				doorIpAddr = monitorLists.get(i).getIp();
+				break;
+			}
+		}
+		Log.i(LICHAO, "doorIpAddr=" + doorIpAddr);
+		int result = DPFunction.toDoorModifyPassWord(doorIpAddr, updataMsg[0]);
+		if (result == 0) {//修改成功
+			DPSIPService.sendInstantMessage(sipAccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+					Constant.PHONE_TYPE_SETPWD, "", "1")));
 			CloudIntercom.poushToAnd(mContext.getString(R.string.push_edit_opendoor_password),
 					mContext.getString(R.string.push_edit_opendoor_password));
 			CloudIntercom.poushToIos(mContext.getString(R.string.push_edit_opendoor_password),
 					mContext.getString(R.string.push_edit_opendoor_password));
-			Log.i(LICHAO, "DoorPassword success:" + newpassword);
-			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
-				Constant.PHONE_TYPE_SETPWD, "", "1")));			
-		} else {
+			Log.i(LICHAO, "DoorPassword success:" + newPassword);
+		} else {//修改失败
 			Log.i(LICHAO, "DoorPassword fail");
-			DPSIPService.sendInstantMessage(sipaccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
-				Constant.PHONE_TYPE_SETPWD, "", "0")));	
+			DPSIPService.sendInstantMessage(sipAccount, DPSIPService.getMsgCommand(new PhoneMessageMod(
+				Constant.PHONE_TYPE_SETPWD, "", "0")));
 		}
 	}
 

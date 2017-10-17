@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.dpower.domain.BindAccountInfo;
 import com.dpower.pub.dp2700.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class DevicesListAdapter extends BaseAdapter {
 		return mDevicesList;
 	}
 
-	@Override
+	@SuppressLint("InflateParams") @Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {

@@ -216,7 +216,6 @@ public class BindDeviceActivity extends BaseFragmentActivity implements
 
 	/** 显示二维码 */
 	private void showQRCode(String QRString) {
-		Log.e("lichao", "无效二维码:" + QRString);
 		try {
 			if(DPDBHelper.countIndoorSip() == 0 && DPFunction.getAccount().isEmpty()) {
 				Bitmap bm = CommonUT.createDestroyImage(getString(R.string.cloud_status_tip), 300, 30);

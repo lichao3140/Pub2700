@@ -99,6 +99,9 @@
     <string name="number_hao">Number</string>
     <string name="target_off_line">Connection Failed, Please Check The Target Device</string>
     <string name="num_unit_gate_phone">Panel</string>
+    <string name="num_unit_gate_one">1 Panel</string>
+    <string name="num_unit_gate_two">2 Panel</string>
+    <string name="num_unit_gate_three">3 Panel</string>
     <string name="gate_phone">Gate Panel</string>
     <string name="manger_center">Management Center</string>
     <string name="num_manger_center">Management Center Number</string>
