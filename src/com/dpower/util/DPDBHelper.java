@@ -31,7 +31,7 @@ import com.example.dpservice.DPSafeService;
 public class DPDBHelper {
 	
 	private static final int MAX_COUNT = 50; // 存储记录的最大数量
-	public static final int ACCOUNT_MACNUM = 50; // 室内机绑定手机的最大数量
+	public static final int ACCOUNT_MACNUM = 10; // 室内机绑定手机的最大数量
 	private static final String DB_NAME = "lib2700_db.db";
 
 	/** 键值对 */

@@ -118,6 +118,7 @@
     <string name="user_name_shouldnot_null">Please Enter Your Username</string>
     <string name="password_shouldnot_null">Please Enter Your Password</string>
     <string name="password_not_same">Please Enter The Same Password</string>
+    <string name="please_select_entrance_machine">Please Select Entrance Machine</string>
     <string name="login_success">Login Complete</string>
     <string name="registering">Registering</string>
     <string name="register_success">Regiser Completed</string>
@@ -311,8 +312,9 @@
     <string name="tips_mode_not_delay">Mode Can Not be Delayed</string>
     <string name="tips_mode_not_close">Mode Can Not Be Closed</string>
     <string name="seized_cannot_same_as_cancel">Please Input Different Password</string>
+    <string name="change_entrance_machine_not_exsit">Entrance Machine Not Exsit</string>
     <string name="change_succeeded">Change Completed</string>
-    <string name="change_failed">Change Failed</string>
+    <string name="change_failed">Change Failed, Please Check The Intnet And Device</string>
     <string name="local_password_error">Old Password Error</string>
     <string name="input_six_password">Please input Password with 6 Digits Or Numbers</string>
     <string name="new_password_cannot_null">Password Can Not Be Blank</string>

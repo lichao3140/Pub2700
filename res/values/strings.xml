@@ -123,6 +123,7 @@
     <string name="tips_user_name_not_legal">用户名长度有误，请输入大于六位且小于16位的用户名</string>
     <string name="tips_user_password_not_legal">密码长度有误，请输入大于六位且小于16位的密码</string>
     <string name="password_not_same">两次密码不一致</string>
+    <string name="please_select_entrance_machine">请选择门口机</string>
     <string name="login_success">登录成功</string>
     <string name="registering">正在注册</string>
     <string name="tip_yun_server_init">云对讲服务尚未启动，正尝试启动中，请稍后</string>
@@ -330,9 +331,10 @@
     <string name="ring_disable">铃声关闭</string>
     <string name="tips_mode_not_delay">此类型无法延迟</string>
     <string name="tips_mode_not_close">此类型无法关闭</string>
-    <string name="seized_cannot_same_as_cancel">挟持密码与撤防密码不能相同。请重新输入</string>
+    <string name="seized_cannot_same_as_cancel">挟持密码与撤防密码不能相同，请重新输入</string>
+    <string name="change_entrance_machine_not_exsit">门口机未安装</string>
     <string name="change_succeeded">修改成功</string>
-    <string name="change_failed">修改失败</string>
+    <string name="change_failed">修改失败，请检查网络和选择的门口机是否安装</string>
     <string name="local_password_error">原密码错误</string>
     <string name="input_six_password">请输入6位密码</string>
     <string name="new_password_cannot_null">密码不能为空</string>

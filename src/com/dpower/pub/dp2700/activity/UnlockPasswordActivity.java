@@ -1,7 +1,6 @@
 package com.dpower.pub.dp2700.activity;
 
 import java.util.ArrayList;
-
 import com.dpower.domain.AddrInfo;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
@@ -9,12 +8,10 @@ import com.dpower.pub.dp2700.tools.EditTextTool;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.pub.dp2700.view.MyEditText;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -28,7 +25,9 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 	private MyEditText mEditPassword;
 	private MyEditText mEditPasswordAgain;
 	private RadioGroup mRadioGroup;
-	private RadioButton doorNo1, doorNo2, doorNo3;
+	
+	private ArrayList<AddrInfo> monitorLists;
+	private String doorIpAddr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +37,14 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 	}
 
 	private void init() {
+		monitorLists = DPFunction.getCellSeeList();
+		doorIpAddr = monitorLists.get(0).getIp();
 		mEditTool = EditTextTool.getInstance();
 		mEditPassword = (MyEditText) findViewById(R.id.et_password);
 		mEditPasswordAgain = (MyEditText) findViewById(R.id.et_password_again);
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_confirm).setOnClickListener(this);
 		mRadioGroup = (RadioGroup) findViewById(R.id.rd_door_no);
-		doorNo1 = (RadioButton) findViewById(R.id.rdb_door_1);
-		doorNo2 = (RadioButton) findViewById(R.id.rdb_door_2);
-		doorNo3 = (RadioButton) findViewById(R.id.rdb_door_3);
 		mRadioGroup.setOnCheckedChangeListener(listener);
 		
 		setKeyboardClickListener(R.id.bt_num_1, "1");
@@ -129,8 +127,6 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 			MyToast.show(R.string.password_not_same);
 			return;
 		}
-		ArrayList<AddrInfo> monitorLists = DPFunction.getCellSeeList();
-		String doorIpAddr = monitorLists.get(0).getIp();
 		int result = DPFunction.toDoorModifyPassWord(doorIpAddr,
 				mEditPassword.getText().toString());
 		if (result == 0) {
@@ -145,18 +141,27 @@ public class UnlockPasswordActivity extends BaseFragmentActivity
 		
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
-			ArrayList<AddrInfo> monitorLists = DPFunction.getCellSeeList();
-			String doorIpAddr = null;
 			switch (group.getCheckedRadioButtonId()) {
 				case R.id.rdb_door_1:
-					doorIpAddr = monitorLists.get(0).getIp();
-					MyToast.show(doorNo1.getText().toString());
+					if (monitorLists.size() >= 1) {
+						doorIpAddr = monitorLists.get(0).getIp();
+					} else {
+						MyToast.shortToast(R.string.change_entrance_machine_not_exsit);
+					}
 					break;
 				case R.id.rdb_door_2:
-					MyToast.show(doorNo2.getText().toString());
+					if (monitorLists.size() >= 2) {
+						doorIpAddr = monitorLists.get(1).getIp();
+					} else {
+						MyToast.shortToast(R.string.change_entrance_machine_not_exsit);
+					}
 					break;
 				case R.id.rdb_door_3:
-					MyToast.show(doorNo3.getText().toString());
+					if (monitorLists.size() >= 3) {
+						doorIpAddr = monitorLists.get(2).getIp();
+					} else {
+						MyToast.shortToast(R.string.change_entrance_machine_not_exsit);
+					}
 					break;
 			}
 		}

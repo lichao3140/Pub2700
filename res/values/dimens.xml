@@ -109,5 +109,7 @@
     <dimen name="mode_item_height">100dp</dimen>
     <dimen name="password_item_height">60dp</dimen>
     <dimen name="password_edit_height">50dp</dimen>
+    <dimen name="password_edit_background_width">425dp</dimen>
+    <dimen name="password_radiobutton_width">250dp</dimen>
   	<dimen name="password_radiobutton_height">66dp</dimen>
 </resources>
