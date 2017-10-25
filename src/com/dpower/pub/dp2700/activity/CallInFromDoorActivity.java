@@ -153,7 +153,7 @@ public class CallInFromDoorActivity extends BaseActivity implements
 		}
 		mRoomCode = intent.getStringExtra("code");
 		Log.i("lichao", "mCallSessionID = " + mAcceptSessionID);
-		Log.i("lichao", "mRoomCode = " + mRoomCode);		
+		Log.i("lichao", "CallInFromDoorActivity mRoomCode = " + mRoomCode);		
 		MyLog.print("mCallSessionID = " + mAcceptSessionID);
 		MyLog.print("mRoomCode = " + mRoomCode);
 		mCallReceiver = new CallReceiver(this, CallReceiver.CALL_IN_ACTION);
