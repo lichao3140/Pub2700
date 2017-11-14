@@ -447,6 +447,7 @@
     <string name="tips_loading">正在加载中</string>
     <string name="tips_logining">正在登录</string>
     <string name="text_reboot">设备重启</string>
+    <string name="text_exit_app">退出应用</string>
     <string name="text_login">云对讲登录</string>
     <string name="text_register">云对讲注册</string>
     <string name="text_unlogin">退出登录</string>

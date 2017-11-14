@@ -7,7 +7,6 @@ import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.pub.dp2700.view.MyEditText;
 import com.dpower.util.CommonUT;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -15,6 +14,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
+/**
+ *  ±º‰…Ë÷√
+ * @author LiChao
+ *
+ */
 public class SetTimeActivity extends BaseActivity implements OnClickListener {
 	
 	private EditTextTool mEditTool;

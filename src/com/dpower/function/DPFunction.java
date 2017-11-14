@@ -161,9 +161,6 @@ public class DPFunction {
 			mContext = context;
 			Time time = new Time();
 			time.setToNow();
-			if (time.year < 2017) {
-				setTime("2017-01-01 00:00:00");
-			}
 			
 			mUhomeApi = new UhomeApi(mContext);
 			mSeeInfo = new CallInfomation();

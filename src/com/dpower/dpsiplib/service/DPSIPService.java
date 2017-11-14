@@ -298,14 +298,14 @@ public class DPSIPService extends Service implements MyAppCallback {
 	 * @category 判断是否有外网连接（普通方法不能判断外网的网络是否连接，比如连接上局域网）
 	 * @return
 	 */ 
-	public static boolean ping() { 
+	public static boolean ping() {
 	    
 	       String result = null; 
 	       try { 
 	               String ip = "8.8.8.8";// ping 的地址，可以换成任何一种可靠的外网 
 	               Process p = Runtime.getRuntime().exec("ping -c 2 -w 100 " + ip);// ping网址3次 
 	               // 读取ping的内容，可以不加 
-	               InputStream input = p.getInputStream(); 
+	               InputStream input = p.getInputStream();
 	               BufferedReader in = new BufferedReader(new InputStreamReader(input)); 
 	               StringBuffer stringBuffer = new StringBuffer(); 
 	               String content = ""; 

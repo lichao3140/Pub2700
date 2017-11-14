@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
@@ -40,9 +41,9 @@
     <uses-permission android:name="android.permission.RUN_INSTRUMENTATION" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.DEVICE_POWER" />
-
+	
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />   
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name="com.dpower.pub.dp2700.application.App"
