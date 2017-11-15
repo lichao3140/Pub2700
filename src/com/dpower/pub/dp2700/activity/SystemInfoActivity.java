@@ -1,27 +1,19 @@
 package com.dpower.pub.dp2700.activity;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.List;
-
 import com.dpower.domain.AddrInfo;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
+import com.dpower.pub.dp2700.activity.dialog.CheckPasswordDialog;
 import com.dpower.pub.dp2700.tools.SPreferences;
 import com.dpower.util.ProjectConfigure;
-
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -168,61 +160,11 @@ public class SystemInfoActivity extends BaseActivity implements OnClickListener{
 			finish();
 			break;
 		case R.id.btn_exit_app:
-			//forceStopAPK("com.dpower.pub.dp2700");
-			getRunningServiceInfo(getApplicationContext(), "com.dpower.pub.dp2700");
+			Intent existApp = new Intent(SystemInfoActivity.this, CheckPasswordDialog.class);
+			startActivity(existApp);
 			break;
 		default:
 			break;
 		}
-	}
-	
-	private void forceStopAPK(String pkgName){
-		Process sh = null;
-		DataOutputStream os = null;
-		try {
-			sh = Runtime.getRuntime().exec("su");
-			os = new DataOutputStream(sh.getOutputStream());
-			final String Command = "am force-stop "+pkgName+ "\n";
-			os.writeBytes(Command);
-			os.flush();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			sh.waitFor();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void getRunningServiceInfo(Context context ,String packageName) {
- 		ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
- 		// 通过调用ActivityManager的getRunningAppServicees()方法获得系统里所有正在运行的进程
- 		List<ActivityManager.RunningServiceInfo> runServiceList = mActivityManager.getRunningServices(50);
- 		System.out.println(runServiceList.size());
- 		// ServiceInfo Model类 用来保存所有进程信息
- 		for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
- 			ComponentName serviceCMP = runServiceInfo.service;
- 			String serviceName = serviceCMP.getShortClassName(); // service 的类名
- 			String pkgName = serviceCMP.getPackageName(); // 包名
- 			
- 			Log.e("lichao", "serviceName:" + serviceName);
- 			Log.e("lichao", "pkgName:" + pkgName);
- 			
- 			if (pkgName.equals(packageName)) {
- 				//mActivityManager.forceStopPackage(packageName);
- 				//mActivityManager.killBackgroundProcesses(packageName);
-				try {
-					Method method = Class.forName("android.app.ActivityManager").getMethod("forceStopPackage", String.class);
-					method.invoke(mActivityManager, packageName);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
- 			}
-
- 		}
 	}
 }

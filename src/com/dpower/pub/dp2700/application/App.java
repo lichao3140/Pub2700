@@ -31,7 +31,7 @@ public class App extends Application {
 	private static final String TAG = "App";
 	
 	private static App mApp;
-	private Stack<Activity> mActivities;
+	private static Stack<Activity> mActivities;
 	private Context mContext;
 	
 	public static App getInstance() {
@@ -241,7 +241,10 @@ public class App extends Application {
         return null;
     }
 
-    public void exit() {
+    /**
+     * 退出应用
+     */
+    public static void exit() {
         if (mActivities != null && mActivities.size() > 0) {
         	MyLog.print(MyLog.ERROR, TAG, "退出应用");
             for (Activity activity : mActivities) {

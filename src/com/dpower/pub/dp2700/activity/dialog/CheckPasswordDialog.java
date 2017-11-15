@@ -4,13 +4,13 @@ import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.activity.BaseFragmentActivity;
 import com.dpower.pub.dp2700.activity.SystemSetActivity;
+import com.dpower.pub.dp2700.application.App;
 import com.dpower.pub.dp2700.fragment.KeyboardNumberFragment;
 import com.dpower.pub.dp2700.fragment.KeyboardNumberFragment.OnNumberKeyboardListener;
 import com.dpower.pub.dp2700.tools.EditTextTool;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.util.ConstConf;
 import com.dpower.util.MyLog;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -106,7 +106,8 @@ public class CheckPasswordDialog extends BaseFragmentActivity
 				} else if (mAction.equals("systemSet")) {
 					password = DPFunction.getPsdProjectSetting();
 				} else {
-					MyLog.print(TAG, "意图不明");
+					App.exit();
+					MyLog.print(TAG, "退出应用");
 					return;
 				}
 				if (mEditPassword.getText().toString().trim().equals(password)) {
