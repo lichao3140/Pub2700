@@ -143,9 +143,9 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	private synchronized void updateData() {
 		ArrayList<BindAccountInfo> infos = null;
 		if (mButtonCurrent == mButtonCardDevices) {
-			infos = DPFunction.getAccountByPhonetpye("1");
-		} else if (mButtonCurrent == mButtonOtherDevices) {
 			infos = DPFunction.getAccountByPhonetpye("2");
+		} else if (mButtonCurrent == mButtonOtherDevices) {
+			infos = DPFunction.getAccountByPhonetpye("0");
 		} else if (mButtonCurrent == mButtonPhoneDevices) {
 			infos = DPFunction.getAccountInfoList();
 		}
@@ -188,13 +188,13 @@ public class UnBindDeviceActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.btn_all_devices://移动设备
+			case R.id.btn_all_devices://手机绑定
 				updateCurrentList(mButtonPhoneDevices);
 				break;
-			case R.id.btn_devices_and://所有安卓设备
+			case R.id.btn_devices_and://门磁绑定
 				updateCurrentList(mButtonCardDevices);
 				break;
-			case R.id.btn_devices_ios://所有苹果设备
+			case R.id.btn_devices_ios://其他绑定
 				updateCurrentList(mButtonOtherDevices);
 				break;
 			case R.id.btn_back://返回
