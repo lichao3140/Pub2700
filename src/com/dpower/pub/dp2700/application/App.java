@@ -2,7 +2,6 @@ package com.dpower.pub.dp2700.application;
 
 import java.io.File;
 import java.util.Stack;
-
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.activity.MainActivity;
@@ -17,7 +16,6 @@ import com.dpower.util.ConstConf;
 import com.dpower.util.DPDBHelper;
 import com.dpower.util.MyLog;
 import com.dpower.util.ProjectConfigure;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -258,7 +256,10 @@ public class App extends Application {
         }
     }
     
-    public void onHomeKey(){
+    /**
+     * ·µ»ØÖ÷Ò³
+     */
+    public static void onHomeKey(){
     	MyLog.print(TAG, "onHomeKey");
     	 if (mActivities != null && mActivities.size() > 0) {
              for (Activity activity : mActivities) {
