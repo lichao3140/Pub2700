@@ -4,8 +4,11 @@ import java.util.List;
 import com.dpower.dpsiplib.callback.SIPCallback;
 import com.dpower.dpsiplib.service.DPSIPService;
 import com.dpower.dpsiplib.service.MyCall;
+import com.dpower.pub.dp2700.service.LoginService;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
@@ -17,10 +20,12 @@ public class SIPIntercom {
 		mContext = context;
 		mSIPCallback = callback;
 		mContext.startService(new Intent(mContext, DPSIPService.class));
+		mContext.startService(new Intent(mContext, LoginService.class));
 	}
 	
 	public static void deinit() {
 		mContext.stopService(new Intent(mContext, DPSIPService.class));
+		mContext.stopService(new Intent(mContext, LoginService.class));
 		mSIPCallback = null;
 		mContext = null;
 	}

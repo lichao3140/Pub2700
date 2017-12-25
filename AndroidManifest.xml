@@ -260,5 +260,8 @@
             android:name="com.dpower.pub.dp2700.broadcastreceiver.RebootAlarmReceiver"
             android:process=":remote" />
         
+        <receiver android:name="com.dpower.pub.dp2700.broadcastreceiver.LoginBroadcastReveicer" ></receiver>
+        <service android:name="com.dpower.pub.dp2700.service.LoginService" />
+        
     </application>
 </manifest>

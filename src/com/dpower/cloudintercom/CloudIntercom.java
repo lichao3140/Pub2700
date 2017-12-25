@@ -1003,6 +1003,7 @@ public class CloudIntercom {
 		if (mCallback == null) {
 			return false;
 		}
+		Log.i("lichao", "CloudIntercom isOnline:" + SIPIntercom.isOnline());
 		SIPIntercomLog.print(SIPIntercomLog.ERROR, "isOnline = " + 
 				SIPIntercom.isOnline());
 		return SIPIntercom.isOnline();
