@@ -33,12 +33,12 @@ public class LoginService extends Service{
 			
 			@Override
 			public void run() {
-				CloudIntercom.registerIndoor();
-				Log.e("lichao", "定时5分钟后自动登录");
+				CloudIntercom.startLogin();
+				Log.e("lichao", "定时3分钟后自动登录");
 			}
 		}).start();
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		int mTime = 1000 * 60 * 5; // 这是120s
+		int mTime = 1000 * 60 * 3; // 这是120s
 		long triggerAtTime = SystemClock.elapsedRealtime() + mTime;
 		Intent mIntent = new Intent(this, LoginBroadcastReveicer.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
