@@ -247,7 +247,7 @@ public class RoomNumSetActivity extends BaseActivity
 		if (TextUtils.isEmpty(mEditAreaNo.getText().toString())) {
 			MyToast.show(R.string.area_input_no);
 			return null;
-		} else if (mEditAreaNo.getText().toString().length() < 2) {
+		} else if (mEditAreaNo.getText().toString().length() < 4) {
 			MyToast.show(R.string.area_no_input_error);
 			return null;
 		}
