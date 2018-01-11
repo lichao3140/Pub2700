@@ -16,6 +16,8 @@
 * 把手机文件传到电脑文件夹里   不要进入adb shll里面执行
 * adb pull /mnt/sdcard/netcfg.dat C:/Users/Administrator/Desktop/linphone/
 ---
+* sqlite3操作
+
 ![](/screenshot/device-2017-10-10-153933.png "主页" height="240" width="420")
 ![](/screenshot/device-2017-10-10-154009.png "云对讲")
 ![](/screenshot/device-2017-10-10-154019.png "家庭安防")
