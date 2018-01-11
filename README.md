@@ -17,8 +17,16 @@
 * adb pull /mnt/sdcard/netcfg.dat C:/Users/Administrator/Desktop/linphone/
 ---
 * sqlite3操作
-
-![](/screenshot/device-2017-10-10-153933.png "主页" height="240" width="420")
+* cd data/data/com.dpower.pub.dp2700/files
+* chmod 777 files
+* cd files
+* sqlite3 lib2700_db.db
+* .tables 查看数据库 lib2700_db里所有的表
+* 显示字段
+* .mode column 
+* .header on
+---
+![](/screenshot/device-2017-10-10-153933.png "主页")
 ![](/screenshot/device-2017-10-10-154009.png "云对讲")
 ![](/screenshot/device-2017-10-10-154019.png "家庭安防")
 ![](/screenshot/device-2017-10-10-154028.png "可视对讲")
