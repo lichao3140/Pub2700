@@ -1,6 +1,8 @@
 package com.dpower.pub.dp2700.application;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
@@ -240,11 +242,11 @@ public class App extends Application {
     }
 
     /**
-     * 退出应用
+     * 退出应用---断电重启后无法退出
      */
     public static void exit() {
         if (mActivities != null && mActivities.size() > 0) {
-        	MyLog.print(MyLog.ERROR, TAG, "退出应用");
+        	MyLog.print(MyLog.ERROR, TAG, "exit()方法退出应用");
             for (Activity activity : mActivities) {
                 if(!activity.isDestroyed()) {
                     activity.finish();
@@ -255,6 +257,57 @@ public class App extends Application {
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
+    
+    /**
+     * Linux shell 命令杀死进程---此应用无效
+     */
+    public static void killProcess(int pid) {
+    	MyLog.print(MyLog.ERROR, TAG, "killProcess()方法退出应用");
+    	Process sh = null;
+    	DataOutputStream os = null;
+    	try {
+    		sh = Runtime.getRuntime().exec("su");
+    		os = new DataOutputStream(sh.getOutputStream());
+    		final String Command = "kill -9 " + pid + "\n";
+    		os.writeBytes(Command);
+    		os.flush();
+    		
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+    		sh.waitFor();
+    	} catch (InterruptedException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    /**
+     * Linux shell 命令杀死进程---OOM
+     * @param packageName
+     */
+    public static void amForceAppProcess(String packageName) {
+    	MyLog.print(MyLog.ERROR, TAG, "amForceAppProcess()方法退出应用");
+        Process process = null;  
+        DataOutputStream os = null;  
+  
+        try {  
+            process = Runtime.getRuntime().exec("su");
+            os = new DataOutputStream(process.getOutputStream());
+            final String Command = "am force-stop "+packageName+ "\n";
+            MyLog.print(MyLog.ERROR, TAG, "Command:" + Command);
+            os.writeBytes(Command);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();  
+        }
+        try {
+        	process.waitFor();
+    	} catch (InterruptedException e) {
+    		e.printStackTrace();
+    	}
+    }  
     
     /**
      * 返回主页

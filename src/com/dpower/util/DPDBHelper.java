@@ -1910,7 +1910,7 @@ public class DPDBHelper {
 		String regEx="[^0-9]";
 		Pattern pattern = Pattern.compile(regEx);
 		Matcher matcher = pattern.matcher(DeviceName);
-		Log.e("lichao È¥ÖÐÎÄ:", matcher.replaceAll("").trim());
+		Log.e("lichao", matcher.replaceAll("").trim());
 		values.put("devicename", matcher.replaceAll("").trim());
 		values.put("devicetype", info.getDeviceType());
 		values.put("devicepassword", info.getDevicePassword());

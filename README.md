@@ -6,6 +6,8 @@
 * adb shell ps|grep com.dpower.pub.dp2700
 * adb shell am start -n ｛包(package)名｝/｛包名｝.{活动(activity)名称,启动应用
 * adb shell am start -n com.android.calculator2/com.android.calculator2.Calculator,启动计算器
+* 杀死进程:
+* am force-stop com.dpower.pub.dp2700
 * 删除系统应用：
 * adb remount （重新挂载系统分区，使系统分区重新可写）。
 * adb shell

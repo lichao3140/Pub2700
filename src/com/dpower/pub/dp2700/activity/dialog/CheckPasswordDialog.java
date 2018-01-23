@@ -1,5 +1,8 @@
 package com.dpower.pub.dp2700.activity.dialog;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.List;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
 import com.dpower.pub.dp2700.activity.BaseFragmentActivity;
@@ -11,6 +14,8 @@ import com.dpower.pub.dp2700.tools.EditTextTool;
 import com.dpower.pub.dp2700.tools.MyToast;
 import com.dpower.util.ConstConf;
 import com.dpower.util.MyLog;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -100,16 +105,19 @@ public class CheckPasswordDialog extends BaseFragmentActivity
 					MyToast.show(R.string.wifi_password_input);
 					return;
 				}
-				String password;
+				
+				String password = null;
 				if (mAction.equals("disalarm")) {
 					password = DPFunction.getSafePassword(false);
 				} else if (mAction.equals("systemSet")) {
 					password = DPFunction.getPsdProjectSetting();
-				} else {
+				} else if (mAction.equals("existApp")) {
 					App.exit();
-					MyLog.print(TAG, "ÍË³öÓ¦ÓÃ");
+					//App.amForceAppProcess("com.dpower.pub.dp2700");
+					//App.killProcess(getProcessID(mContext, "com.dpower.pub.dp2700"));
 					return;
 				}
+				
 				if (mEditPassword.getText().toString().trim().equals(password)) {
 					if (mAction.equals("disalarm")) {
 						Intent intent = new Intent(mContext, HomeSecurityModeDelayDialog.class);
@@ -131,4 +139,20 @@ public class CheckPasswordDialog extends BaseFragmentActivity
 				break;
 		}
 	}
+	
+	public int getProcessID(Context ctx, String packageName) {
+		ActivityManager am = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningAppProcessInfo> infoList = am.getRunningAppProcesses();
+		int pid = -1;
+		if (infoList == null) {
+			return pid;
+		}
+		
+		for (RunningAppProcessInfo info : infoList) {
+			if (info.processName.equals(packageName)) {
+				pid = info.pid;
+			}
+		}
+		return pid;
+    }
 }

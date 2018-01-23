@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import com.dpower.pub.dp2700.broadcastreceiver.RebootAlarmReceiver;
 import com.dpower.util.MyLog;
+import com.dpower.util.ProjectConfigure;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -23,7 +24,7 @@ import android.content.Intent;
 public class RebootUT {
 	private static final String TAG = "RebootUT";
 	
-	public static final int REBOOT_TIME = 3;
+	public static int REBOOT_TIME = 8;
 	private static RebootUT mRebootUT;
 	private Context mContext;
 	private AlarmManager mAlarmManager;
@@ -39,7 +40,15 @@ public class RebootUT {
 		return mRebootUT;
 	}
 
+	/**
+	 * 设置重启时间
+	 * @param hour
+	 */
 	public void rebootAtTime(int hour) {
+		if (ProjectConfigure.project == 0) {
+			hour = 8;
+			REBOOT_TIME = hour;
+		}
 		mAlarmManager = (AlarmManager) mContext.getSystemService(
 				Context.ALARM_SERVICE);
 		Intent intent = new Intent(mContext, RebootAlarmReceiver.class);
@@ -53,11 +62,8 @@ public class RebootUT {
 		MyLog.print(TAG, "重启闹钟设置：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
 				Locale.getDefault()).format(cal.getTime()));
 		mAlarmManager.cancel(pi);
-		// mAlarmManager.set(AlarmManager.RTC_WAKEUP, time, pi); // 设置闹钟，当前时间就唤醒
 		mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time,
 				AlarmManager.INTERVAL_DAY, pi); // 设置闹钟，当前时间就唤醒
-//		mAlarmManager.setRepeating(AlarmManager.RTC, time, 
-//				AlarmManager.INTERVAL_DAY, pi);
 	}
 
 	private long getTime(int hour) {

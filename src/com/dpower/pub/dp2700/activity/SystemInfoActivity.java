@@ -161,6 +161,7 @@ public class SystemInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.btn_exit_app:
 			Intent existApp = new Intent(SystemInfoActivity.this, CheckPasswordDialog.class);
+			existApp.setAction("existApp");
 			startActivity(existApp);
 			break;
 		default:
