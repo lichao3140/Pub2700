@@ -4,34 +4,27 @@
 * adb uninstall com.dpower.pub.dp2700
 * adb install	 C:/Users/Administrator/Desktop/linphone/UpdateApk.apk
 * adb shell ps|grep com.dpower.pub.dp2700
-* adb shell am start -n £û°ü(package)Ãû£ı/£û°üÃû£ı.{»î¶¯(activity)Ãû³Æ,Æô¶¯Ó¦ÓÃ
-* adb shell am start -n com.android.calculator2/com.android.calculator2.Calculator,Æô¶¯¼ÆËãÆ÷
-* É±ËÀ½ø³Ì:
+* adb shell am start -n ï½›åŒ…(package)åï½/ï½›åŒ…åï½.{æ´»åŠ¨(activity)åç§°,å¯åŠ¨åº”ç”¨
+* adb shell am start -n com.android.calculator2/com.android.calculator2.Calculator,å¯åŠ¨è®¡ç®—å™¨
+* æ€æ­»è¿›ç¨‹:
 * am force-stop com.dpower.pub.dp2700
-* É¾³ıÏµÍ³Ó¦ÓÃ£º
-* adb remount £¨ÖØĞÂ¹ÒÔØÏµÍ³·ÖÇø£¬Ê¹ÏµÍ³·ÖÇøÖØĞÂ¿ÉĞ´£©¡£
+* åˆ é™¤ç³»ç»Ÿåº”ç”¨ï¼š
+* adb remount ï¼ˆé‡æ–°æŒ‚è½½ç³»ç»Ÿåˆ†åŒºï¼Œä½¿ç³»ç»Ÿåˆ†åŒºé‡æ–°å¯å†™ï¼‰ã€‚
 * adb shell
 * cd system/app
-* rm *.apk £¨rm UpdateApk.apk£©
-* °ÑµçÄÔÎÄ¼ş´«µ½ÊÖ»úÎÄ¼ş¼ĞÀï   ²»Òª½øÈëadb shllÀïÃæÖ´ĞĞ
+* rm *.apk ï¼ˆrm UpdateApk.apkï¼‰
+* æŠŠç”µè„‘æ–‡ä»¶ä¼ åˆ°æ‰‹æœºæ–‡ä»¶å¤¹é‡Œ   ä¸è¦è¿›å…¥adb shllé‡Œé¢æ‰§è¡Œ
 * adb push C:/Users/Administrator/Desktop/linphone/1/netcfg.dat /sdcard
-* °ÑÊÖ»úÎÄ¼ş´«µ½µçÄÔÎÄ¼ş¼ĞÀï   ²»Òª½øÈëadb shllÀïÃæÖ´ĞĞ
+* æŠŠæ‰‹æœºæ–‡ä»¶ä¼ åˆ°ç”µè„‘æ–‡ä»¶å¤¹é‡Œ   ä¸è¦è¿›å…¥adb shllé‡Œé¢æ‰§è¡Œ
 * adb pull /mnt/sdcard/netcfg.dat C:/Users/Administrator/Desktop/linphone/
 ---
-* sqlite3²Ù×÷
+* sqlite3æ“ä½œ
 * cd data/data/com.dpower.pub.dp2700/files
 * chmod 777 files
 * cd files
 * sqlite3 lib2700_db.db
-* .tables ²é¿´Êı¾İ¿â lib2700_dbÀïËùÓĞµÄ±í
-* ÏÔÊ¾×Ö¶Î
+* .tables æŸ¥çœ‹æ•°æ®åº“ lib2700_dbé‡Œæ‰€æœ‰çš„è¡¨
+* æ˜¾ç¤ºå­—æ®µ
 * .mode column 
 * .header on
 ---
-![](/screenshot/device-2017-10-10-153933.png "Ö÷Ò³")
-![](/screenshot/device-2017-10-10-154009.png "ÔÆ¶Ô½²")
-![](/screenshot/device-2017-10-10-154019.png "¼ÒÍ¥°²·À")
-![](/screenshot/device-2017-10-10-154028.png "¿ÉÊÓ¶Ô½²")
-![](/screenshot/device-2017-10-10-154039.png "ÖÇÄÜ¼Ò¾Ó")
-![](/screenshot/device-2017-10-10-154049.png "ÉèÖÃ")
-![](/screenshot/device-2017-10-10-154059.png "ÓéÀÖÌìµØ")
