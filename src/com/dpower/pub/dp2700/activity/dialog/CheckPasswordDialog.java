@@ -1,7 +1,5 @@
 package com.dpower.pub.dp2700.activity.dialog;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.List;
 import com.dpower.function.DPFunction;
 import com.dpower.pub.dp2700.R;
@@ -16,6 +14,7 @@ import com.dpower.util.ConstConf;
 import com.dpower.util.MyLog;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -140,6 +139,12 @@ public class CheckPasswordDialog extends BaseFragmentActivity
 		}
 	}
 	
+	/**
+	 * 获取进程ID
+	 * @param ctx
+	 * @param packageName
+	 * @return
+	 */
 	public int getProcessID(Context ctx, String packageName) {
 		ActivityManager am = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
 		List<RunningAppProcessInfo> infoList = am.getRunningAppProcesses();
@@ -154,5 +159,27 @@ public class CheckPasswordDialog extends BaseFragmentActivity
 			}
 		}
 		return pid;
+    }
+	
+	/**
+	 * 获取后台所有正在运行的服务和进程
+	 * @param context
+	 * @param packageName
+	 */
+	public static void getRunningServiceInfo(Context context, String packageName) {
+        ActivityManager mActivityManager = (ActivityManager) context  
+                .getSystemService(Context.ACTIVITY_SERVICE);  
+        // 通过调用ActivityManager的getRunningAppServicees()方法获得系统里所有正在运行的进程  
+        List<ActivityManager.RunningServiceInfo> runServiceList = mActivityManager  
+                .getRunningServices(50);  
+        System.out.println(runServiceList.size());  
+        // ServiceInfo Model类 用来保存所有进程信息  
+        for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) { 
+            ComponentName serviceCMP = runServiceInfo.service;  
+            String serviceName = serviceCMP.getShortClassName(); // service 的类名  
+            String pkgName = serviceCMP.getPackageName(); // 包名  
+            System.out.println("serviceName:" + serviceName);
+            System.out.println("pkgName:" + pkgName);
+        }  
     }
 }

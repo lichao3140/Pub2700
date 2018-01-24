@@ -259,7 +259,7 @@ public class App extends Application {
     }
     
     /**
-     * Linux shell 命令杀死进程---此应用无效
+     * Linux shell 命令杀死进程---此应用无效(双进程守护)
      */
     public static void killProcess(int pid) {
     	MyLog.print(MyLog.ERROR, TAG, "killProcess()方法退出应用");
@@ -284,7 +284,7 @@ public class App extends Application {
     }
     
     /**
-     * Linux shell 命令杀死进程---OOM
+     * Linux shell 命令杀死进程---OOM(双进程守护)
      * @param packageName
      */
     public static void amForceAppProcess(String packageName) {
